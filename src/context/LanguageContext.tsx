@@ -30,7 +30,7 @@ const nav: Record<Language, NavItem[]> = {
 
 type LanguageContextType = {
   language: Language;
-  toggleLanguage: () => void;
+  setLanguage: (lang: Language) => void;
   navItems: NavItem[];
 };
 
@@ -39,12 +39,9 @@ const LanguageContext = createContext<LanguageContextType | null>(null);
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>("sr");
 
-  const toggleLanguage = () =>
-    setLanguage((prev) => (prev === "sr" ? "en" : "sr"));
-
   return (
     <LanguageContext.Provider
-      value={{ language, toggleLanguage, navItems: nav[language] }}
+      value={{ language, setLanguage, navItems: nav[language] }}
     >
       {children}
     </LanguageContext.Provider>
