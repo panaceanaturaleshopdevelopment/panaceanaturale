@@ -8,80 +8,104 @@ export default function UsageSection() {
         </p>
         <div className="w-10 h-px bg-[#3D7A3D] mb-12" />
 
-        <div className="space-y-10">
-
-          <p className="font-[family-name:var(--font-serif)] text-[21px] leading-[1.9] text-[#2C2C22] font-light">
-            Pošto čovekov probavni sistem nije u stanju da u potpunosti razgradi
-            vlakna listova trave, veći deo soka ostao bi zarobljen u listovima,
-            pa ga naš organizam ne bi mogao iskoristiti. Upravo zato se pšenična
-            trava cedi, pa se tako dobijen sok konzumira. Hladno ceđeni sok se
-            zamrzava odmah po ceđenju, kako bi se očuvali svi hranljivi sastojci
-            u njemu. Sok ne sadrži bilo kakve aditive, veštačke boje ili
-            konzervanse —{" "}
-            <span className="font-medium text-[#1E3A1E]">on je 100% prirodan</span>.
-            To je razlog zašto se on čuva u zamrzivaču i zamrznut transportuje
-            do krajnjeg konzumenta.
+        <div className="space-y-8 mb-24">
+          <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+            Sok od pšenične trave čuva se u zamrzivaču i vadi neposredno pre
+            upotrebe. Pošto se zamrzava odmah nakon ceđenja, na taj način se
+            čuvaju njegova svežina, prirodna boja i kvalitet, bez potrebe za{" "}
+            <span className="font-medium text-[#1E3A1E]">
+              konzervansima, veštačkim bojama ili dodatim aditivima
+            </span>
+            .
           </p>
+        </div>
 
-          <div className="border-t border-[#E4E2D8] pt-10">
-            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D] mb-6">
+        <div className="mb-24">
+          <div className="border-t border-[#E4E2D8] pt-10 mb-10">
+            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D]">
               Kako koristiti
             </p>
-            <p className="font-[family-name:var(--font-serif)] text-[21px] leading-[1.9] text-[#2C2C22] font-light">
-              Flašice soka od pšenične trave čuvaju se u zamrzivaču. Iz
-              zamrzivača se vade neposredno pre upotrebe. Sok se otapa na
-              sobnoj temperaturi ili u posudi sa mlakom vodom{" "}
-              <span className="font-medium text-[#1E3A1E]">(ne toplijom od 39°C)</span>.
-              Važno je da se sok popije{" "}
-              <span className="font-medium text-[#1E3A1E]">odmah po otapanju</span>,
-              kako bi se izbegao proces oksidacije kojim sok gubi deo vitamina
-              i enzima, menjajući pritom ukus i boju.
-            </p>
           </div>
-
-          <div className="border-t border-[#E4E2D8] pt-10">
-            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D] mb-6">
-              Doziranje
+          <div className="space-y-8">
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Flašicu možete otopiti na sobnoj temperaturi ili u posudi sa
+              mlakom vodom. Voda ne bi trebalo da bude toplija od{" "}
+              <span className="font-medium text-[#1E3A1E]">39°C</span>, kako se
+              sok ne bi izlagao visokim temperaturama.
             </p>
-            <p className="font-[family-name:var(--font-serif)] text-[21px] leading-[1.9] text-[#2C2C22] font-light">
-              Preporučena dnevna doza soka je{" "}
-              <span className="font-medium text-[#1E3A1E]">30ml dnevno (jedna flašica)</span>,
-              osim kod korisnika koji su izloženi jakim efektima antikancerogenih
-              terapija, gde je preporučena doza{" "}
-              <span className="font-medium text-[#1E3A1E]">60ml dnevno (2 flašice)</span>,
-              a najbolje je piti jednu ujutro i jednu uveče. Rok upotrebe soka
-              označen je na svakoj kutiji. Flašica zaleđenog soka neće promeniti
-              svojstva ako se{" "}
-              <span className="font-medium text-[#1E3A1E]">godinu dana čuva u zamrzivaču</span>.
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Nakon otapanja, sok je najbolje popiti odmah. Ne preporučuje se
+              ponovno zamrzavanje već odmrznutog soka.
             </p>
-          </div>
-
-          <div className="border-t border-[#E4E2D8] pt-10">
-            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D] mb-6">
-              Ko može piti sok?
-            </p>
-            <p className="font-[family-name:var(--font-serif)] text-[21px] leading-[1.9] text-[#2C2C22] font-light">
-              Pošto je sok od pšenične trave u celosti prirodan proizvod, mogu
-              ga koristiti{" "}
-              <span className="font-medium text-[#1E3A1E]">odrasli i deca starija od 2 godine</span>.
-              Sok se može uzimati kao suplement ishrani, kao lekovito sredstvo
-              alternativne medicine u ublažavanju tegoba izazvanih bolestima,
-              ali ga mogu piti i zdravi, kao preventivno sredstvo. Neželjeni
-              efekti soka nisu poznati, mada se kod pojedinih osoba javlja
-              mučnina i promena konzistencije stolice u prvih nekoliko dana
-              korišćenja. U tim slučajevima, preporučuje se razblaživanje soka
-              sa malom količinom flaširane vode ili soka od jabuke. Čim se
-              organizam privikne na sok, treba ga unositi nerazblaženog. Postoji
-              mogućnost alergijske reakcije kod osoba koje su alergične na
-              pšenicu.{" "}
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Preporučuje se da se sok pije ujutru, na prazan stomak, oko{" "}
               <span className="font-medium text-[#1E3A1E]">
-                Sok od pšenične trave ne sadrži gluten
+                15–30 minuta pre obroka
               </span>
-              , pa ga smeju uzimati osobe koje su osetljive na gluten.
+              . Ukoliko vam više odgovara, možete ga konzumirati i kasnije
+              tokom dana, prema sopstvenoj rutini.
+            </p>
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Zbog intenzivnog ukusa, u početku se može razblažiti sa malo vode
+              ili soka od jabuke. Kada se organizam navikne, može se piti
+              nerazblažen.
             </p>
           </div>
-
         </div>
+
+        <div className="mb-24">
+          <div className="border-t border-[#E4E2D8] pt-10 mb-10">
+            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D]">
+              Preporučena dnevna količina
+            </p>
+          </div>
+          <div className="space-y-8">
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Preporučena dnevna količina je{" "}
+              <span className="font-medium text-[#1E3A1E]">
+                30 ml, odnosno jedna flašica dnevno
+              </span>
+              .
+            </p>
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Osobe koje imaju zdravstvene tegobe, koriste terapiju, trudnice,
+              dojilje i roditelji koji žele da sok daju deci trebalo bi da se
+              prethodno posavetuju sa lekarom ili nutricionistom.
+            </p>
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Rok upotrebe označen je na pakovanju. Proizvod čuvati u
+              zamrzivaču do upotrebe.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div className="border-t border-[#E4E2D8] pt-10 mb-10">
+            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D]">
+              Ko može koristiti sok?
+            </p>
+          </div>
+          <div className="space-y-8">
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Sok od pšenične trave mogu koristiti odrasli kao dodatak
+              raznovrsnoj i uravnoteženoj ishrani.
+            </p>
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Kod pojedinih osoba, naročito na početku korišćenja, mogu se
+              javiti blage digestivne reakcije poput mučnine ili promene
+              stolice. U tom slučaju preporučuje se manja količina ili
+              razblaživanje soka sa malo vode ili soka od jabuke.
+            </p>
+            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+              Osobe alergične na pšenicu treba da budu oprezne. Iako se mlada
+              pšenična trava uglavnom smatra bezglutenskom kada se bere pre
+              formiranja zrna, kod osoba sa celijakijom ili izraženom
+              osetljivošću na gluten preporučuje se dodatni oprez i
+              konsultacija sa stručnim licem.
+            </p>
+          </div>
+        </div>
+
       </div>
     </section>
   );
