@@ -1,9 +1,9 @@
 import AboutSection from "@/components/AboutSection";
 import HeroSection from "@/components/HeroSection";
+import JuiceSection from "@/components/JuiceSection";
 import UsageSection from "@/components/UsageSection";
 
 const placeholders = [
-  { id: "juice", label: "O soku / About the juice" },
   { id: "where", label: "Gde pronaći / Where to find" },
   { id: "contact", label: "Kontakt / Contact" },
 ];
@@ -14,6 +14,8 @@ export default function Home() {
       <HeroSection />
 
       <AboutSection />
+
+      <JuiceSection />
 
       <UsageSection />
 
