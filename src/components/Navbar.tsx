@@ -68,14 +68,16 @@ export default function Navbar() {
               }`}
             />
           </button>
-          <Image
-            src="/panacea_logo.png"
-            alt="Panacea"
-            width={535}
-            height={466}
-            className="h-20 w-auto object-contain"
-            priority
-          />
+          <button onClick={() => scrollTo("home")} aria-label="Početna">
+            <Image
+              src="/panacea_logo.png"
+              alt="Panacea"
+              width={535}
+              height={466}
+              className="h-20 w-auto object-contain"
+              priority
+            />
+          </button>
         </div>
 
         <ul className="hidden md:flex items-center gap-6">
