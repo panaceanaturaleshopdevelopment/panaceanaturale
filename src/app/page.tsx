@@ -1,4 +1,5 @@
 import AboutSection from "@/components/AboutSection";
+import HeroSection from "@/components/HeroSection";
 
 const placeholders = [
   { id: "juice", label: "O soku / About the juice" },
@@ -10,12 +11,7 @@ const placeholders = [
 export default function Home() {
   return (
     <>
-      <section
-        id="home"
-        className="min-h-screen flex items-center justify-center border-b border-[#E4E2D8]"
-      >
-        <span className="text-2xl font-light text-[#6B6B5E]">Hero</span>
-      </section>
+      <HeroSection />
 
       <AboutSection />
 
