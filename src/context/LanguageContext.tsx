@@ -15,7 +15,7 @@ const nav: Record<Language, NavItem[]> = {
     { id: "about", label: "O nama" },
     { id: "juice", label: "O soku" },
     { id: "usage", label: "Upotreba" },
-    { id: "where", label: "Gde pronaći" },
+    { id: "where", label: "Dostupnost" },
     { id: "contact", label: "Kontakt" },
   ],
   en: [
@@ -23,7 +23,7 @@ const nav: Record<Language, NavItem[]> = {
     { id: "about", label: "About us" },
     { id: "juice", label: "About the juice" },
     { id: "usage", label: "How to use" },
-    { id: "where", label: "Where to find" },
+    { id: "where", label: "Stockists" },
     { id: "contact", label: "Contact" },
   ],
 };
