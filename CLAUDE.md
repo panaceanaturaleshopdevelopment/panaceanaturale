@@ -124,7 +124,17 @@ Avoid:
 # Current Status
 
 - Stack selected
-- Navbar in progress
+- Navbar complete
+- Hero section: placeholder, needs design and content
+- About (O nama): complete
+- O soku: complete
+- Upotreba: complete
+- Dostupnost: structure complete, pending:
+  - [ ] Map of stockist locations (placeholder in place)
+  - [ ] Email form functionality (form UI in place, disabled)
+  - [ ] Real phone number and email address
+- Kontakt: placeholder
+- Photos/visuals: not yet added
 
 
 
