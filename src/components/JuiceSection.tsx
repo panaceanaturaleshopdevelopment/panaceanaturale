@@ -1,6 +1,6 @@
 export default function JuiceSection() {
   return (
-    <section id="juice" className="min-h-screen bg-[#F2F0E8] flex items-center">
+    <section id="juice" className="min-h-screen bg-[#FAFAF7] flex items-center">
       <div className="max-w-2xl mx-auto px-8 py-28 w-full">
 
         <p className="font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.25em] text-[#3D7A3D] mb-6">
