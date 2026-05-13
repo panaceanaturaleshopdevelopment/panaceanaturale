@@ -21,13 +21,6 @@ const nutrients = [
   { name: "Cink", value: "2,65", unit: "mg" },
 ];
 
-const benefits = [
-  "raznovrsnoj i uravnoteženoj ishrani,",
-  "aktivnom načinu života,",
-  "svakodnevnoj energiji i vitalnosti,",
-  "osećaju svežine i blagostanja,",
-  "unosu prirodnih biljnih sastojaka.",
-];
 
 export default function JuiceSection() {
   return (
@@ -174,29 +167,15 @@ export default function JuiceSection() {
           </div>
           <div className="space-y-8">
             <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
-              Mnogi ga koriste kao jednostavan način da u svakodnevnu rutinu
-              unesu više svežih biljnih nutrijenata.
+              Sok od pšenične trave je jednostavan način da se u svakodnevnu
+              ishranu uključi svež, biljni napitak bogat prirodnim zelenim
+              sastojcima. Zbog praktične upotrebe i čistog sastava, često ga
+              biraju ljudi koji žele da podrže zdravije navike, bez komplikovane
+              pripreme i dodataka.
             </p>
             <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
-              Najčešće se bira kao podrška:
-            </p>
-            <ul className="space-y-3 pl-1">
-              {benefits.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light"
-                >
-                  <span className="mt-[0.65em] w-1 h-1 rounded-full bg-[#3D7A3D] shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
-              Sok od pšenične trave{" "}
-              <span className="font-medium text-[#1E3A1E]">
-                nije lek i ne zamenjuje medicinsku terapiju
-              </span>
-              , ali može biti deo pažljivo odabranih zdravih životnih navika.
+              Može se piti samostalno, kao jutarnja rutina, ili dodati u
+              smoothie i druge hladne napitke.
             </p>
           </div>
         </div>
