@@ -11,24 +11,25 @@ export default function AboutSection() {
 
         <div className="space-y-8">
           <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
-            Preduzetnička radnja Panacea naturale je malo porodično preduzeće iz
-            Čačka, koje se bavi proizvodnjom i prodajom hladno ceđenog soka od
-            pšenične trave. Proizvodnjom soka se bavimo od 2013. godine. U
-            početku, sok smo spravljali isključivo za lične potrebe, ali je
-            vremenom to postalo naš porodični posao. Smatrali smo da sa svakim
-            treba da podelimo ono što je značajno unapredilo naše zdravlje, da
-            svako treba da ima koristi od našeg rada i iskustava.
+            Panacea Naturale je porodična priča iz Čačka, nastala iz ličnog
+            iskustva i želje da se prirodna podrška zdravlju približi što
+            većem broju ljudi.
           </p>
 
           <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
-            Naš cilj je da budemo što prisutniji i što zastupljeniji na domaćem
-            tržištu, kako bi naš proizvod bio dostupan svakom potencijalnom
-            kupcu, odnosno kako bi što veći broj ljudi mogao osetiti sve one
-            pozitivne efekte soka, koji je sa razlogom nazvan{" "}
+            Od 2013. godine proizvodimo hladno ceđeni sok od pšenične trave —
+            najpre za sebe i svoju porodicu, a zatim i za sve one koji žele da
+            u svoju svakodnevicu unesu svež, prirodan i pažljivo pripremljen
+            proizvod.
+          </p>
+
+          <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
+            Vodimo se jednostavnom idejom: da kvalitetan sok od pšenične trave,
+            poznat i kao{" "}
             <em className="not-italic font-medium text-[#1E3A1E]">
               zeleno zdravlje
             </em>
-            .
+            , bude dostupan što većem broju ljudi širom Srbije.
           </p>
         </div>
 
