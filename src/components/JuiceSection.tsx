@@ -1,7 +1,7 @@
-const highlights = [
-  { label: "Gvožđe", value: "126", unit: "mg" },
-  { label: "Kalijum", value: "363", unit: "mg" },
-  { label: "Fosfor", value: "288", unit: "mg" },
+const facts = [
+  { value: "100%", label: "čist sok od pšenične trave" },
+  { value: "30 ml", label: "preporučena dnevna količina" },
+  { value: "10–12", label: "dana starosti biljke pri berbi" },
 ];
 
 const nutrients = [
@@ -42,6 +42,19 @@ export default function JuiceSection() {
         <h2 className="font-[family-name:var(--font-serif)] text-[38px] md:text-[44px] font-light text-[#1E3A1E] leading-tight mb-12">
           O soku od pšenične trave
         </h2>
+
+        <div className="grid grid-cols-3 gap-6 mb-16">
+          {facts.map(({ value, label }) => (
+            <div key={label} className="text-center">
+              <p className="font-[family-name:var(--font-serif)] text-[40px] md:text-[48px] leading-none font-light text-[#1E3A1E]">
+                {value}
+              </p>
+              <p className="font-[family-name:var(--font-nav)] text-[9px] uppercase tracking-[0.16em] text-[#6B6B5E] mt-2 leading-[1.6]">
+                {label}
+              </p>
+            </div>
+          ))}
+        </div>
 
         <div className="space-y-8 mb-24">
           <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
@@ -92,48 +105,32 @@ export default function JuiceSection() {
             </p>
           </div>
 
-          <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light mb-12">
+          <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light mb-10">
             Prema podacima iz naučne literature, sok od pšenične trave može
             sadržati značajne količine prirodnih nutrijenata. U prikazu
             nutritivnog profila na 100 ml navode se, između ostalog:
           </p>
 
-          <div className="grid grid-cols-3 gap-6 mb-12">
-            {highlights.map(({ label, value, unit }) => (
-              <div key={label} className="text-center">
-                <p className="font-[family-name:var(--font-serif)] text-[48px] md:text-[56px] leading-none font-light text-[#1E3A1E]">
-                  {value}
-                </p>
-                <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#3D7A3D] mt-1">
-                  {unit}
-                </p>
-                <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.16em] text-[#6B6B5E] mt-1">
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
-
           <div className="border border-[#E4E2D8] rounded-sm overflow-hidden mb-6">
-            <div className="grid grid-cols-2 bg-[#F2F0E8] px-5 py-3 border-b border-[#E4E2D8]">
-              <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E]">
+            <div className="grid grid-cols-2 bg-[#F2F0E8] px-4 py-2 border-b border-[#E4E2D8]">
+              <p className="font-[family-name:var(--font-nav)] text-[9px] uppercase tracking-[0.18em] text-[#6B6B5E]">
                 Nutrijent
               </p>
-              <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E] text-right">
+              <p className="font-[family-name:var(--font-nav)] text-[9px] uppercase tracking-[0.18em] text-[#6B6B5E] text-right">
                 na 100 ml
               </p>
             </div>
             {nutrients.map(({ name, value, unit }, i) => (
               <div
                 key={name}
-                className={`grid grid-cols-2 px-5 py-3 border-b border-[#E4E2D8] last:border-0 ${
+                className={`grid grid-cols-2 px-4 py-2 border-b border-[#E4E2D8] last:border-0 ${
                   i % 2 === 0 ? "bg-[#FAFAF7]" : "bg-[#F7F5EE]"
                 }`}
               >
-                <p className="font-[family-name:var(--font-serif)] text-[16px] text-[#2C2C22] font-light">
+                <p className="font-[family-name:var(--font-serif)] text-[14px] text-[#2C2C22] font-light">
                   {name}
                 </p>
-                <p className="font-[family-name:var(--font-serif)] text-[16px] text-[#1E3A1E] font-medium text-right">
+                <p className="font-[family-name:var(--font-serif)] text-[14px] text-[#1E3A1E] font-medium text-right">
                   {value}{" "}
                   <span className="font-light text-[#6B6B5E]">{unit}</span>
                 </p>
