@@ -1,10 +1,10 @@
 import AboutSection from "@/components/AboutSection";
 import HeroSection from "@/components/HeroSection";
 import JuiceSection from "@/components/JuiceSection";
+import StockistsSection from "@/components/StockistsSection";
 import UsageSection from "@/components/UsageSection";
 
 const placeholders = [
-  { id: "where", label: "Dostupnost / Stockists", bg: "#FAFAF7" },
   { id: "contact", label: "Kontakt / Contact", bg: "#F2F0E8" },
 ];
 
@@ -18,6 +18,8 @@ export default function Home() {
       <JuiceSection />
 
       <UsageSection />
+
+      <StockistsSection />
 
       {placeholders.map((s) => (
         <section
