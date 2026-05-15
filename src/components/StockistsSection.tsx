@@ -1,4 +1,7 @@
+import dynamic from "next/dynamic";
 import ContactForm from "./ContactForm";
+
+const StockistsMap = dynamic(() => import("./StockistsMap"), { ssr: false });
 
 export default function StockistsSection() {
   return (
@@ -17,10 +20,8 @@ export default function StockistsSection() {
             <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D] mb-6">
               Mapa prodajnih mesta
             </p>
-            <div className="w-full h-72 bg-[#F2F0E8] border border-[#E4E2D8] rounded-sm flex items-center justify-center">
-              <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.2em] text-[#B8B8A8]">
-                Mapa dolazi uskoro
-              </p>
+            <div className="w-full h-96 border border-[#E4E2D8] overflow-hidden">
+              <StockistsMap />
             </div>
           </div>
 
