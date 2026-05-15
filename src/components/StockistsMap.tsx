@@ -40,10 +40,10 @@ const stockists: Stockist[] = [
 
 const pinIcon = new L.DivIcon({
   className: "",
-  html: `<div style="width:12px;height:12px;background:#1E3A1E;border-radius:50%;border:2px solid #3D7A3D;box-shadow:0 1px 4px rgba(0,0,0,0.25);"></div>`,
-  iconSize: [12, 12],
-  iconAnchor: [6, 6],
-  popupAnchor: [0, -10],
+  html: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32"><path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 20 12 20S24 21 24 12C24 5.373 18.627 0 12 0z" fill="#C0392B"/><circle cx="12" cy="12" r="5" fill="#fff" opacity="0.9"/></svg>`,
+  iconSize: [24, 32],
+  iconAnchor: [12, 32],
+  popupAnchor: [0, -34],
 });
 
 export default function StockistsMap() {
