@@ -1,3 +1,5 @@
+import ContactForm from "./ContactForm";
+
 export default function StockistsSection() {
   return (
     <section id="where" className="bg-[#FAFAF7]">
@@ -50,56 +52,7 @@ export default function StockistsSection() {
               Pošaljite nam poruku i odgovorićemo u najkraćem mogućem roku.
             </p>
 
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E] mb-2">
-                    Ime i prezime
-                  </label>
-                  <input
-                    type="text"
-                    disabled
-                    placeholder="Vaše ime"
-                    className="w-full bg-[#F2F0E8] border border-[#E4E2D8] px-4 py-3 text-sm text-[#2C2C22] placeholder:text-[#B8B8A8] outline-none rounded-none"
-                  />
-                </div>
-                <div>
-                  <label className="block font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E] mb-2">
-                    Email adresa
-                  </label>
-                  <input
-                    type="email"
-                    disabled
-                    placeholder="vasa@email.com"
-                    className="w-full bg-[#F2F0E8] border border-[#E4E2D8] px-4 py-3 text-sm text-[#2C2C22] placeholder:text-[#B8B8A8] outline-none rounded-none"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E] mb-2">
-                  Poruka
-                </label>
-                <textarea
-                  disabled
-                  placeholder="Vaša poruka ili porudžbina..."
-                  rows={5}
-                  className="w-full bg-[#F2F0E8] border border-[#E4E2D8] px-4 py-3 text-sm text-[#2C2C22] placeholder:text-[#B8B8A8] outline-none rounded-none resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled
-                className="font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.18em] text-[#FAFAF7] bg-[#1E3A1E] px-8 py-3.5 opacity-50 cursor-not-allowed"
-              >
-                Pošalji poruku
-              </button>
-
-              <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.15em] text-[#B8B8A8]">
-                Forma uskoro dostupna
-              </p>
-            </form>
+            <ContactForm />
           </div>
 
         </div>
