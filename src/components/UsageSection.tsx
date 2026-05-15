@@ -91,12 +91,6 @@ export default function UsageSection() {
               raznovrsnoj i uravnoteženoj ishrani.
             </p>
             <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
-              Kod pojedinih osoba, naročito na početku korišćenja, mogu se
-              javiti blage digestivne reakcije poput mučnine ili promene
-              stolice. U tom slučaju preporučuje se manja količina ili
-              razblaživanje soka sa malo vode ili soka od jabuke.
-            </p>
-            <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
               Osobe alergične na pšenicu treba da budu oprezne. Iako se mlada
               pšenična trava uglavnom smatra bezglutenskom kada se bere pre
               formiranja zrna, kod osoba sa celijakijom ili izraženom
