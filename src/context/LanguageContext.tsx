@@ -43,6 +43,10 @@ type Translations = {
     phone: { heading: string; text: string };
     email: { heading: string; text: string; button: string; subject: string };
   };
+  faq: {
+    label: string;
+    items: { question: string; answer: string; link?: { text: string; url: string } }[];
+  };
   footer: {
     tagline: string;
     address: string;
@@ -77,6 +81,7 @@ const nav: Record<Language, NavItem[]> = {
         { id: "where-email", label: "Poruči emailom" },
       ],
     },
+    { id: "faq", label: "Česta pitanja" },
   ],
   en: [
     { id: "home", label: "Home" },
@@ -102,6 +107,7 @@ const nav: Record<Language, NavItem[]> = {
         { id: "where-email", label: "Order by email" },
       ],
     },
+    { id: "faq", label: "FAQ" },
   ],
 };
 
@@ -190,6 +196,36 @@ const translations: Record<Language, Translations> = {
         button: "Pošalji email",
         subject: "Poruka sa sajta Panacea Naturale",
       },
+    },
+    faq: {
+      label: "Česta pitanja",
+      items: [
+        {
+          question: "Da li mogu da poručim putem Vibera ili WhatsApp-a?",
+          answer: "Da, pored telefonskog poziva, dostupni smo i putem Vibera, WhatsApp-a i SMS poruka.",
+        },
+        {
+          question: "Da li je moguće lično preuzimanje?",
+          answer: "Da, moguće je i lično preuzimanje. Za više informacija i dogovor oko preuzimanja, kontaktirajte nas direktno.",
+        },
+        {
+          question: "Kako se proizvod šalje i da li stiže zaleđen?",
+          answer: "Proizvod se šalje pažljivo upakovan u zaštitnu i izolovanu ambalažu, kako bi se očuvao kvalitet tokom transporta. Sok stiže zaleđen, a način pakovanja i slanja obezbeđuje proizvođač.",
+        },
+        {
+          question: "Da li je sok zdravstveno ispitan i bezbedan za upotrebu?",
+          answer: "Da. Sok od pšenične trave Panacea Naturale ispitan je i ocenjen kao zdravstveno bezbedan za upotrebu, na osnovu izvršenih analiza i stručnog mišljenja.",
+        },
+        {
+          question: "Ko potvrđuje zdravstvenu bezbednost proizvoda?",
+          answer: "Sok od pšenične trave Panacea Naturale ispitan je od strane Instituta za javno zdravlje Kragujevac.",
+        },
+        {
+          question: "Da li proizvod poseduje sertifikat o zdravstvenoj bezbednosti?",
+          answer: "Da. Sertifikat možete pogledati ",
+          link: { text: "ovde", url: "/documents/cert_panacea.pdf" },
+        },
+      ],
     },
     footer: {
       tagline: "Hladno ceđeni sok od pšenične trave",
@@ -283,6 +319,36 @@ const translations: Record<Language, Translations> = {
         button: "Send email",
         subject: "Message from Panacea Naturale website",
       },
+    },
+    faq: {
+      label: "FAQ",
+      items: [
+        {
+          question: "Can I order via Viber or WhatsApp?",
+          answer: "Yes, in addition to a phone call, we are also available via Viber, WhatsApp and SMS messages.",
+        },
+        {
+          question: "Is it possible to pick up the order in person?",
+          answer: "Yes, personal pickup is also possible. For more information and to arrange a pickup, contact us directly.",
+        },
+        {
+          question: "How is the product shipped and does it arrive frozen?",
+          answer: "The product is carefully packaged in protective and insulated packaging to preserve quality during transport. The juice arrives frozen, and the packaging and shipping method is ensured by the manufacturer.",
+        },
+        {
+          question: "Is the juice health-tested and safe for consumption?",
+          answer: "Yes. Panacea Naturale wheatgrass juice has been tested and assessed as safe for consumption, based on analyses performed and expert opinion.",
+        },
+        {
+          question: "Who confirms the health safety of the product?",
+          answer: "Panacea Naturale wheatgrass juice has been tested by the Institute of Public Health Kragujevac.",
+        },
+        {
+          question: "Does the product have a health safety certificate?",
+          answer: "Yes. You can view the certificate ",
+          link: { text: "here", url: "/documents/cert_panacea.pdf" },
+        },
+      ],
     },
     footer: {
       tagline: "Cold-pressed wheatgrass juice",
