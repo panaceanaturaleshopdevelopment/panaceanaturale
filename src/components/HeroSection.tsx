@@ -27,6 +27,7 @@ export default function HeroSection() {
           src="/images/0. pocetna.png"
           alt="Panacea Naturale"
           fill
+          sizes="100vw"
           className="object-cover object-center opacity-70"
           priority
         />
