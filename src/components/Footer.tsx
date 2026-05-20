@@ -41,36 +41,46 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="space-y-1.5">
-            <a href="tel:+381677208129" className="block font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200">
-              +381 67 7208 129
-            </a>
-            <a href="mailto:panacea.naturale@gmail.com" className="block font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200">
-              panacea.naturale@gmail.com
-            </a>
-            <p className="font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4]">
-              {f.address}
+          <div>
+            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#5A8A5A] mb-3">
+              {f.contactHeading}
             </p>
+            <div className="space-y-1.5">
+              <a href="tel:+381677208129" className="block font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200">
+                +381 67 7208 129
+              </a>
+              <a href="mailto:panacea.naturale@gmail.com" className="block font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200">
+                panacea.naturale@gmail.com
+              </a>
+              <p className="font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4]">
+                {f.address}
+              </p>
+            </div>
           </div>
 
           {/* Social */}
-          <div className="space-y-1.5">
-            <a
-              href="https://www.instagram.com/sok_od_psenicne_trave_pn/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200"
-            >
-              <InstagramIcon />
-              Instagram
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200"
-            >
-              <FacebookIcon />
-              Facebook
-            </a>
+          <div>
+            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#5A8A5A] mb-3">
+              {f.followHeading}
+            </p>
+            <div className="space-y-1.5">
+              <a
+                href="https://www.instagram.com/sok_od_psenicne_trave_pn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200"
+              >
+                <InstagramIcon />
+                Instagram
+              </a>
+              <a
+                href="#"
+                className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200"
+              >
+                <FacebookIcon />
+                Facebook
+              </a>
+            </div>
           </div>
 
         </div>

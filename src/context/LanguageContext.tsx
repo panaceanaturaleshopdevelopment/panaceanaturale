@@ -194,8 +194,8 @@ const translations: Record<Language, Translations> = {
     footer: {
       tagline: "Hladno ceđeni sok od pšenične trave",
       address: "Milana Radosavljevića Abaza 28/1, Čačak",
-      contactHeading: "Kontakt",
-      followHeading: "Pratite nas",
+      contactHeading: "Kontakt info",
+      followHeading: "Pronađite nas",
       copyright: "© 2025 Panacea Naturale. Sva prava zadržana.",
     },
   },
@@ -287,8 +287,8 @@ const translations: Record<Language, Translations> = {
     footer: {
       tagline: "Cold-pressed wheatgrass juice",
       address: "Milana Radosavljevića Abaza 28/1, Čačak",
-      contactHeading: "Contact",
-      followHeading: "Follow us",
+      contactHeading: "Contact info",
+      followHeading: "Find us",
       copyright: "© 2025 Panacea Naturale. All rights reserved.",
     },
   },

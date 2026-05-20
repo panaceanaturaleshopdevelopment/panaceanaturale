@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   id?: string;
@@ -11,6 +11,15 @@ type Props = {
 
 export default function Accordion({ id, heading, children, defaultOpen = false }: Props) {
   const [open, setOpen] = useState(defaultOpen);
+
+  useEffect(() => {
+    if (!id) return;
+    const handler = (e: Event) => {
+      if ((e as CustomEvent).detail?.id === id) setOpen(true);
+    };
+    window.addEventListener("open-accordion", handler);
+    return () => window.removeEventListener("open-accordion", handler);
+  }, [id]);
 
   return (
     <div id={id}>

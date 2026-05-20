@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist, Geist_Mono, Raleway } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import FloatingOrderButton from "@/components/FloatingOrderButton";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
@@ -47,6 +48,7 @@ export default function RootLayout({
           <Navbar />
           <main className="pt-32">{children}</main>
           <Footer />
+          <FloatingOrderButton />
         </Providers>
       </body>
     </html>
