@@ -2,7 +2,7 @@
 # Project Overview
 
 ## Goal
-Short explanation of the website/project.
+Website for Panacea Naturale — a family business from Čačak producing cold-pressed wheatgrass (spelt) juice since 2013. The site presents the product, educates users, shows stockists on a map, and enables ordering via phone/email.
 
 ---
 
@@ -11,27 +11,30 @@ Short explanation of the website/project.
 - Next.js (App Router)
 - Tailwind CSS
 - TypeScript
-- Nodemailer (contact form email via Gmail SMTP)
 - React Leaflet + OpenStreetMap (interactive stockists map)
-
----
-
-# Design Direction
-
-
+- CSS scroll snap (horizontal gallery)
+- Custom i18n (LanguageContext — SR/EN)
 
 ---
 
 # Project Structure
 
-Sections (in page order):
+## Page sections (in order):
 1. Navbar
 2. Hero (`#home`)
 3. O nama (`#about`)
 4. O soku (`#juice`) — subsections: `#juice-zeleno-zdravlje`, `#juice-nutritivni-sastav`, `#juice-hladno-cedjenje`, `#juice-zasto-biraju`
-5. Upotreba (`#usage`)
-6. Dostupnost (`#where`)
-7. Kontakt (placeholder)
+5. Galerija (`#gallery`)
+6. Upotreba (`#usage`)
+7. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
+8. Česta pitanja (`#faq`)
+9. Footer
+
+## Key files:
+- `src/context/LanguageContext.tsx` — all translations (SR/EN) + nav structure
+- `src/lib/tx.tsx` — rich text helper: renders `**bold**` markers as styled spans
+- `src/components/ui/Accordion.tsx` — reusable collapsible subsection; listens for `open-accordion` custom event
+- `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right, dispatches open-accordion + scrolls to `#where-phone`
 
 ---
 
@@ -53,7 +56,7 @@ The website should feel:
 ## Style Inspiration
 
 Visual references:
-- premium wellness brands
+- premium wellness brands (Looops Moments referenced for scroll/gallery style)
 - Scandinavian minimalism
 - Japanese-inspired clean layouts
 - modern organic product websites
@@ -72,19 +75,18 @@ Visual references:
 
 ---
 
-## Color Direction
+## Color Palette
 
-Preferred:
-- warm neutrals
-- muted greens
-- earthy tones
-- soft off-whites
-
-Avoid:
-- aggressive gradients
-- neon colors
-- excessive glow
-- harsh contrast
+| Token | Hex | Usage |
+|---|---|---|
+| Dark green | `#1E3A1E` | Navbar, footer background |
+| Medium green | `#3D7A3D` | Section labels, accents |
+| Muted green | `#5A8A5A` | Footer headings, logo color |
+| Light green | `#7FA87F` | Hover underlines, footer tagline |
+| Warm white | `#FAFAF7` | Section backgrounds (alt) |
+| Warm neutral | `#F2F0E8` | Section backgrounds |
+| Body text | `#2C2C22` | Main paragraph text |
+| Muted text | `#5C5C50` | Secondary text |
 
 ---
 
@@ -105,41 +107,94 @@ Avoid:
 
 ---
 
-# Coding Rules
+# Navbar
 
-- Prefer reusable components
-- Keep code production-ready
-- Avoid unnecessary dependencies
-- Ask before major architectural changes
-
----
-
-# Workflow Rules
-
-- Do not rewrite unrelated files
-- Work section-by-section
-- Explain major decisions before implementation
-- Ask before introducing major changes
+- Dark green background (`#1E3A1E`) matching footer
+- **Theme toggle**: change `THEME` constant at top of `Navbar.tsx` between `"dark"` and `"light"` to switch full color scheme
+- Logo uses CSS mask (`backgroundColor: #5A8A5A`) for exact brand color
+- Logo replaces hamburger on mobile — clicking toggles mobile menu
+- Desktop hover dropdowns for O soku and Dostupnost subsections
+- Mobile accordion submenus
+- Language switcher: srb / eng
+- Scroll offset: 128px (navbar height `h-32`) applied to all anchor scrolls
 
 ---
 
 # Current Status
 
-- Navbar: complete
-- Hero: background image (`1. psenica.png`) with quote overlay, CSS fade-in animation
-- O nama: complete, final text in place
-- O soku: complete — product fact stats (100%, 30ml, 10-12 days), nutritive table, 4 subsections with IDs ready for nav
-- Upotreba: complete — intro, Kako koristiti, Preporučena dnevna količina, Ko može koristiti
-- Dostupnost: complete
-  - [x] Interactive OpenStreetMap with 23 stockist pins (red SVG markers with popups)
-  - [x] Phone number clickable (`tel:`) — opens dialer on mobile
-  - [x] Email contact form functional (Nodemailer + Gmail SMTP)
-  - [ ] Gmail App Password still needs to be configured in `.env.local` before form sends emails
-- Kontakt: placeholder, not started
-- Photos/visuals: images added to `public/images/`, not yet integrated beyond hero
-- All text content managed on `feature/text-content` branch
+## Completed sections:
 
+### Navbar
+- Dark green theme with light theme toggle available
+- Dropdown submenus for O soku and Dostupnost
+- Logo as CSS mask in brand green
+- Mobile: logo replaces hamburger
 
+### Hero (`#home`)
+- Background: `0. pocetna.png` (fixed, parallax scroll effect)
+- Text scrolls at 0.35× speed, fades on scroll (ref-based, no React re-renders)
+- Three layers: `bg-[#D6E4D6]` container + `opacity-70` image + `bg-gradient-to-b from-stone-900/40 to-stone-900/10`
+- Green text-shadow on quote for legibility
+- Bold Cormorant Garamond, italic
+
+### O nama (`#about`)
+- Complete, final text in place (SR + EN)
+
+### O soku (`#juice`)
+- Intro with 3 fact stats (100%, 30ml, 10–12 days)
+- 4 collapsible subsections (Accordion component)
+- Nutrient table with bilingual nutrient names
+- All text translated SR/EN
+
+### Galerija (`#gallery`)
+- Horizontal scroll strip, portrait cards (`3:4`), CSS snap
+- Arrows shown at scroll boundaries
+- Click any card → full-screen lightbox with prev/next, keyboard nav, backdrop close
+
+### Upotreba (`#usage`)
+- Intro paragraph + 3 collapsible subsections (Accordion)
+- All text translated SR/EN
+
+### Dostupnost (`#where`)
+- Interactive OpenStreetMap with 23 stockist pins (red SVG markers + popups)
+- 3 collapsible subsections: map, phone, email
+- Phone: `tel:` link
+- Email: `mailto:` link (replaces previous Nodemailer form)
+- Map z-index fix: `isolation: isolate` prevents Leaflet controls from overlapping navbar
+
+### Česta pitanja (`#faq`)
+- 6 Q&As (SR + EN)
+- Custom FAQ accordion with 18px question text (not uppercase)
+- Certificate link opens `cert_panacea.pdf` in new tab
+- Renders nothing if `items` array is empty
+
+### Footer
+- Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
+- Contact: phone, email, full address
+- Social: Instagram (linked), Facebook (placeholder `#`)
+- Copyright line
+
+### Floating order button
+- Fixed bottom-right, always visible
+- Opens `#where-phone` accordion + scrolls to it
+- "Poruči" (SR) / "Order" (EN)
+
+## Assets:
+- Images: `public/images/` (0–7, hero + 6 gallery photos)
+- Certificate: `public/documents/cert_panacea.pdf`
+
+## Internationalisation:
+- All text in `LanguageContext.tsx` under `translations.sr` and `translations.en`
+- `tx()` helper in `src/lib/tx.tsx` renders `**bold**` inline
+- FAQ items have optional `link: { text, url }` for inline links in answers
+- To add nav entries: update `nav.sr` and `nav.en` arrays in LanguageContext
+
+## Pending:
+- [ ] Facebook link URL (currently `#` placeholder in Footer)
+- [ ] Page metadata (`title`, `description`) in `layout.tsx` still default Next.js values
+- [ ] `lang` attribute in `<html>` is hardcoded `"en"` — not reactive to language switch
+
+---
 
 see:
 @AGENTS.md
