@@ -116,7 +116,11 @@ Avoid:
 - Desktop hover dropdowns for O soku and Dostupnost subsections
 - Mobile accordion submenus
 - Language switcher: srb / eng
-- Scroll offset: 128px (navbar height `h-32`) applied to all anchor scrolls
+- Height: `h-20` (80px) — logo is `h-28` (112px) and bleeds 32px below the green bar
+- `overflow: visible` on `<header>` allows logo to overflow without clipping
+- Logo wrapper: `self-start items-start` — anchors to top, branch extends downward
+- Scroll offset: **80px** applied to all anchor scrolls (`Navbar.tsx`, `FloatingOrderButton.tsx`)
+- `main` padding: `pt-20` in `layout.tsx`
 
 ---
 
@@ -125,10 +129,13 @@ Avoid:
 ## Completed sections:
 
 ### Navbar
-- Dark green theme with light theme toggle available
-- Dropdown submenus for O soku and Dostupnost
-- Logo as CSS mask in brand green
-- Mobile: logo replaces hamburger
+- Dark green theme (`#1E3A1E`) with light theme toggle — change `THEME` constant at top of `Navbar.tsx`
+- Height `h-20` (80px); logo `h-28` bleeds 32px below the bar (`overflow: visible`, `self-start`)
+- Logo: CSS mask div with `backgroundColor: #5A8A5A` — exact brand color, no filter approximation
+- Mobile: logo replaces hamburger (click toggles menu on `window.innerWidth < 768`)
+- Dropdown submenus for O soku and Dostupnost (hover desktop, accordion mobile)
+- Language switcher: lowercase `srb` / `eng`
+- Nav text contrast: `#D8D4C4` default, `#F0EDE4` hover
 
 ### Hero (`#home`)
 - Background: `0. pocetna.png` (fixed, parallax scroll effect)
