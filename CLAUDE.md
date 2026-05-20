@@ -8,10 +8,11 @@ Short explanation of the website/project.
 
 # Tech Stack
 
-- Next.js
+- Next.js (App Router)
 - Tailwind CSS
-- Framer Motion
 - TypeScript
+- Nodemailer (contact form email via Gmail SMTP)
+- React Leaflet + OpenStreetMap (interactive stockists map)
 
 ---
 
@@ -23,13 +24,14 @@ Short explanation of the website/project.
 
 # Project Structure
 
-Planned sections:
+Sections (in page order):
 1. Navbar
-2. Hero
-3. Features
-4. Showcase
-5. FAQ
-6. Footer
+2. Hero (`#home`)
+3. O nama (`#about`)
+4. O soku (`#juice`) — subsections: `#juice-zeleno-zdravlje`, `#juice-nutritivni-sastav`, `#juice-hladno-cedjenje`, `#juice-zasto-biraju`
+5. Upotreba (`#usage`)
+6. Dostupnost (`#where`)
+7. Kontakt (placeholder)
 
 ---
 
@@ -123,18 +125,19 @@ Avoid:
 
 # Current Status
 
-- Stack selected
-- Navbar complete
-- Hero section: placeholder, needs design and content
-- About (O nama): complete
-- O soku: complete
-- Upotreba: complete
-- Dostupnost: structure complete, pending:
-  - [ ] Map of stockist locations (placeholder in place)
-  - [ ] Email form functionality (form UI in place, disabled)
-  - [ ] Real phone number and email address
-- Kontakt: placeholder
-- Photos/visuals: not yet added
+- Navbar: complete
+- Hero: background image (`1. psenica.png`) with quote overlay, CSS fade-in animation
+- O nama: complete, final text in place
+- O soku: complete — product fact stats (100%, 30ml, 10-12 days), nutritive table, 4 subsections with IDs ready for nav
+- Upotreba: complete — intro, Kako koristiti, Preporučena dnevna količina, Ko može koristiti
+- Dostupnost: complete
+  - [x] Interactive OpenStreetMap with 23 stockist pins (red SVG markers with popups)
+  - [x] Phone number clickable (`tel:`) — opens dialer on mobile
+  - [x] Email contact form functional (Nodemailer + Gmail SMTP)
+  - [ ] Gmail App Password still needs to be configured in `.env.local` before form sends emails
+- Kontakt: placeholder, not started
+- Photos/visuals: images added to `public/images/`, not yet integrated beyond hero
+- All text content managed on `feature/text-content` branch
 
 
 
