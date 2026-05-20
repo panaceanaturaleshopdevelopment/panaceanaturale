@@ -31,7 +31,7 @@ export default function HeroSection() {
           className="object-cover object-center opacity-70"
           priority
         />
-        <div className="absolute inset-0 bg-stone-900/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/40 to-stone-900/10" />
       </div>
 
       {/* Hero text — scrolls at 0.35× speed and fades out */}

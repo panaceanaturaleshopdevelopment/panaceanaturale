@@ -26,7 +26,7 @@ export default function Accordion({ id, heading, children, defaultOpen = false }
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="w-full flex items-center justify-between border-t border-[#E4E2D8] py-8 group"
+        className="w-full flex items-center justify-between border-t border-[#C8C4B4] py-8 group"
       >
         <span className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.22em] text-[#3D7A3D] group-hover:text-[#1E3A1E] transition-colors duration-200">
           {heading}
