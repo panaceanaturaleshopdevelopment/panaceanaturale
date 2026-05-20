@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist, Geist_Mono, Raleway } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
@@ -45,6 +46,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           <main className="pt-32">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

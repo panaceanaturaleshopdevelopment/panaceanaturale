@@ -13,12 +13,18 @@ export default function Navbar() {
   const { language, setLanguage, navItems } = useLanguage();
   const [langOpen, setLangOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSubmenu, setMobileSubmenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(id);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 128;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
     setMobileOpen(false);
+    setMobileSubmenu(null);
   };
 
   useEffect(() => {
@@ -41,7 +47,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-[#FAFAF7]/97 backdrop-blur-md border-b transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[1000] bg-[#FAFAF7]/97 backdrop-blur-md border-b transition-all duration-300 ${
         scrolled ? "border-[#E4E2D8] shadow-sm" : "border-transparent"
       }`}
     >
@@ -74,23 +80,56 @@ export default function Navbar() {
               alt="Panacea"
               width={535}
               height={466}
-              className="h-20 w-auto object-contain"
+              className="h-28 w-auto object-contain"
               priority
             />
           </button>
         </div>
 
+        {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-6">
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <button
-                onClick={() => scrollTo(item.id)}
-                className="relative font-[family-name:var(--font-nav)] text-[13px] font-500 uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#3D7A3D] after:transition-[width] after:duration-300 hover:after:w-full"
-              >
-                {item.label}
-              </button>
-            </li>
-          ))}
+          {navItems.map((item) =>
+            item.children ? (
+              <li key={item.id} className="relative group">
+                <button
+                  onClick={() => scrollTo(item.id)}
+                  className="relative flex items-center gap-1 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#3D7A3D] after:transition-[width] after:duration-300 hover:after:w-full"
+                >
+                  {item.label}
+                  <svg
+                    className="w-2.5 h-2.5 transition-transform duration-200 group-hover:rotate-180"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <path d="M2 4l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <ul className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 bg-[#FAFAF7] border border-[#E4E2D8] shadow-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  {item.children.map((child) => (
+                    <li key={child.id} className="border-b border-[#F2F0E8] last:border-0">
+                      <button
+                        onClick={() => scrollTo(child.id)}
+                        className="w-full text-left px-4 py-2.5 font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] hover:bg-[#F2F0E8] transition-colors duration-150"
+                      >
+                        {child.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li key={item.id}>
+                <button
+                  onClick={() => scrollTo(item.id)}
+                  className="relative font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#3D7A3D] after:transition-[width] after:duration-300 hover:after:w-full"
+                >
+                  {item.label}
+                </button>
+              </li>
+            )
+          )}
         </ul>
 
         <div className="flex items-center gap-3 shrink-0">
@@ -135,23 +174,61 @@ export default function Navbar() {
               </ul>
             )}
           </div>
-
         </div>
       </nav>
 
+      {/* Mobile nav */}
       {mobileOpen && (
         <div className="md:hidden border-t border-[#E4E2D8] bg-[#FAFAF7]">
           <ul className="max-w-7xl mx-auto px-6 py-3 flex flex-col">
-            {navItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  onClick={() => scrollTo(item.id)}
-                  className="w-full text-left py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] transition-colors border-b border-[#F2F0E8] last:border-0"
-                >
-                  {item.label}
-                </button>
-              </li>
-            ))}
+            {navItems.map((item) =>
+              item.children ? (
+                <li key={item.id}>
+                  <button
+                    onClick={() =>
+                      setMobileSubmenu((prev) => (prev === item.id ? null : item.id))
+                    }
+                    className="w-full flex items-center justify-between py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] transition-colors border-b border-[#F2F0E8]"
+                  >
+                    {item.label}
+                    <svg
+                      className={`w-3 h-3 transition-transform duration-200 ${
+                        mobileSubmenu === item.id ? "rotate-180" : ""
+                      }`}
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    >
+                      <path d="M2 4l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                  {mobileSubmenu === item.id && (
+                    <ul className="pl-4 border-l border-[#E4E2D8] ml-2 mb-1">
+                      {item.children.map((child) => (
+                        <li key={child.id}>
+                          <button
+                            onClick={() => scrollTo(child.id)}
+                            className="w-full text-left py-2.5 font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] transition-colors"
+                          >
+                            {child.label}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ) : (
+                <li key={item.id}>
+                  <button
+                    onClick={() => scrollTo(item.id)}
+                    className="w-full text-left py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] text-[#5C5C50] hover:text-[#1E3A1E] transition-colors border-b border-[#F2F0E8] last:border-0"
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              )
+            )}
           </ul>
         </div>
       )}
