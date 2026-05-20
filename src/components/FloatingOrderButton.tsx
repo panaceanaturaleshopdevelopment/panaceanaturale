@@ -10,7 +10,7 @@ export default function FloatingOrderButton() {
     setTimeout(() => {
       const el = document.getElementById("where-phone");
       if (!el) return;
-      const top = el.getBoundingClientRect().top + window.scrollY - 128;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: "smooth" });
     }, 50);
   };

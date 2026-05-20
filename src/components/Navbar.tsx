@@ -63,7 +63,7 @@ export default function Navbar() {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 128;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: "smooth" });
     }
     setMobileOpen(false);
@@ -90,12 +90,12 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[1000] ${th.header} border-b transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[1000] overflow-visible ${th.header} border-b transition-all duration-300 ${
         scrolled ? th.borderScrolled : "border-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-8 h-32 flex items-center justify-between gap-8">
-        <div className="flex items-center gap-3 shrink-0">
+      <nav className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between gap-8">
+        <div className="flex items-start shrink-0 self-start">
           <button
             onClick={() => {
               if (window.innerWidth < 768) setMobileOpen((o) => !o);
