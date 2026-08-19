@@ -74,7 +74,9 @@ export default function Footer() {
                 Instagram
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/people/Panacea-Naturale/61562838522730/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200"
               >
                 <FacebookIcon />
