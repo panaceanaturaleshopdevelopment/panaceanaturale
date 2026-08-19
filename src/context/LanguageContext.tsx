@@ -120,7 +120,7 @@ const translations: Record<Language, Translations> = {
     about: {
       label: "O nama",
       p1: "Panacea Naturale je porodična priča iz Čačka, nastala iz ličnog iskustva i želje da se prirodna podrška zdravlju približi što većem broju ljudi.",
-      p2: "Od 2013. godine proizvodimo hladno ceđeni sok od pšenične trave — najpre za sebe i svoju porodicu, a zatim i za sve one koji žele da u svoju svakodnevicu unesu svež, prirodan i pažljivo pripremljen proizvod.",
+      p2: "Od 2013. godine proizvodimo hladno ceđeni sok od pšenične trave, najpre za sebe i svoju porodicu, a zatim i za sve one koji žele da u svoju svakodnevicu unesu svež, prirodan i pažljivo pripremljen proizvod.",
       p3: "Vodimo se jednostavnom idejom: da kvalitetan sok od pšenične trave, poznat i kao **zeleno zdravlje**, bude dostupan što većem broju ljudi širom Srbije.",
     },
     juice: {
@@ -129,16 +129,16 @@ const translations: Record<Language, Translations> = {
       facts: [
         { value: "100%", label: "čist sok od pšenične trave" },
         { value: "30 ml", label: "preporučena dnevna količina" },
-        { value: "10–12", label: "dana starosti biljke pri berbi" },
+        { value: "10-12", label: "dana starosti biljke pri berbi" },
       ],
       intro: {
         p1: "Sok od pšenične trave dobija se hladnim ceđenjem mladih izdanaka pšenice, najčešće starih između 10 i 12 dana. Za proizvodnju koristimo pažljivo uzgojenu pšeničnu travu od **organske spelte**, ubranu u fazi kada je biljka bogata svojim prirodnim zelenim sastojcima.",
-        p2: "Odmah nakon ceđenja, sok se brzo zamrzava kako bi se što bolje očuvali njegova svežina, prirodna boja i nutritivna svojstva. Ne pasterizuje se, ne suši i ne sadrži **aditive, veštačke boje ni konzervanse** — u flašici se nalazi samo čist sok od pšenične trave.",
+        p2: "Odmah nakon ceđenja, sok se brzo zamrzava kako bi se što bolje očuvali njegova svežina, prirodna boja i nutritivna svojstva. Ne pasterizuje se, ne suši i ne sadrži **aditive, veštačke boje ni konzervanse**, u flašici se nalazi samo čist sok od pšenične trave.",
         p3: "Pšenična trava prirodno sadrži hlorofil, vitamine, minerale, enzime, aminokiseline i antioksidativna jedinjenja. Zbog toga se sok od pšenične trave u literaturi često opisuje kao nutritivno bogata funkcionalna namirnica.",
       },
       zelenoZdravlje: {
         heading: "Zašto „zeleno zdravlje“?",
-        text: "Prepoznatljiva intenzivno zelena boja soka potiče od **hlorofila** — prirodnog pigmenta koji se nalazi u zelenim biljkama. Pored hlorofila, sok od pšenične trave sadrži i antioksidativna jedinjenja, vitamine i minerale, zbog čega ga mnogi koriste kao deo uravnotežene ishrane i zdravih životnih navika.",
+        text: "Prepoznatljiva intenzivno zelena boja soka potiče od **hlorofila**, prirodnog pigmenta koji se nalazi u zelenim biljkama. Pored hlorofila, sok od pšenične trave sadrži i antioksidativna jedinjenja, vitamine i minerale, zbog čega ga mnogi koriste kao deo uravnotežene ishrane i zdravih životnih navika.",
       },
       nutritivniSastav: {
         heading: "Nutritivni sastav",
@@ -168,7 +168,7 @@ const translations: Record<Language, Translations> = {
         heading: "Kako koristiti",
         p1: "Flašicu možete otopiti na sobnoj temperaturi ili u posudi sa mlakom vodom. Voda ne bi trebalo da bude toplija od **39°C**, kako se sok ne bi izlagao visokim temperaturama.",
         p2: "Nakon otapanja, sok je najbolje popiti odmah. Ne preporučuje se ponovno zamrzavanje već odmrznutog soka.",
-        p3: "Preporučuje se da se sok pije ujutru, na prazan stomak, oko **15–30 minuta pre obroka**. Ukoliko vam više odgovara, možete ga konzumirati i kasnije tokom dana, prema sopstvenoj rutini.",
+        p3: "Preporučuje se da se sok pije ujutru, na prazan stomak, oko **15-30 minuta pre obroka**. Ukoliko vam više odgovara, možete ga konzumirati i kasnije tokom dana, prema sopstvenoj rutini.",
         p4: "Zbog intenzivnog ukusa, u početku se može razblažiti sa malo vode ili soka od jabuke. Kada se organizam navikne, može se piti nerazblažen.",
       },
       kolicina: {
@@ -243,7 +243,7 @@ const translations: Record<Language, Translations> = {
     about: {
       label: "About us",
       p1: "Panacea Naturale is a family story from Čačak, born from personal experience and the desire to bring natural health support to as many people as possible.",
-      p2: "Since 2013, we have been producing cold-pressed wheatgrass juice — first for ourselves and our family, and then for all those who want to bring a fresh, natural and carefully prepared product into their everyday lives.",
+      p2: "Since 2013, we have been producing cold-pressed wheatgrass juice, first for ourselves and our family, and then for all those who want to bring a fresh, natural and carefully prepared product into their everyday lives.",
       p3: "We are guided by a simple idea: that quality wheatgrass juice, also known as **green health**, should be available to as many people as possible throughout Serbia.",
     },
     juice: {
@@ -252,16 +252,16 @@ const translations: Record<Language, Translations> = {
       facts: [
         { value: "100%", label: "pure wheatgrass juice" },
         { value: "30 ml", label: "recommended daily dose" },
-        { value: "10–12", label: "days old at harvest" },
+        { value: "10-12", label: "days old at harvest" },
       ],
       intro: {
         p1: "Wheatgrass juice is obtained by cold-pressing young wheat sprouts, usually between 10 and 12 days old. For production, we use carefully grown wheatgrass from **organic spelt**, harvested at the stage when the plant is rich in its natural green constituents.",
-        p2: "Immediately after pressing, the juice is quickly frozen to best preserve its freshness, natural color and nutritional properties. It is not pasteurized, dried, or contains **additives, artificial colors or preservatives** — the bottle contains only pure wheatgrass juice.",
+        p2: "Immediately after pressing, the juice is quickly frozen to best preserve its freshness, natural color and nutritional properties. It is not pasteurized, dried, or contains **additives, artificial colors or preservatives**; the bottle contains only pure wheatgrass juice.",
         p3: "Wheatgrass naturally contains chlorophyll, vitamins, minerals, enzymes, amino acids and antioxidant compounds. This is why wheatgrass juice is often described in the literature as a nutritionally rich functional food.",
       },
       zelenoZdravlje: {
         heading: "Why “green health”?",
-        text: "The distinctive intensely green color of the juice comes from **chlorophyll** — the natural pigment found in green plants. In addition to chlorophyll, wheatgrass juice contains antioxidant compounds, vitamins and minerals, which is why many people use it as part of a balanced diet and healthy lifestyle.",
+        text: "The distinctive intensely green color of the juice comes from **chlorophyll**, the natural pigment found in green plants. In addition to chlorophyll, wheatgrass juice contains antioxidant compounds, vitamins and minerals, which is why many people use it as part of a balanced diet and healthy lifestyle.",
       },
       nutritivniSastav: {
         heading: "Nutritional composition",
@@ -291,7 +291,7 @@ const translations: Record<Language, Translations> = {
         heading: "How to use",
         p1: "The bottle can be thawed at room temperature or in a bowl of lukewarm water. The water should not be warmer than **39°C**, so that the juice is not exposed to high temperatures.",
         p2: "After thawing, the juice is best consumed immediately. Re-freezing already thawed juice is not recommended.",
-        p3: "It is recommended to drink the juice in the morning, on an empty stomach, about **15–30 minutes before a meal**. If it suits you better, you can also consume it later in the day, according to your own routine.",
+        p3: "It is recommended to drink the juice in the morning, on an empty stomach, about **15-30 minutes before a meal**. If it suits you better, you can also consume it later in the day, according to your own routine.",
         p4: "Due to the intense taste, it can initially be diluted with a little water or apple juice. Once the body gets used to it, it can be drunk undiluted.",
       },
       kolicina: {
