@@ -61,11 +61,17 @@ export default function Navbar() {
   const langRef = useRef<HTMLDivElement>(null);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
+    // Ask any Accordion with a matching id to open first
+    window.dispatchEvent(new CustomEvent("open-accordion", { detail: { id } }));
+
+    // Allow the accordion to open/reflow, then scroll to the element with the usual 80px offset
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }, 50);
     setMobileOpen(false);
     setMobileSubmenu(null);
   };

@@ -15,7 +15,17 @@ export default function Accordion({ id, heading, children, defaultOpen = false }
   useEffect(() => {
     if (!id) return;
     const handler = (e: Event) => {
-      if ((e as CustomEvent).detail?.id === id) setOpen(true);
+      if ((e as CustomEvent).detail?.id === id) {
+        setOpen(true);
+
+        // After programmatic open, ensure the accordion scrolls into view with same offset
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const top = el.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior: "smooth" });
+        }, 60);
+      }
     };
     window.addEventListener("open-accordion", handler);
     return () => window.removeEventListener("open-accordion", handler);
