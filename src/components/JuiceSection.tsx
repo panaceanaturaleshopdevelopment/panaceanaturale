@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { tx } from "@/lib/tx";
 import Accordion from "@/components/ui/Accordion";
@@ -61,6 +62,16 @@ export default function JuiceSection() {
           <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
             {j.intro.p3}
           </p>
+        </div>
+
+        <div className="mb-16 -mx-8 px-8">
+          <Image
+            src="/images/8. slider panacea.png"
+            alt="Panacea Naturale Benefits"
+            width={600}
+            height={400}
+            className="w-full h-auto object-contain"
+          />
         </div>
 
         <Accordion id="juice-zeleno-zdravlje" heading={j.zelenoZdravlje.heading}>
