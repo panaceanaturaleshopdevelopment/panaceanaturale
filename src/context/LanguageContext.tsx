@@ -220,11 +220,11 @@ const translations: Record<Language, Translations> = {
           question: "Ko potvrđuje zdravstvenu bezbednost proizvoda?",
           answer: "Sok od pšenične trave Panacea Naturale ispitan je od strane Instituta za javno zdravlje Kragujevac.",
         },
-        {
-          question: "Da li proizvod poseduje sertifikat o zdravstvenoj bezbednosti?",
-          answer: "Da. Sertifikat možete pogledati ",
-          link: { text: "ovde", url: "/documents/cert_panacea.pdf" },
-        },
+        // {
+        //   question: "Da li proizvod poseduje sertifikat o zdravstvenoj bezbednosti?",
+        //   answer: "Da. Sertifikat možete pogledati ",
+        //   link: { text: "ovde", url: "/documents/cert_panacea.pdf" },
+        // },
       ],
     },
     footer: {
@@ -343,11 +343,11 @@ const translations: Record<Language, Translations> = {
           question: "Who confirms the health safety of the product?",
           answer: "Panacea Naturale wheatgrass juice has been tested by the Institute of Public Health Kragujevac.",
         },
-        {
-          question: "Does the product have a health safety certificate?",
-          answer: "Yes. You can view the certificate ",
-          link: { text: "here", url: "/documents/cert_panacea.pdf" },
-        },
+        // {
+        //   question: "Does the product have a health safety certificate?",
+        //   answer: "Yes. You can view the certificate ",
+        //   link: { text: "here", url: "/documents/cert_panacea.pdf" },
+        // },
       ],
     },
     footer: {

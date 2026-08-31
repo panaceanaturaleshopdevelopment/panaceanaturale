@@ -177,9 +177,10 @@ Avoid:
 
 ### Footer
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
-- Contact: phone, email, full address
-- Social: Instagram (linked), Facebook (placeholder `#`)
+- Contact: `+381 67 7208 129` | `panacea.naturale@gmail.com` | Čačak, Serbia address
+- Social: Instagram (linked), Facebook (linked)
 - Copyright line
+- All text responsive, mobile-friendly 3→1 column layout
 
 ### Floating order button
 - Fixed bottom-right, always visible
@@ -192,14 +193,44 @@ Avoid:
 
 ## Internationalisation:
 - All text in `LanguageContext.tsx` under `translations.sr` and `translations.en`
-- `tx()` helper in `src/lib/tx.tsx` renders `**bold**` inline
+- `useLanguage()` hook provides `t` (translations) and `setLanguage()` function
+- `tx()` helper in `src/lib/tx.tsx` renders `**bold**` inline formatting
 - FAQ items have optional `link: { text, url }` for inline links in answers
 - To add nav entries: update `nav.sr` and `nav.en` arrays in LanguageContext
+- Language toggle: lowercase `srb` / `eng` in navbar (mobile and desktop)
+
+## Fonts:
+- **Serif headers**: Cormorant Garamond (300, 400, 500) — elegant, premium feel
+- **Navigation/labels**: Raleway (400, 500, 600) — clean, geometric
+- **Fallback**: Geist Sans system font stack
 
 ## Pending:
-- [ ] Facebook link URL (currently `#` placeholder in Footer)
-- [ ] Page metadata (`title`, `description`) in `layout.tsx` still default Next.js values
-- [ ] `lang` attribute in `<html>` is hardcoded `"en"` — not reactive to language switch
+- [x] Facebook link URL — Updated: `https://www.facebook.com/people/Panacea-Naturale/61562838522730/`
+- [ ] Page metadata (`title`, `description`) in `layout.tsx` — Update with proper SEO titles and descriptions
+- [ ] `lang` attribute in `<html>` — Make reactive to language context (currently hardcoded `"en"`)
+
+## Deployment Readiness:
+- ✅ All pages fully functional and responsive
+- ✅ Mobile-first design implemented
+- ✅ No external API dependencies (OpenStreetMap is CDN-based)
+- ✅ Mailto and tel: links work on all devices
+- ⚠️ Complete 2 pending items above before production launch
+
+---
+
+## Quick Reference:
+- **Site URL structure**: Single-page with anchor sections (#home, #about, #juice, etc.)
+- **Scroll offset**: 80px (navbar height) — applied to all anchor jumps
+- **Color theme**: Toggle in `Navbar.tsx` top-level `THEME` constant (`"dark"` or `"light"`)
+- **Mobile breakpoint**: `md:` = 768px (Tailwind default)
+- **Stockists data**: 23 locations stored in `StockistsMap.tsx` (hardcoded, can be moved to CMS)
+- **Gallery images**: 6 photos in `public/images/` (1–7.jpg, 0.jpg is hero background)
+- **PDF certificate**: `public/documents/cert_panacea.pdf`
+
+## Contact Integration:
+- **Phone**: `tel:+381677208129` (tel: protocol, works on all devices)
+- **Email**: `mailto:panacea.naturale@gmail.com` (free, native HTML, no backend required)
+- **Map**: OpenStreetMap via React Leaflet (CDN-based, free)
 
 ---
 
