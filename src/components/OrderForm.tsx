@@ -67,6 +67,14 @@ export default function OrderForm({ onClose }: OrderFormProps) {
           <p className="font-[family-name:var(--font-serif)] text-xl text-[#2C2C22]">{t.order.success}</p>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
+            <input
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-px w-px opacity-0"
+            />
             {fields.map(([name, label, type]) => (
               <label key={name} className="block font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.12em] text-[#3D7A3D]">
                 {label}

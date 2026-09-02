@@ -1,11 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useLanguage } from "@/context/LanguageContext";
 
 export default function HeroSection() {
-  const { t } = useLanguage();
-
   return (
     <>
       {/* Fixed background — stays pinned while the page scrolls over it */}

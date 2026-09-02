@@ -13,6 +13,7 @@ The site is a responsive single-page presentation with bilingual Serbian/English
 - Resend for order email delivery
 - Custom i18n using `LanguageContext` (SR/EN)
 - `next/font` with Cormorant Garamond and Raleway
+- npm with the committed `package-lock.json`
 
 ## Local Development
 
@@ -86,10 +87,9 @@ The current implementation sends the order notification to Panacea only. It does
 
 1. Push the repository to GitHub.
 2. Import the repository into Vercel.
-3. Add `RESEND_API_KEY` and `RESEND_FROM_EMAIL` under **Settings > Environment Variables**.
-4. Enable the variables for Production, and Preview if preview orders should be tested.
-5. Verify the sending domain in Resend and add its DNS records at the domain registrar.
-6. Deploy or redeploy the project.
+3. Add `RESEND_API_KEY` and `RESEND_FROM_EMAIL` under **Settings > Environment Variables**. Set them for Production, and Preview if preview orders should be tested.
+4. Verify the sending domain in Resend and add its DNS records at the domain registrar.
+5. Deploy or redeploy the project.
 
 Vercel automatically runs the Next.js build and deploys `src/app/api/orders/route.ts` as a serverless function. Environment variable changes require a new deployment. Test a real inquiry after deployment and check delivery, subject, reply-to, and body content.
 
@@ -111,12 +111,23 @@ The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1
 - Certificate: `public/documents/cert_panacea.pdf`
 - Stockist locations are currently hardcoded in `StockistsMap.tsx`
 
+## Security
+
+The order endpoint currently has server-side validation, a 16 KB request-body limit, a hidden honeypot field, and a best-effort limit of 5 requests per IP per 10 minutes. The Resend API key is read only in the server route and is never exposed to the browser.
+
+The in-memory rate limiter is not a complete production anti-abuse system on Vercel because separate serverless instances do not share memory. The recommended next step is to add a shared rate-limit store such as Upstash Redis, or add Cloudflare Turnstile/reCAPTCHA verification. Either option requires a service account and environment variables. Until then, monitor Resend usage and treat the current limiter as basic protection only.
+
+Do not disable install scripts globally: Next.js needs `sharp` for image optimization. Keep dependencies updated with `npm audit` and review audit results before using `npm audit fix --force`.
+
+The current dependency audit is clean: both `npm audit` and `npm audit --omit=dev` report zero known vulnerabilities. The remaining major-version options shown by `npm outdated` are ESLint 10, TypeScript 7, and `@types/node` 26; these should be upgraded separately with compatibility testing rather than automatically.
+
 ## Production Checklist
 
 - Configure and test Resend in the production environment.
 - Add accurate page metadata in `src/app/layout.tsx`.
 - Make the document `lang` attribute react to the selected language if needed.
-- Consider adding rate limiting, a honeypot or CAPTCHA, and request logging to protect the public order endpoint from spam.
+- Configure shared rate limiting or CAPTCHA/Turnstile before a high-traffic launch.
+- Add request/error monitoring and alerting for the public order endpoint.
 - Confirm the verified email domain, DNS records, phone number, social links, map locations, and certificate before launch.
 
 ## Notes for Maintainers
@@ -124,4 +135,4 @@ The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1
 - Keep changes small and consistent with the existing Tailwind and component patterns.
 - Do not edit generated `.next` files.
 - Do not commit secrets or `.env*` files.
-- `npm run lint` currently reports one unrelated warning for an unused translation variable in `HeroSection.tsx`; it does not fail the command.
+- `npm audit` and `npm audit --omit=dev` should both report zero vulnerabilities before deployment.
