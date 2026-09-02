@@ -222,7 +222,7 @@ Avoid:
 - [x] Facebook link URL — Updated: `https://www.facebook.com/people/Panacea-Naturale/61562838522730/`
 - [ ] Page metadata (`title`, `description`) in `layout.tsx` — Update with proper SEO titles and descriptions
 - [ ] `lang` attribute in `<html>` — Make reactive to language context (currently hardcoded `"en"`)
-- [ ] **Resend domain verification (do this when migrating to the real repo/Vercel app)** — `RESEND_API_KEY` and `RESEND_FROM_EMAIL` are currently set in Vercel (`panaceanaturale-z1e3`) using a **personal** Resend account with no verified domain, so `RESEND_FROM_EMAIL=onboarding@resend.dev` (Resend sandbox). Sandbox mode can only deliver to the Resend account owner's own email — **not** to `panacea.naturale@gmail.com` — so order-inquiry emails do not currently reach the business inbox in production. Before/at launch on the real repo and Vercel app: verify `panaceanaturale.rs` (or a subdomain) as a domain in the production Resend account, add the DNS records it provides, then update `RESEND_FROM_EMAIL` to an address on that domain (e.g. `orders@panaceanaturale.rs`) and redeploy.
+- [ ] **Resend domain verification (do this when migrating to the real repo/Vercel app)** — `RESEND_API_KEY` and `RESEND_FROM_EMAIL` are currently set in Vercel (`panaceanaturale-z1e3`) using a **personal** Resend account with no verified domain, so `RESEND_FROM_EMAIL=onboarding@resend.dev` (Resend sandbox). Sandbox mode can only deliver to the Resend account owner's own email — **not** to `panacea.naturale.shop@gmail.com` — so order-inquiry emails do not currently reach the business inbox in production. Before/at launch on the real repo and Vercel app: verify `panaceanaturale.rs` (or a subdomain) as a domain in the production Resend account, add the DNS records it provides, then update `RESEND_FROM_EMAIL` to an address on that domain (e.g. `orders@panaceanaturale.rs`) and redeploy.
 
 ## Deployment Readiness:
 - ✅ All pages fully functional and responsive
@@ -231,7 +231,7 @@ Avoid:
 - ✅ Mailto and tel: links work on all devices
 - ✅ `npm audit` and `npm audit --omit=dev` report zero known vulnerabilities
 - ⚠️ Complete the 2 SEO/accessibility pending items above and add shared order-endpoint anti-abuse protection before high-traffic production use
-- ⚠️ Order-inquiry emails are not yet reaching `panacea.naturale@gmail.com` in production — Resend is on a personal account with no verified domain (sandbox `from` address). See the Resend domain verification pending item above.
+- ⚠️ Order-inquiry emails are not yet reaching `panacea.naturale.shop@gmail.com` in production — Resend is on a personal account with no verified domain (sandbox `from` address). See the Resend domain verification pending item above.
 
 ---
 
