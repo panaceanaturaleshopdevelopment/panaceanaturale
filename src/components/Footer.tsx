@@ -47,7 +47,7 @@ export default function Footer() {
             </p>
             <div className="space-y-1.5">
               <a href="tel:+381615000280" className="block font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200">
-                061 5000280
+                0615000280
               </a>
               <a href="mailto:panacea.naturale@gmail.com" className="block font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200">
                 panacea.naturale@gmail.com

@@ -103,7 +103,7 @@ The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1
 
 ## Important Contacts and Assets
 
-- Phone: `061 5000280` (`tel:+381615000280`)
+- Phone: `0615000280` (`tel:+381615000280`)
 - Email: `panacea.naturale@gmail.com`
 - Instagram and Facebook links are maintained in `Footer.tsx`
 - Hero: `public/images/9. visual1600x1200.png`

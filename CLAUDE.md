@@ -165,7 +165,7 @@ Avoid:
 ### Dostupnost (`#where`)
 - Interactive OpenStreetMap with 23 stockist pins (red SVG markers + popups)
 - 3 collapsible subsections: map, phone, email
-- Phone: `061 5000280` with `tel:+381615000280` link
+- Phone: `0615000280` with `tel:+381615000280` link
 - Email: `mailto:` link (replaces previous Nodemailer form)
 - Map z-index fix: `isolation: isolate` prevents Leaflet controls from overlapping navbar
 
@@ -177,7 +177,7 @@ Avoid:
 
 ### Footer
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
-- Contact: `061 5000280` | `panacea.naturale@gmail.com` | Čačak, Serbia address
+- Contact: `0615000280` | `panacea.naturale@gmail.com` | Čačak, Serbia address
 - Social: Instagram (linked), Facebook (linked)
 - Copyright line
 - All text responsive, mobile-friendly 3→1 column layout
@@ -239,7 +239,7 @@ Avoid:
 - **PDF certificate**: `public/documents/cert_panacea.pdf`
 
 ## Contact Integration:
-- **Phone**: `061 5000280` (`tel:+381615000280`, tel: protocol, works on all devices)
+- **Phone**: `0615000280` (`tel:+381615000280`, tel: protocol, works on all devices)
 - **Email**: `mailto:panacea.naturale@gmail.com` (free, native HTML, no backend required)
 - **Map**: OpenStreetMap via React Leaflet (CDN-based, free)
 - **Order form**: `POST /api/orders` via Resend; requires `RESEND_API_KEY` and `RESEND_FROM_EMAIL`
