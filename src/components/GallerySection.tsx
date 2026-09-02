@@ -11,6 +11,7 @@ const images = [
   { src: "/images/5. cedjenje1.png", alt: "Hladno ceđenje soka" },
   { src: "/images/6. cedjenje2.png", alt: "Hladno ceđenje soka" },
   { src: "/images/7. bocice.png", alt: "Flašice soka od pšenične trave" },
+
 ];
 
 export default function GallerySection() {

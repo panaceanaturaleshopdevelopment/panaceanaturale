@@ -11,6 +11,22 @@ type NavItem = {
 };
 
 type Translations = {
+  order: {
+    title: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    packages: string;
+    bottlesPerPackage: string;
+    selectOption: string;
+    message: string;
+    optional: string;
+    submit: string;
+    close: string;
+    success: string;
+    error: string;
+  };
   hero: { quote: string; attribution: string };
   about: { label: string; p1: string; p2: string; p3: string };
   juice: {
@@ -113,6 +129,22 @@ const nav: Record<Language, NavItem[]> = {
 
 const translations: Record<Language, Translations> = {
   sr: {
+    order: {
+      title: "Poruči sok",
+      fullName: "Ime i prezime",
+      email: "Email adresa",
+      phone: "Broj telefona",
+      address: "Fizička adresa",
+      packages: "Broj pakovanja",
+      bottlesPerPackage: "Jedno pakovanje sadrži 7 flašica",
+      selectOption: "Izaberite",
+      message: "Poruka",
+      optional: "opciono",
+      submit: "Pošalji upit",
+      close: "Zatvori",
+      success: "Porudžbina je poslata. Uskoro ćemo vas kontaktirati.",
+      error: "Porudžbina nije poslata. Pokušajte ponovo.",
+    },
     hero: {
       quote: "„Snaga tvoga tela leži u sokovima biljaka.“",
       attribution: "Otac kineske medicine · Shin-Nongu",
@@ -220,11 +252,11 @@ const translations: Record<Language, Translations> = {
           question: "Ko potvrđuje zdravstvenu bezbednost proizvoda?",
           answer: "Sok od pšenične trave Panacea Naturale ispitan je od strane Instituta za javno zdravlje Kragujevac.",
         },
-        {
-          question: "Da li proizvod poseduje sertifikat o zdravstvenoj bezbednosti?",
-          answer: "Da. Sertifikat možete pogledati ",
-          link: { text: "ovde", url: "/documents/cert_panacea.pdf" },
-        },
+        // {
+        //   question: "Da li proizvod poseduje sertifikat o zdravstvenoj bezbednosti?",
+        //   answer: "Da. Sertifikat možete pogledati ",
+        //   link: { text: "ovde", url: "/documents/cert_panacea.pdf" },
+        // },
       ],
     },
     footer: {
@@ -236,6 +268,22 @@ const translations: Record<Language, Translations> = {
     },
   },
   en: {
+    order: {
+      title: "Order juice",
+      fullName: "Full name",
+      email: "Email address",
+      phone: "Phone number",
+      address: "Physical address",
+      packages: "Number of packages",
+      bottlesPerPackage: "One package contains 7 bottles",
+      selectOption: "Select",
+      message: "Message",
+      optional: "optional",
+      submit: "Send inquiry",
+      close: "Close",
+      success: "Your order has been sent. We will contact you soon.",
+      error: "The order could not be sent. Please try again.",
+    },
     hero: {
       quote: "“The strength of your body lies in the juices of plants.”",
       attribution: "Father of Chinese Medicine · Shin-Nongu",
@@ -343,11 +391,11 @@ const translations: Record<Language, Translations> = {
           question: "Who confirms the health safety of the product?",
           answer: "Panacea Naturale wheatgrass juice has been tested by the Institute of Public Health Kragujevac.",
         },
-        {
-          question: "Does the product have a health safety certificate?",
-          answer: "Yes. You can view the certificate ",
-          link: { text: "here", url: "/documents/cert_panacea.pdf" },
-        },
+        // {
+        //   question: "Does the product have a health safety certificate?",
+        //   answer: "Yes. You can view the certificate ",
+        //   link: { text: "here", url: "/documents/cert_panacea.pdf" },
+        // },
       ],
     },
     footer: {
