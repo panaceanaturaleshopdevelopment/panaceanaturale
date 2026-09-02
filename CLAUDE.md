@@ -14,6 +14,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - React Leaflet + OpenStreetMap (interactive stockists map)
 - CSS scroll snap (horizontal gallery)
 - Custom i18n (LanguageContext — SR/EN)
+- Resend (order inquiry email delivery)
 
 ---
 
@@ -139,10 +140,10 @@ Avoid:
 
 ### Hero (`#home`)
 - Background: `9. visual1600x1200.png` (fixed responsive visual)
-- Text scrolls at 0.35× speed, fades on scroll (ref-based, no React re-renders)
-- Three layers: `bg-[#D6E4D6]` container + `opacity-70` image + `bg-gradient-to-b from-stone-900/40 to-stone-900/10`
-- Green text-shadow on quote for legibility
-- Bold Cormorant Garamond, italic
+- Text is baked into the visual asset; the hero component does not render a text overlay
+- Mobile uses `object-contain` and a 4:3 section height to avoid cropping and empty space
+- Desktop uses a full-viewport `object-cover` presentation
+- Visual layers: `bg-[#D6E4D6]` container + `opacity-70` image + `bg-gradient-to-b from-stone-900/40 to-stone-900/10`
 
 ### O nama (`#about`)
 - Complete, final text in place (SR + EN)
@@ -197,6 +198,8 @@ Avoid:
 - Email subject includes the order number and bottle count
 - Customer email is used as `replyTo`; the body includes name, address, message, and contact details
 - Required server environment variables: `RESEND_API_KEY` and verified `RESEND_FROM_EMAIL`
+- Security controls: 16 KB request limit, server-side validation, honeypot field, and best-effort limit of 5 requests per IP per 10 minutes
+- The current in-memory limiter is not shared between Vercel serverless instances; add shared rate limiting or CAPTCHA/Turnstile before high-traffic launch
 
 ## Assets:
 - Images: `public/images/` (0–7, hero + 6 gallery photos)
@@ -225,7 +228,8 @@ Avoid:
 - ✅ Mobile-first design implemented
 - ✅ OpenStreetMap is CDN-based; order email delivery uses Resend
 - ✅ Mailto and tel: links work on all devices
-- ⚠️ Complete 2 pending items above before production launch
+- ✅ `npm audit` and `npm audit --omit=dev` report zero known vulnerabilities
+- ⚠️ Complete the 2 SEO/accessibility pending items above and add shared order-endpoint anti-abuse protection before high-traffic production use
 
 ---
 
@@ -243,6 +247,12 @@ Avoid:
 - **Email**: `mailto:panacea.naturale@gmail.com` (free, native HTML, no backend required)
 - **Map**: OpenStreetMap via React Leaflet (CDN-based, free)
 - **Order form**: `POST /api/orders` via Resend; requires `RESEND_API_KEY` and `RESEND_FROM_EMAIL`
+
+## Security Notes:
+- The order endpoint validates all fields, limits request bodies to 16 KB, rejects the hidden honeypot field, and allows at most 5 requests per IP per 10-minute window in a single serverless instance.
+- The in-memory limiter is best-effort only on Vercel because instances do not share memory. For stronger production protection, add a shared rate-limit store such as Upstash Redis or a managed CAPTCHA/Turnstile check.
+- Keep `RESEND_API_KEY` server-side, configure `RESEND_FROM_EMAIL` in Vercel Environment Variables, and never commit `.env*` files.
+- Run `npm audit` and `npm audit --omit=dev` before releases; both currently report zero known vulnerabilities.
 
 ---
 
