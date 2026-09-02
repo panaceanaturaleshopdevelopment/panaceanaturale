@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const recipient = "panacea.naturale@gmail.com";
+const recipient = "panacea.naturale.shop@gmail.com";
 const bottlesPerPackage = 7;
 const maxBodyBytes = 16 * 1024;
 const rateLimitWindowMs = 10 * 60 * 1000;
