@@ -34,7 +34,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - `src/context/LanguageContext.tsx` — all translations (SR/EN) + nav structure
 - `src/lib/tx.tsx` — rich text helper: renders `**bold**` markers as styled spans
 - `src/components/ui/Accordion.tsx` — reusable collapsible subsection; listens for `open-accordion` custom event
-- `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right, dispatches open-accordion + scrolls to `#where-phone`
+- `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right that opens the `OrderForm` modal
 
 ---
 
@@ -119,7 +119,7 @@ Avoid:
 - Height: `h-20` (80px) — logo is `h-28` (112px) and bleeds 32px below the green bar
 - `overflow: visible` on `<header>` allows logo to overflow without clipping
 - Logo wrapper: `self-start items-start` — anchors to top, branch extends downward
-- Scroll offset: **80px** applied to all anchor scrolls (`Navbar.tsx`, `FloatingOrderButton.tsx`)
+- Scroll offset: **80px** applied to navbar anchor scrolls
 - `main` padding: `pt-20` in `layout.tsx`
 
 ---
@@ -138,7 +138,7 @@ Avoid:
 - Nav text contrast: `#D8D4C4` default, `#F0EDE4` hover
 
 ### Hero (`#home`)
-- Background: `0. pocetna.png` (fixed, parallax scroll effect)
+- Background: `9. visual1600x1200.png` (fixed responsive visual)
 - Text scrolls at 0.35× speed, fades on scroll (ref-based, no React re-renders)
 - Three layers: `bg-[#D6E4D6]` container + `opacity-70` image + `bg-gradient-to-b from-stone-900/40 to-stone-900/10`
 - Green text-shadow on quote for legibility
@@ -165,7 +165,7 @@ Avoid:
 ### Dostupnost (`#where`)
 - Interactive OpenStreetMap with 23 stockist pins (red SVG markers + popups)
 - 3 collapsible subsections: map, phone, email
-- Phone: `tel:` link
+- Phone: `061 5000280` with `tel:+381615000280` link
 - Email: `mailto:` link (replaces previous Nodemailer form)
 - Map z-index fix: `isolation: isolate` prevents Leaflet controls from overlapping navbar
 
@@ -177,15 +177,26 @@ Avoid:
 
 ### Footer
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
-- Contact: `+381 67 7208 129` | `panacea.naturale@gmail.com` | Čačak, Serbia address
+- Contact: `061 5000280` | `panacea.naturale@gmail.com` | Čačak, Serbia address
 - Social: Instagram (linked), Facebook (linked)
 - Copyright line
 - All text responsive, mobile-friendly 3→1 column layout
 
 ### Floating order button
-- Fixed bottom-right, always visible
-- Opens `#where-phone` accordion + scrolls to it
-- "Poruči" (SR) / "Order" (EN)
+- Fixed bottom-right, always visible, larger with rounded corners, gold border, premium shadow, and hover lift
+- Opens the `OrderForm` modal with required full name, email, phone, physical address, and package count fields
+- Package count is a dropdown; each package contains 7 bottles
+- Includes an optional message field and bilingual SR/EN labels
+- Submits to `POST /api/orders`
+- "Poruči" (SR) / "Order" (EN); form submit action is "Pošalji upit" / "Send inquiry"
+
+### Order email flow
+- `src/components/OrderForm.tsx` provides the client-side order form and submission state
+- `src/app/api/orders/route.ts` validates the request, converts packages to 7 bottles per package, generates a unique `PN-...` order number, and sends the email through Resend
+- Email recipient: `panacea.naturale@gmail.com`
+- Email subject includes the order number and bottle count
+- Customer email is used as `replyTo`; the body includes name, address, message, and contact details
+- Required server environment variables: `RESEND_API_KEY` and verified `RESEND_FROM_EMAIL`
 
 ## Assets:
 - Images: `public/images/` (0–7, hero + 6 gallery photos)
@@ -212,7 +223,7 @@ Avoid:
 ## Deployment Readiness:
 - ✅ All pages fully functional and responsive
 - ✅ Mobile-first design implemented
-- ✅ No external API dependencies (OpenStreetMap is CDN-based)
+- ✅ OpenStreetMap is CDN-based; order email delivery uses Resend
 - ✅ Mailto and tel: links work on all devices
 - ⚠️ Complete 2 pending items above before production launch
 
@@ -228,9 +239,10 @@ Avoid:
 - **PDF certificate**: `public/documents/cert_panacea.pdf`
 
 ## Contact Integration:
-- **Phone**: `tel:+381677208129` (tel: protocol, works on all devices)
+- **Phone**: `061 5000280` (`tel:+381615000280`, tel: protocol, works on all devices)
 - **Email**: `mailto:panacea.naturale@gmail.com` (free, native HTML, no backend required)
 - **Map**: OpenStreetMap via React Leaflet (CDN-based, free)
+- **Order form**: `POST /api/orders` via Resend; requires `RESEND_API_KEY` and `RESEND_FROM_EMAIL`
 
 ---
 

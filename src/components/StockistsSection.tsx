@@ -30,13 +30,13 @@ export default function StockistsSection() {
             {s.phone.text}
           </p>
           <a
-            href="tel:+381677208129"
+            href="tel:+381615000280"
             className="inline-flex items-center gap-3 font-[family-name:var(--font-nav)] text-[12px] uppercase tracking-[0.18em] text-[#1E3A1E] hover:text-[#3D7A3D] transition-colors duration-200"
           >
             <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.13 1.19 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
             </svg>
-            +381 67 7208 129
+            061 5000280
           </a>
         </Accordion>
 
