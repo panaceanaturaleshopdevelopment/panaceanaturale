@@ -59,7 +59,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Order service unavailable" }, { status: 500 });
     }
 
-    const orderNumber = `PN-${new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 14)}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const orderTimestamp = new Date();
+    const orderNumber = `PN-${orderTimestamp.toISOString().replace(/[-:TZ.]/g, "").slice(0, 14)}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const orderDate = orderTimestamp.toLocaleString("en-GB", { timeZone: "Europe/Belgrade", dateStyle: "medium", timeStyle: "short" });
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { error } = await resend.emails.send({
@@ -69,6 +71,7 @@ export async function POST(request: Request) {
       subject: `Order ${orderNumber} - ${bottles} bottle${bottles === 1 ? "" : "s"}`,
       text: [
         `Order number: ${orderNumber}`,
+        `Order date: ${orderDate}`,
         `Number of packages: ${packages}`,
         `Number of bottles: ${bottles}`,
         "",
