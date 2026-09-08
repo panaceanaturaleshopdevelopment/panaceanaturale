@@ -201,17 +201,21 @@ Avoid:
 - Security controls: 16 KB request limit, server-side validation, honeypot field, and best-effort limit of 5 requests per IP per 10 minutes
 - The current in-memory limiter is not shared between Vercel serverless instances; add shared rate limiting or CAPTCHA/Turnstile before high-traffic launch
 
+#### Resend account & domain status (as of 2026-09-08)
+- **Active Resend account**: dedicated business account registered with `panacea.naturale.shop@gmail.com` credentials (replaces an earlier personal/sandbox account used only during initial setup — that old account's API key is no longer referenced anywhere and can be revoked whenever convenient).
+- **API key**: named `panacea-vercel-production` (sending-access only), stored as `RESEND_API_KEY` in Vercel (`panaceanaturale-z1e3`, Production environment). Not recorded here — rotate via the Resend dashboard/MCP tools and update the Vercel env var + redeploy if it ever needs to change.
+- **Domain added to Resend**: `panaceanaturale.rs` (Resend domain id `58cdc29e-e5c7-444f-864f-c667c30a7e45`, region `us-east-1`, sending enabled, receiving disabled).
+- **DNS records added** (via `vercel dns add`, since this domain's zone is managed in Vercel):
+  - DKIM — `TXT resend._domainkey` (record id `rec_734c4e6f07bfdf339e1dd287`)
+  - SPF — `MX send` → `feedback-smtp.us-east-1.amazonses.com`, priority 10 (record id `rec_d7e65d34792a690089073efa`)
+  - SPF — `TXT send` → `v=spf1 include:amazonses.com ~all` (record id `rec_6cff613639e352526137f20e`)
+- **Verification status**: `pending`. Likely blocked by an unresolved registrar issue — see the yu.net nameserver item below; Resend's verification crawler may hit resolvers still pointed at the old DNS host, which has no knowledge of these records.
+- **Current `RESEND_FROM_EMAIL`**: still `onboarding@resend.dev` (Resend's shared sandbox address) as an interim measure. This currently delivers successfully **only** because the order recipient (`panacea.naturale.shop@gmail.com`) happens to match this Resend account's own owner email — sandbox mode only allows sending to the account owner. This is a fragile coincidence, not a real fix: it would break for any other recipient (e.g. emailing a customer directly) and isn't something to build on.
+- **Once `panaceanaturale.rs` shows `verified` in Resend**: update `RESEND_FROM_EMAIL` in Vercel to an address on that domain (e.g. `orders@panaceanaturale.rs`) and redeploy — this removes the sandbox restriction entirely and enables sending to any recipient.
+
 ## Assets:
 - Images: `public/images/` (0–7, hero + 6 gallery photos)
 - Certificate: `public/documents/cert_panacea.pdf`
-
-## Internationalisation:
-- All text in `LanguageContext.tsx` under `translations.sr` and `translations.en`
-- `useLanguage()` hook provides `t` (translations) and `setLanguage()` function
-- `tx()` helper in `src/lib/tx.tsx` renders `**bold**` inline formatting
-- FAQ items have optional `link: { text, url }` for inline links in answers
-- To add nav entries: update `nav.sr` and `nav.en` arrays in LanguageContext
-- Language toggle: lowercase `srb` / `eng` in navbar (mobile and desktop)
 
 ## Fonts:
 - **Serif headers**: Cormorant Garamond (300, 400, 500) — elegant, premium feel
@@ -222,7 +226,8 @@ Avoid:
 - [x] Facebook link URL — Updated: `https://www.facebook.com/people/Panacea-Naturale/61562838522730/`
 - [ ] Page metadata (`title`, `description`) in `layout.tsx` — Update with proper SEO titles and descriptions
 - [ ] `lang` attribute in `<html>` — Make reactive to language context (currently hardcoded `"en"`)
-- [ ] **Resend domain verification (do this when migrating to the real repo/Vercel app)** — `RESEND_API_KEY` and `RESEND_FROM_EMAIL` are currently set in Vercel (`panaceanaturale-z1e3`) using a **personal** Resend account with no verified domain, so `RESEND_FROM_EMAIL=onboarding@resend.dev` (Resend sandbox). Sandbox mode can only deliver to the Resend account owner's own email — **not** to `panacea.naturale.shop@gmail.com` — so order-inquiry emails do not currently reach the business inbox in production. Before/at launch on the real repo and Vercel app: verify `panaceanaturale.rs` (or a subdomain) as a domain in the production Resend account, add the DNS records it provides, then update `RESEND_FROM_EMAIL` to an address on that domain (e.g. `orders@panaceanaturale.rs`) and redeploy.
+- [ ] **Resend domain verification** — in progress, see "Resend account & domain status" under Order email flow above for full detail. `panaceanaturale.rs` has been added to a dedicated Resend account and its DNS records added in Vercel; verification is `pending`. Likely blocked on the yu.net nameserver issue below — the domain's registry delegation still lists old nameservers alongside the new Vercel ones, so DNS checks can inconsistently miss the new records. Once verified, update `RESEND_FROM_EMAIL` to an address on that domain and redeploy.
+- [ ] **yu.net nameserver fix** — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site) and is the likely blocker on Resend domain verification above. Support has been contacted at my.yu.net; awaiting their fix. Re-verify both this domain's delegation and Resend's domain status once resolved.
 
 ## Deployment Readiness:
 - ✅ All pages fully functional and responsive
@@ -231,7 +236,7 @@ Avoid:
 - ✅ Mailto and tel: links work on all devices
 - ✅ `npm audit` and `npm audit --omit=dev` report zero known vulnerabilities
 - ⚠️ Complete the 2 SEO/accessibility pending items above and add shared order-endpoint anti-abuse protection before high-traffic production use
-- ⚠️ Order-inquiry emails are not yet reaching `panacea.naturale.shop@gmail.com` in production — Resend is on a personal account with no verified domain (sandbox `from` address). See the Resend domain verification pending item above.
+- ✅ Order-inquiry emails now reach `panacea.naturale.shop@gmail.com` in production, but only via a fragile interim workaround (Resend sandbox `from` address that happens to match the account owner's email) — not yet a real fix. See the Resend domain verification and yu.net nameserver pending items above.
 
 ---
 
@@ -244,20 +249,11 @@ Avoid:
 - **Gallery images**: 6 photos in `public/images/` (1–7.jpg, 0.jpg is hero background)
 - **PDF certificate**: `public/documents/cert_panacea.pdf`
 
-## Contact Integration:
-- **Phone**: `0615000280` (`tel:+381615000280`, tel: protocol, works on all devices)
-- **Email**: `mailto:panacea.naturale@gmail.com` (free, native HTML, no backend required)
-- **Map**: OpenStreetMap via React Leaflet (CDN-based, free)
-- **Order form**: `POST /api/orders` via Resend; requires `RESEND_API_KEY` and `RESEND_FROM_EMAIL`
-
-## Security Notes:
-- The order endpoint validates all fields, limits request bodies to 16 KB, rejects the hidden honeypot field, and allows at most 5 requests per IP per 10-minute window in a single serverless instance.
-- The in-memory limiter is best-effort only on Vercel because instances do not share memory. For stronger production protection, add a shared rate-limit store such as Upstash Redis or a managed CAPTCHA/Turnstile check.
-- Keep `RESEND_API_KEY` server-side, configure `RESEND_FROM_EMAIL` in Vercel Environment Variables, and never commit `.env*` files.
-- Run `npm audit` and `npm audit --omit=dev` before releases; both currently report zero known vulnerabilities.
+See README.md for contact integration details (phone/email/map/order-form mechanics) and the Security section (validation, rate limiting, secret handling, audit status) — both are stable/generic and maintained there to avoid duplication.
 
 ---
 
 see:
+@README.md
 @AGENTS.md
 @GIT.md
