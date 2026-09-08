@@ -39,10 +39,10 @@ export default function OrderForm({ onClose }: OrderFormProps) {
   };
 
   const fields = [
-    ["fullName", t.order.fullName, "text"],
-    ["email", t.order.email, "email"],
-    ["phone", t.order.phone, "tel"],
-    ["address", t.order.address, "text"],
+    ["fullName", t.order.fullName, "text", undefined],
+    ["email", t.order.email, "email", "^\\S+@\\S+\\.\\S+$"],
+    ["phone", t.order.phone, "tel", "^[+]?[0-9\\s-]{6,20}$"],
+    ["address", t.order.address, "text", undefined],
   ] as const;
 
   return (
@@ -77,13 +77,14 @@ export default function OrderForm({ onClose }: OrderFormProps) {
               aria-hidden="true"
               className="absolute -left-[9999px] h-px w-px opacity-0"
             />
-            {fields.map(([name, label, type]) => (
+            {fields.map(([name, label, type, pattern]) => (
               <label key={name} className="block font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.12em] text-[#3D7A3D]">
                 {label}
                 <input
                   name={name}
                   type={type}
                   required
+                  pattern={pattern}
                   className="mt-2 block w-full border-b border-[#C8C4B4] bg-transparent px-1 py-2 font-[family-name:var(--font-serif)] text-lg normal-case tracking-normal text-[#2C2C22] outline-none focus:border-[#3D7A3D]"
                 />
               </label>

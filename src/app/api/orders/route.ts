@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid order data" }, { status: 400 });
     }
 
-    if (!/^\S+@\S+\.\S+$/.test(email) || fullName.length > 120 || email.length > 254 || phone.length > 40 || address.length > 500 || message.length > 2000) {
+    if (!/^\S+@\S+\.\S+$/.test(email) || !/^[+]?[0-9\s-]{6,20}$/.test(phone) || fullName.length > 120 || email.length > 254 || address.length > 500 || message.length > 2000) {
       return NextResponse.json({ error: "Invalid order data" }, { status: 400 });
     }
 
@@ -59,7 +59,8 @@ export async function POST(request: Request) {
     }
 
     const orderTimestamp = new Date();
-    const orderNumber = `PN-${orderTimestamp.toISOString().replace(/[-:TZ.]/g, "").slice(0, 14)}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const [orderDay, orderTime] = orderTimestamp.toLocaleString("sv-SE", { timeZone: "Europe/Belgrade" }).split(" ");
+    const orderNumber = `PN-${orderDay.replace(/-/g, "")}-${orderTime.slice(0, 5).replace(":", "")}-${crypto.randomUUID().slice(0, 4).toUpperCase()}`;
     const orderDate = orderTimestamp.toLocaleString("en-GB", { timeZone: "Europe/Belgrade", dateStyle: "medium", timeStyle: "short" });
     const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -67,7 +68,7 @@ export async function POST(request: Request) {
       from: process.env.RESEND_FROM_EMAIL,
       to: process.env.ORDER_RECIPIENT_EMAIL,
       replyTo: email,
-      subject: `Order ${orderNumber} - ${bottles} bottle${bottles === 1 ? "" : "s"}`,
+      subject: `Order ${orderNumber} - ${packages} package${packages === 1 ? "" : "s"}`,
       text: [
         `Order number: ${orderNumber}`,
         `Order date: ${orderDate}`,

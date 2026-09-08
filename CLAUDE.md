@@ -198,6 +198,7 @@ Avoid:
 - Email subject includes the order number and bottle count
 - Customer email is used as `replyTo`; the body includes name, address, order date/time, message, and contact details
 - Required server environment variables: `RESEND_API_KEY`, verified `RESEND_FROM_EMAIL`, and `ORDER_RECIPIENT_EMAIL`
+- In Vercel, `RESEND_API_KEY` is stored as type `Secret` (write-only, never readable again, even in the dashboard) since it's a real credential. `RESEND_FROM_EMAIL` and `ORDER_RECIPIENT_EMAIL` are stored as type `Config` instead (readable in the dashboard and via `vercel env pull`) since they're not secrets, just settings — this makes it possible to actually verify their current value later instead of only being able to blindly overwrite it
 - Security controls: 16 KB request limit, server-side validation, honeypot field, and best-effort limit of 5 requests per IP per 10 minutes
 - The current in-memory limiter is not shared between Vercel serverless instances; add shared rate limiting or CAPTCHA/Turnstile before high-traffic launch
 
