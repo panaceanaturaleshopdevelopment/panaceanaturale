@@ -19,8 +19,10 @@ export default function OrderForm({ onClose }: OrderFormProps) {
     setIsSubmitting(true);
     setResult(null);
 
+    const form = event.currentTarget;
+
     try {
-      const formData = new FormData(event.currentTarget);
+      const formData = new FormData(form);
       const response = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -28,7 +30,7 @@ export default function OrderForm({ onClose }: OrderFormProps) {
       });
 
       setResult(response.ok ? "success" : "error");
-      if (response.ok) event.currentTarget.reset();
+      if (response.ok) form.reset();
     } catch {
       setResult("error");
     } finally {

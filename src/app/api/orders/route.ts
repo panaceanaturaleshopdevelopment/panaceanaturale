@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const recipient = "panacea.naturale.shop@gmail.com";
 const bottlesPerPackage = 7;
 const maxBodyBytes = 16 * 1024;
 const rateLimitWindowMs = 10 * 60 * 1000;
@@ -54,21 +53,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid order data" }, { status: 400 });
     }
 
-    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL) {
+    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL || !process.env.ORDER_RECIPIENT_EMAIL) {
       console.error("Order email configuration is missing");
       return NextResponse.json({ error: "Order service unavailable" }, { status: 500 });
     }
 
-    const orderNumber = `PN-${new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 14)}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const orderTimestamp = new Date();
+    const orderNumber = `PN-${orderTimestamp.toISOString().replace(/[-:TZ.]/g, "").slice(0, 14)}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+    const orderDate = orderTimestamp.toLocaleString("en-GB", { timeZone: "Europe/Belgrade", dateStyle: "medium", timeStyle: "short" });
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL,
-      to: recipient,
+      to: process.env.ORDER_RECIPIENT_EMAIL,
       replyTo: email,
       subject: `Order ${orderNumber} - ${bottles} bottle${bottles === 1 ? "" : "s"}`,
       text: [
         `Order number: ${orderNumber}`,
+        `Order date: ${orderDate}`,
         `Number of packages: ${packages}`,
         `Number of bottles: ${bottles}`,
         "",
