@@ -223,11 +223,20 @@ Avoid:
 - **Fallback**: Geist Sans system font stack
 
 ## Pending:
+
+### Unblocked — can be worked whenever
 - [x] Facebook link URL — Updated: `https://www.facebook.com/people/Panacea-Naturale/61562838522730/`
-- [ ] Page metadata (`title`, `description`) in `layout.tsx` — Update with proper SEO titles and descriptions
-- [ ] `lang` attribute in `<html>` — Make reactive to language context (currently hardcoded `"en"`)
-- [ ] **Resend domain verification** — in progress, see "Resend account & domain status" under Order email flow above for full detail. `panaceanaturale.rs` has been added to a dedicated Resend account and its DNS records added in Vercel; verification is `pending`. Likely blocked on the yu.net nameserver issue below — the domain's registry delegation still lists old nameservers alongside the new Vercel ones, so DNS checks can inconsistently miss the new records. Once verified, update `RESEND_FROM_EMAIL` to an address on that domain and redeploy.
-- [ ] **yu.net nameserver fix** — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site) and is the likely blocker on Resend domain verification above. Support has been contacted at my.yu.net; awaiting their fix. Re-verify both this domain's delegation and Resend's domain status once resolved.
+- [x] Page metadata (`title`, `description`) in `layout.tsx` — set to Serbian SEO copy (matches the app's default language), replacing the default "Create Next App" placeholder
+- [x] `lang` attribute in `<html>` — now reactive: `layout.tsx` sets the SSR default to `"sr"`, and `LanguageProvider` (`LanguageContext.tsx`) syncs `document.documentElement.lang` client-side via `useEffect` whenever the user toggles language. Verified via SSR curl check (correct `lang="sr"` + title/description on initial load); the client-side toggle itself wasn't click-tested in an actual browser, only reasoned through as a standard React pattern.
+- [ ] Shared order-endpoint anti-abuse protection (rate limiting/CAPTCHA) — current in-memory limiter doesn't work across Vercel's serverless instances; needed before high-traffic launch
+
+### Blocked — waiting on yu.net support, nothing to do here until they respond
+- [ ] **yu.net nameserver fix** *(blocks the two items below)* — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site). Support has been contacted at my.yu.net; awaiting their fix.
+- [ ] **Resend domain verification** *(blocked by yu.net fix above)* — `panaceanaturale.rs` has been added to a dedicated Resend account and its DNS records added in Vercel; verification is `pending`, likely because Resend's crawler can inconsistently hit the old, un-migrated nameservers. Once yu.net's fix lands and delegation is confirmed clean, re-check verification status; once verified, update `RESEND_FROM_EMAIL` to an address on that domain and redeploy.
+- [ ] **`sokodpsenicnetrave.rs` nameserver migration** *(deliberately held, not just waiting)* — a second, currently-unused domain on the same Vercel project. User wants it migrated to Vercel nameservers too, but this is intentionally on hold until yu.net resolves the first domain's issue — no point risking the same split-delegation bug on a second domain mid-fix. Vercel's project side is already configured to expect it.
+- [ ] **Vercel project migration to the business account** *(deliberately deferred, not forgotten)* — move the Vercel project from the personal `brkovicana` Hobby account to `panaceanaturaleshop-hub`, mirroring the GitHub org migration (already done). Deferred specifically until the yu.net situation is fully resolved and stable, so a second DNS-adjacent change doesn't overlap with an in-flight one. See `project_vercel_resend_setup` memory for the full Vercel-Team-requires-payment / manual-transfer-risk research behind this decision.
+
+### Done, contributing context
 - [x] **Repo made public** — moved to the `panaceanaturaleshopdevelopment` GitHub org, then made public, deliberately: Vercel's free Hobby plan cannot auto-deploy a *private* org-owned repo (Pro-only), and paying for Pro/a Team was explicitly ruled out. Before making it public, `ORDER_RECIPIENT_EMAIL` was moved out of hardcoded source into an env var so the current code no longer exposes it. **Known residual gap**: earlier commits in git history still contain the recipient email in plain text (from before this change) — a deliberate, accepted tradeoff (history left as-is rather than rewritten) rather than an oversight.
 
 ## Deployment Readiness:
@@ -236,8 +245,9 @@ Avoid:
 - ✅ OpenStreetMap is CDN-based; order email delivery uses Resend
 - ✅ Mailto and tel: links work on all devices
 - ✅ `npm audit` and `npm audit --omit=dev` report zero known vulnerabilities
-- ⚠️ Complete the 2 SEO/accessibility pending items above and add shared order-endpoint anti-abuse protection before high-traffic production use
-- ✅ Order-inquiry emails now reach `panacea.naturale.shop@gmail.com` in production, but only via a fragile interim workaround (Resend sandbox `from` address that happens to match the account owner's email) — not yet a real fix. See the Resend domain verification and yu.net nameserver pending items above.
+- ✅ Page metadata and reactive `lang` attribute done — see Pending above
+- ⚠️ Add shared order-endpoint anti-abuse protection before high-traffic production use
+- ✅ Order-inquiry emails now reach `panacea.naturale.shop@gmail.com` in production (now via `ORDER_RECIPIENT_EMAIL`), but only via a fragile interim workaround (Resend sandbox `from` address that happens to match the account owner's email) — not yet a real fix. See the Resend domain verification and yu.net nameserver pending items above.
 
 ---
 
