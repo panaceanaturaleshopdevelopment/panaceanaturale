@@ -62,7 +62,7 @@ public/
 
 The floating `Poruci` / `Order` button opens `OrderForm`. The form requires full name, email address, phone number, physical address, and a package count selected from a dropdown. The message field is optional. One package contains 7 bottles.
 
-The client sends JSON to `POST /api/orders`. The server validates the input, converts packages to bottles, generates a unique `PN-...` order number, and sends an email to `panacea.naturale@gmail.com` through Resend.
+The client sends JSON to `POST /api/orders`. The server validates the input, converts packages to bottles, generates a unique `PN-...` order number, and sends an email to `panacea.naturale.shop@gmail.com` through Resend.
 
 The email subject includes the order number and total bottle count. The email body includes the package count, bottle count, customer name, address, message, and contact details. The customer email is used as `replyTo`.
 
@@ -96,6 +96,8 @@ Vercel automatically runs the Next.js build and deploys `src/app/api/orders/rout
 ## Content and Translations
 
 All visible copy is stored in `src/context/LanguageContext.tsx`. When adding or changing copy, update both `translations.sr` and `translations.en`. Navigation items are maintained in the `nav` arrays in the same file.
+
+The `useLanguage()` hook exposes `t` (the active translations object) and `setLanguage()`. FAQ items support an optional `link: { text, url }` for an inline link in the answer. The language switcher in the navbar uses lowercase labels (`srb` / `eng`).
 
 The page sections appear in this order: Navbar, Hero, About, Juice, Gallery, Usage, Availability, FAQ, and Footer. Anchor IDs are documented in `CLAUDE.md`.
 
