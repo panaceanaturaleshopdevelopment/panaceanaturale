@@ -62,9 +62,9 @@ public/
 
 The floating `Poruci` / `Order` button opens `OrderForm`. The form requires full name, email address, phone number, physical address, and a package count selected from a dropdown. The message field is optional. One package contains 7 bottles.
 
-The client sends JSON to `POST /api/orders`. The server validates the input, converts packages to bottles, generates a unique `PN-...` order number, and sends an email to `panacea.naturale.shop@gmail.com` through Resend.
+The client sends JSON to `POST /api/orders`. The server validates the input, converts packages to bottles, generates a unique `PN-...` order number, and sends an email to the address configured in `ORDER_RECIPIENT_EMAIL` through Resend. The recipient is intentionally not hardcoded in source, since this repository is public.
 
-The email subject includes the order number and total bottle count. The email body includes the package count, bottle count, customer name, address, message, and contact details. The customer email is used as `replyTo`.
+The email subject includes the order number and total bottle count. The email body includes the package count, bottle count, order date/time, customer name, address, message, and contact details. The customer email is used as `replyTo`.
 
 The submit action is labeled `Pošalji upit` in Serbian and `Send inquiry` in English.
 
@@ -75,6 +75,7 @@ Resend setup is required before real order delivery works. Create a Resend accou
 ```env
 RESEND_API_KEY=re_your_api_key
 RESEND_FROM_EMAIL="Panacea Naturale <orders@your-verified-domain.com>"
+ORDER_RECIPIENT_EMAIL=orders-inbox@example.com
 ```
 
 For local development, place these values in `.env.local`. Environment files are ignored by `.gitignore` and must never be committed. Do not use a `NEXT_PUBLIC_` prefix for the API key.
@@ -87,7 +88,7 @@ The current implementation sends the order notification to Panacea only. It does
 
 1. Push the repository to GitHub.
 2. Import the repository into Vercel.
-3. Add `RESEND_API_KEY` and `RESEND_FROM_EMAIL` under **Settings > Environment Variables**. Set them for Production, and Preview if preview orders should be tested.
+3. Add `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, and `ORDER_RECIPIENT_EMAIL` under **Settings > Environment Variables**. Set them for Production, and Preview if preview orders should be tested.
 4. Verify the sending domain in Resend and add its DNS records at the domain registrar.
 5. Deploy or redeploy the project.
 
@@ -115,7 +116,7 @@ The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1
 
 ## Security
 
-The order endpoint currently has server-side validation, a 16 KB request-body limit, a hidden honeypot field, and a best-effort limit of 5 requests per IP per 10 minutes. The Resend API key is read only in the server route and is never exposed to the browser.
+This repository is public. The order endpoint currently has server-side validation, a 16 KB request-body limit, a hidden honeypot field, and a best-effort limit of 5 requests per IP per 10 minutes — note that a public repo means these exact thresholds and the honeypot field name are visible to anyone, which offers less defense-in-depth than they would in a private repo. The Resend API key and order recipient are read only from environment variables in the server route and are never hardcoded in source or exposed to the browser. Earlier git history predates this and may still contain the recipient email in plain text; this is a known, accepted gap rather than an oversight.
 
 The in-memory rate limiter is not a complete production anti-abuse system on Vercel because separate serverless instances do not share memory. The recommended next step is to add a shared rate-limit store such as Upstash Redis, or add Cloudflare Turnstile/reCAPTCHA verification. Either option requires a service account and environment variables. Until then, monitor Resend usage and treat the current limiter as basic protection only.
 

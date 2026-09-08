@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const recipient = "panacea.naturale.shop@gmail.com";
 const bottlesPerPackage = 7;
 const maxBodyBytes = 16 * 1024;
 const rateLimitWindowMs = 10 * 60 * 1000;
@@ -54,7 +53,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid order data" }, { status: 400 });
     }
 
-    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL) {
+    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL || !process.env.ORDER_RECIPIENT_EMAIL) {
       console.error("Order email configuration is missing");
       return NextResponse.json({ error: "Order service unavailable" }, { status: 500 });
     }
@@ -66,7 +65,7 @@ export async function POST(request: Request) {
 
     const { error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL,
-      to: recipient,
+      to: process.env.ORDER_RECIPIENT_EMAIL,
       replyTo: email,
       subject: `Order ${orderNumber} - ${bottles} bottle${bottles === 1 ? "" : "s"}`,
       text: [

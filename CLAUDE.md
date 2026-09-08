@@ -194,10 +194,10 @@ Avoid:
 ### Order email flow
 - `src/components/OrderForm.tsx` provides the client-side order form and submission state
 - `src/app/api/orders/route.ts` validates the request, converts packages to 7 bottles per package, generates a unique `PN-...` order number, and sends the email through Resend
-- Email recipient: `panacea.naturale.shop@gmail.com`
+- Email recipient is read from `ORDER_RECIPIENT_EMAIL` (not hardcoded — deliberately kept out of source since this repo is public; see Pending below), currently set to `panacea.naturale.shop@gmail.com` in Vercel
 - Email subject includes the order number and bottle count
-- Customer email is used as `replyTo`; the body includes name, address, message, and contact details
-- Required server environment variables: `RESEND_API_KEY` and verified `RESEND_FROM_EMAIL`
+- Customer email is used as `replyTo`; the body includes name, address, order date/time, message, and contact details
+- Required server environment variables: `RESEND_API_KEY`, verified `RESEND_FROM_EMAIL`, and `ORDER_RECIPIENT_EMAIL`
 - Security controls: 16 KB request limit, server-side validation, honeypot field, and best-effort limit of 5 requests per IP per 10 minutes
 - The current in-memory limiter is not shared between Vercel serverless instances; add shared rate limiting or CAPTCHA/Turnstile before high-traffic launch
 
@@ -228,6 +228,7 @@ Avoid:
 - [ ] `lang` attribute in `<html>` — Make reactive to language context (currently hardcoded `"en"`)
 - [ ] **Resend domain verification** — in progress, see "Resend account & domain status" under Order email flow above for full detail. `panaceanaturale.rs` has been added to a dedicated Resend account and its DNS records added in Vercel; verification is `pending`. Likely blocked on the yu.net nameserver issue below — the domain's registry delegation still lists old nameservers alongside the new Vercel ones, so DNS checks can inconsistently miss the new records. Once verified, update `RESEND_FROM_EMAIL` to an address on that domain and redeploy.
 - [ ] **yu.net nameserver fix** — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site) and is the likely blocker on Resend domain verification above. Support has been contacted at my.yu.net; awaiting their fix. Re-verify both this domain's delegation and Resend's domain status once resolved.
+- [x] **Repo made public** — moved to the `panaceanaturaleshopdevelopment` GitHub org, then made public, deliberately: Vercel's free Hobby plan cannot auto-deploy a *private* org-owned repo (Pro-only), and paying for Pro/a Team was explicitly ruled out. Before making it public, `ORDER_RECIPIENT_EMAIL` was moved out of hardcoded source into an env var so the current code no longer exposes it. **Known residual gap**: earlier commits in git history still contain the recipient email in plain text (from before this change) — a deliberate, accepted tradeoff (history left as-is rather than rewritten) rather than an oversight.
 
 ## Deployment Readiness:
 - ✅ All pages fully functional and responsive
