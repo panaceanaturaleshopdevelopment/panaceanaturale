@@ -8,6 +8,8 @@ type NavItem = {
   id: string;
   label: string;
   children?: NavItem[];
+  /** Scroll target if different from `id` (e.g. an alias item pointing at another section) */
+  target?: string;
 };
 
 type Translations = {
@@ -108,7 +110,7 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "faq", label: "Česta pitanja" },
-    { id: "footer", label: "Kontakt" },
+    { id: "contact", label: "Kontakt", target: "where" },
   ],
   en: [
     { id: "home", label: "Home" },
@@ -136,7 +138,7 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "faq", label: "FAQ" },
-    { id: "footer", label: "Contact" },
+    { id: "contact", label: "Contact", target: "where" },
   ],
 };
 

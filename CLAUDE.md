@@ -30,7 +30,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 7. Cena (`#price`)
 8. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
 9. Česta pitanja (`#faq`)
-10. Footer (`#footer`) — also targeted directly by the "Kontakt" nav item
+10. Footer (`#footer`)
 
 ## Key files:
 - `src/context/LanguageContext.tsx` — all translations (SR/EN) + nav structure
@@ -116,7 +116,9 @@ Avoid:
 - Dark green background (`#1E3A1E`) matching footer
 - **Theme toggle**: change `THEME` constant at top of `Navbar.tsx` between `"dark"` and `"light"` to switch full color scheme
 - Logo uses CSS mask (`backgroundColor: #5A8A5A`) for exact brand color
-- Mobile: a three-line hamburger icon (toggles to an X when open) opens the mobile menu; the logo itself is desktop-only (`hidden md:block`) and scrolls to `#home` when clicked — changed from the earlier logo-as-hamburger design per client feedback (2026-09-18) that the logo shouldn't double as the menu icon
+- Mobile: an enlarged three-line hamburger icon (`w-9 h-9`, toggles to an X when open) opens the mobile menu; the logo itself is desktop-only (`hidden md:block`) and scrolls to `#home` when clicked — changed from the earlier logo-as-hamburger design per client feedback (2026-09-18) that the logo shouldn't double as the menu icon
+- Mobile menu items with children (O soku, Dostupnost): tapping the label scrolls to that section like any other item; a separate chevron button expands/collapses the submenu without navigating
+- `NavItem.target` (optional, `LanguageContext.tsx`) lets a nav item scroll to a different section's id than its own — used by Kontakt/Contact, which points at `#where` (Dostupnost) rather than being a separate section
 - Desktop hover dropdowns for O soku and Dostupnost subsections
 - Mobile accordion submenus
 - Language switcher: srb / eng
@@ -136,9 +138,10 @@ Avoid:
 - Dark green theme (`#1E3A1E`) with light theme toggle — change `THEME` constant at top of `Navbar.tsx`
 - Height `h-20` (80px); logo `h-28` bleeds 32px below the bar (`overflow: visible`, `self-start`)
 - Logo: CSS mask div with `backgroundColor: #5A8A5A` — exact brand color, no filter approximation
-- Mobile: hamburger icon (toggles to X when open) replaces the logo as the menu control; logo shown desktop-only, click scrolls to `#home` (click toggles menu on `window.innerWidth < 768`)
-- Dropdown submenus for O soku and Dostupnost (hover desktop, accordion mobile)
-- Nav includes `Cena` (→ `#price`) and `Kontakt`/`Contact` (→ `#footer`) as flat items
+- Mobile: hamburger icon (enlarged `w-9 h-9`, toggles to X when open) replaces the logo as the menu control; logo shown desktop-only, click scrolls to `#home` (click toggles menu on `window.innerWidth < 768`)
+- Dropdown submenus for O soku and Dostupnost (hover desktop; mobile: tapping the item's own label scrolls to that section AND closes the menu, same as every other item — a separate small chevron button toggles the submenu list open/closed without navigating). Fixed 2026-09-18: previously tapping O soku/Dostupnost on mobile only opened the submenu and never scrolled, unlike every flat nav item
+- `NavItem` supports an optional `target` field (`LanguageContext.tsx`) for items whose scroll destination differs from their own `id` — used by `Kontakt`/`Contact` (`id: "contact"`, `target: "where"`) so it scrolls to the existing Dostupnost/contact section instead of duplicating it as a new section
+- Nav includes `Cena` (→ `#price`) and `Kontakt`/`Contact` (→ `#where`) as flat items
 - Language switcher: lowercase `srb` / `eng`
 - Nav text contrast: `#D8D4C4` default, `#F0EDE4` hover
 
@@ -187,7 +190,7 @@ Avoid:
 
 ### Footer
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
-- `id="footer"` on the `<footer>` element — the navbar's `Kontakt`/`Contact` item scrolls here directly (added 2026-09-18; simplest option matching the existing anchor-scroll nav pattern, no new modal/page needed)
+- `id="footer"` on the `<footer>` element (currently unreferenced by nav — the `Kontakt`/`Contact` item was changed 2026-09-18 to scroll to `#where`/Dostupnost instead, since that section already covers phone/email/map contact info; kept in case something else anchors here later)
 - Contact: `0615000280` | `panacea.naturale@gmail.com` | Čačak, Serbia address
 - Social: Instagram (linked), Facebook (linked)
 - Copyright line
