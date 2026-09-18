@@ -8,8 +8,6 @@ type NavItem = {
   id: string;
   label: string;
   children?: NavItem[];
-  /** Scroll target if different from `id` (e.g. an alias item pointing at another section) */
-  target?: string;
 };
 
 type Translations = {
@@ -74,6 +72,13 @@ type Translations = {
     label: string;
     items: { question: string; answer: string; link?: { text: string; url: string } }[];
   };
+  contact: {
+    label: string;
+    heading: string;
+    phoneLabel: string;
+    emailLabel: string;
+    addressLabel: string;
+  };
   footer: {
     tagline: string;
     address: string;
@@ -110,7 +115,7 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "faq", label: "Česta pitanja" },
-    { id: "contact", label: "Kontakt", target: "where" },
+    { id: "contact", label: "Kontakt" },
   ],
   en: [
     { id: "home", label: "Home" },
@@ -138,7 +143,7 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "faq", label: "FAQ" },
-    { id: "contact", label: "Contact", target: "where" },
+    { id: "contact", label: "Contact" },
   ],
 };
 
@@ -282,6 +287,13 @@ const translations: Record<Language, Translations> = {
         //   link: { text: "ovde", url: "/documents/cert_panacea.pdf" },
         // },
       ],
+    },
+    contact: {
+      label: "Kontakt",
+      heading: "Kontakt",
+      phoneLabel: "Telefon",
+      emailLabel: "Email",
+      addressLabel: "Adresa",
     },
     footer: {
       tagline: "Hladno ceđeni sok od pšenične trave",
@@ -430,6 +442,13 @@ const translations: Record<Language, Translations> = {
         //   link: { text: "here", url: "/documents/cert_panacea.pdf" },
         // },
       ],
+    },
+    contact: {
+      label: "Contact",
+      heading: "Contact",
+      phoneLabel: "Phone",
+      emailLabel: "Email",
+      addressLabel: "Address",
     },
     footer: {
       tagline: "Cold-pressed wheatgrass juice",
