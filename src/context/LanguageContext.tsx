@@ -20,6 +20,7 @@ type Translations = {
     packages: string;
     bottlesPerPackage: string;
     selectOption: string;
+    total: string;
     message: string;
     optional: string;
     submit: string;
@@ -46,6 +47,14 @@ type Translations = {
     zastoBiraju: { heading: string; p1: string; p2: string };
   };
   gallery: { label: string };
+  price: {
+    label: string;
+    heading: string;
+    currency: string;
+    perPackage: string;
+    note: string;
+    photoSoon: string;
+  };
   usage: {
     label: string;
     intro: string;
@@ -88,6 +97,7 @@ const nav: Record<Language, NavItem[]> = {
     },
     { id: "gallery", label: "Galerija" },
     { id: "usage", label: "Upotreba" },
+    { id: "price", label: "Cena" },
     {
       id: "where",
       label: "Dostupnost",
@@ -98,6 +108,7 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "faq", label: "Česta pitanja" },
+    { id: "footer", label: "Kontakt" },
   ],
   en: [
     { id: "home", label: "Home" },
@@ -114,6 +125,7 @@ const nav: Record<Language, NavItem[]> = {
     },
     { id: "gallery", label: "Gallery" },
     { id: "usage", label: "How to use" },
+    { id: "price", label: "Price" },
     {
       id: "where",
       label: "Stockists",
@@ -124,6 +136,7 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "faq", label: "FAQ" },
+    { id: "footer", label: "Contact" },
   ],
 };
 
@@ -138,6 +151,7 @@ const translations: Record<Language, Translations> = {
       packages: "Broj pakovanja",
       bottlesPerPackage: "Jedno pakovanje sadrži 7 flašica",
       selectOption: "Izaberite",
+      total: "Ukupno",
       message: "Poruka",
       optional: "opciono",
       submit: "Pošalji upit",
@@ -174,10 +188,10 @@ const translations: Record<Language, Translations> = {
       },
       nutritivniSastav: {
         heading: "Nutritivni sastav",
-        intro: "Prema podacima iz naučne literature, sok od pšenične trave može sadržati značajne količine prirodnih nutrijenata. U prikazu nutritivnog profila na 100 ml navode se, između ostalog:",
+        intro: "Zvanična analiza nutritivnog sastava soka od pšenične trave Panacea Naturale pokazuje sledeće vrednosti:",
         colNutrient: "Nutrijent",
-        colPer100: "na 100 ml",
-        note: "Napomena: nutritivne vrednosti mogu varirati u zavisnosti od sorte, uslova uzgoja, starosti biljke, načina obrade i čuvanja. Navedene vrednosti su podaci iz objavljene naučne literature, a ne laboratorijska deklaracija konkretnog proizvoda.",
+        colPer100: "na 100 g",
+        note: "Napomena: navedene vrednosti predstavljaju rezultate izvršene analize konkretnog proizvoda Panacea Naturale i mogu blago varirati između serija.",
       },
       hladnoCedjenje: {
         heading: "Hladno ceđenje i brzo zamrzavanje",
@@ -192,6 +206,14 @@ const translations: Record<Language, Translations> = {
     },
     gallery: {
       label: "Galerija",
+    },
+    price: {
+      label: "Cena",
+      heading: "Cena",
+      currency: "RSD",
+      perPackage: "po pakovanju",
+      note: "*Jedno pakovanje sadrži 7 flašica.",
+      photoSoon: "Fotografija pakovanja uskoro",
     },
     usage: {
       label: "Upotreba",
@@ -277,6 +299,7 @@ const translations: Record<Language, Translations> = {
       packages: "Number of packages",
       bottlesPerPackage: "One package contains 7 bottles",
       selectOption: "Select",
+      total: "Total",
       message: "Message",
       optional: "optional",
       submit: "Send inquiry",
@@ -313,10 +336,10 @@ const translations: Record<Language, Translations> = {
       },
       nutritivniSastav: {
         heading: "Nutritional composition",
-        intro: "According to data from scientific literature, wheatgrass juice may contain significant amounts of natural nutrients. The nutritional profile per 100 ml includes, among others:",
+        intro: "The official nutritional analysis of Panacea Naturale wheatgrass juice shows the following values:",
         colNutrient: "Nutrient",
-        colPer100: "per 100 ml",
-        note: "Note: nutritional values may vary depending on variety, growing conditions, plant age, processing method and storage. The values shown are data from published scientific literature, not a laboratory declaration of a specific product.",
+        colPer100: "per 100 g",
+        note: "Note: the values shown are results of an analysis performed on the specific Panacea Naturale product and may vary slightly between batches.",
       },
       hladnoCedjenje: {
         heading: "Cold pressing and quick freezing",
@@ -331,6 +354,14 @@ const translations: Record<Language, Translations> = {
     },
     gallery: {
       label: "Gallery",
+    },
+    price: {
+      label: "Price",
+      heading: "Price",
+      currency: "RSD",
+      perPackage: "per package",
+      note: "*One package contains 7 bottles.",
+      photoSoon: "Package photo coming soon",
     },
     usage: {
       label: "How to use",

@@ -27,15 +27,18 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 4. O soku (`#juice`) — subsections: `#juice-zeleno-zdravlje`, `#juice-nutritivni-sastav`, `#juice-hladno-cedjenje`, `#juice-zasto-biraju`
 5. Galerija (`#gallery`)
 6. Upotreba (`#usage`)
-7. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
-8. Česta pitanja (`#faq`)
-9. Footer
+7. Cena (`#price`)
+8. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
+9. Česta pitanja (`#faq`)
+10. Footer (`#footer`) — also targeted directly by the "Kontakt" nav item
 
 ## Key files:
 - `src/context/LanguageContext.tsx` — all translations (SR/EN) + nav structure
 - `src/lib/tx.tsx` — rich text helper: renders `**bold**` markers as styled spans
+- `src/lib/pricing.ts` — single source of truth for the package price (`PACKAGE_PRICE_RSD`) and its locale-aware formatter; used by both `PriceSection` and `OrderForm` so the displayed price and the order-form total can't drift apart
 - `src/components/ui/Accordion.tsx` — reusable collapsible subsection; listens for `open-accordion` custom event
 - `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right that opens the `OrderForm` modal
+- `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, placeholder box for a package photo (pending from the client)
 
 ---
 
@@ -113,7 +116,7 @@ Avoid:
 - Dark green background (`#1E3A1E`) matching footer
 - **Theme toggle**: change `THEME` constant at top of `Navbar.tsx` between `"dark"` and `"light"` to switch full color scheme
 - Logo uses CSS mask (`backgroundColor: #5A8A5A`) for exact brand color
-- Logo replaces hamburger on mobile — clicking toggles mobile menu
+- Mobile: a three-line hamburger icon (toggles to an X when open) opens the mobile menu; the logo itself is desktop-only (`hidden md:block`) and scrolls to `#home` when clicked — changed from the earlier logo-as-hamburger design per client feedback (2026-09-18) that the logo shouldn't double as the menu icon
 - Desktop hover dropdowns for O soku and Dostupnost subsections
 - Mobile accordion submenus
 - Language switcher: srb / eng
@@ -133,8 +136,9 @@ Avoid:
 - Dark green theme (`#1E3A1E`) with light theme toggle — change `THEME` constant at top of `Navbar.tsx`
 - Height `h-20` (80px); logo `h-28` bleeds 32px below the bar (`overflow: visible`, `self-start`)
 - Logo: CSS mask div with `backgroundColor: #5A8A5A` — exact brand color, no filter approximation
-- Mobile: logo replaces hamburger (click toggles menu on `window.innerWidth < 768`)
+- Mobile: hamburger icon (toggles to X when open) replaces the logo as the menu control; logo shown desktop-only, click scrolls to `#home` (click toggles menu on `window.innerWidth < 768`)
 - Dropdown submenus for O soku and Dostupnost (hover desktop, accordion mobile)
+- Nav includes `Cena` (→ `#price`) and `Kontakt`/`Contact` (→ `#footer`) as flat items
 - Language switcher: lowercase `srb` / `eng`
 - Nav text contrast: `#D8D4C4` default, `#F0EDE4` hover
 
@@ -151,7 +155,7 @@ Avoid:
 ### O soku (`#juice`)
 - Intro with 3 fact stats (100%, 30ml, 10–12 days)
 - 4 collapsible subsections (Accordion component)
-- Nutrient table with bilingual nutrient names
+- Nutrient table with bilingual nutrient names, per 100 g. Values (as of 2026-09-18) are from an actual lab analysis of the Panacea Naturale product — not generic literature figures like the earlier table — and include EU-label-style sub-rows (`sub: true` in the `nutrients` array in `JuiceSection.tsx`) for "of which saturates" and "of which sugars" nested under Fat and Carbohydrate
 - All text translated SR/EN
 
 ### Galerija (`#gallery`)
@@ -162,6 +166,11 @@ Avoid:
 ### Upotreba (`#usage`)
 - Intro paragraph + 3 collapsible subsections (Accordion)
 - All text translated SR/EN
+
+### Cena (`#price`)
+- Added 2026-09-18 per client feedback
+- Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a dashed placeholder box for a package photo the client hasn't sent yet
+- The price constant is shared with `OrderForm.tsx` so the Cena section and the order-form total always agree
 
 ### Dostupnost (`#where`)
 - Interactive OpenStreetMap with 23 stockist pins (red SVG markers + popups)
@@ -178,6 +187,7 @@ Avoid:
 
 ### Footer
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
+- `id="footer"` on the `<footer>` element — the navbar's `Kontakt`/`Contact` item scrolls here directly (added 2026-09-18; simplest option matching the existing anchor-scroll nav pattern, no new modal/page needed)
 - Contact: `0615000280` | `panacea.naturale@gmail.com` | Čačak, Serbia address
 - Social: Instagram (linked), Facebook (linked)
 - Copyright line
@@ -187,6 +197,7 @@ Avoid:
 - Fixed bottom-right, always visible, larger with rounded corners, gold border, premium shadow, and hover lift
 - Opens the `OrderForm` modal with required full name, email, phone, physical address, and package count fields
 - Package count is a dropdown; each package contains 7 bottles
+- Shows a live-calculated total (`packages × PACKAGE_PRICE_RSD` from `src/lib/pricing.ts`) beneath the package dropdown as soon as a count is selected
 - Includes an optional message field and bilingual SR/EN labels
 - Submits to `POST /api/orders`
 - "Poruči" (SR) / "Order" (EN); form submit action is "Pošalji upit" / "Send inquiry"
@@ -230,6 +241,8 @@ Avoid:
 - [x] Page metadata (`title`, `description`) in `layout.tsx` — set to Serbian SEO copy (matches the app's default language), replacing the default "Create Next App" placeholder
 - [x] `lang` attribute in `<html>` — now reactive: `layout.tsx` sets the SSR default to `"sr"`, and `LanguageProvider` (`LanguageContext.tsx`) syncs `document.documentElement.lang` client-side via `useEffect` whenever the user toggles language. Verified via SSR curl check (correct `lang="sr"` + title/description on initial load); the client-side toggle itself wasn't click-tested in an actual browser, only reasoned through as a standard React pattern.
 - [ ] Shared order-endpoint anti-abuse protection (rate limiting/CAPTCHA) — current in-memory limiter doesn't work across Vercel's serverless instances; needed before high-traffic launch
+- [ ] Package photo for the Cena section — client said they'll provide it; `PriceSection.tsx` currently shows a dashed placeholder box in its place
+- [ ] Product videos — client asked for videos added to the site, most likely as YouTube links; nothing built yet since no links/content have been provided
 
 ### Blocked — waiting on yu.net support, nothing to do here until they respond
 - [ ] **yu.net nameserver fix** *(blocks the two items below)* — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site). Support has been contacted at my.yu.net; awaiting their fix.

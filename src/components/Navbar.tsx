@@ -107,9 +107,35 @@ export default function Navbar() {
               if (window.innerWidth < 768) setMobileOpen((o) => !o);
               else scrollTo("home");
             }}
-            aria-label="Početna"
+            aria-label={language === "sr" ? "Meni / Početna" : "Menu / Home"}
+            className="flex items-center justify-center"
           >
+            {/* Mobile: hamburger / close icon toggles the menu */}
+            <svg
+              className="md:hidden w-7 h-7"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={th.logoColor}
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              {mobileOpen ? (
+                <>
+                  <line x1="5" y1="5" x2="19" y2="19" />
+                  <line x1="19" y1="5" x2="5" y2="19" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </>
+              )}
+            </svg>
+
+            {/* Desktop: brand logo, scrolls to top */}
             <div
+              className="hidden md:block"
               style={{
                 backgroundColor: th.logoColor,
                 WebkitMaskImage: "url(/panacea_logo.png)",
