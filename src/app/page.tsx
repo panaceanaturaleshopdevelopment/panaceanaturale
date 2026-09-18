@@ -1,4 +1,5 @@
 import AboutSection from "@/components/AboutSection";
+import ContactSection from "@/components/ContactSection";
 import FAQSection from "@/components/FAQSection";
 import GallerySection from "@/components/GallerySection";
 import HeroSection from "@/components/HeroSection";
@@ -15,8 +16,9 @@ export default function Home() {
       <JuiceSection />
       <GallerySection />
       <UsageSection />
-      <PriceSection />
       <StockistsSection />
+      <PriceSection />
+      <ContactSection />
       <FAQSection />
     </>
   );

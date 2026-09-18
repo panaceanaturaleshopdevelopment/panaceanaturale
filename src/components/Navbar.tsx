@@ -47,6 +47,20 @@ const themes = {
 
 const th = themes[THEME];
 
+const logoMaskStyle = {
+  backgroundColor: th.logoColor,
+  WebkitMaskImage: "url(/panacea_logo.png)",
+  maskImage: "url(/panacea_logo.png)",
+  WebkitMaskSize: "contain",
+  maskSize: "contain",
+  WebkitMaskRepeat: "no-repeat",
+  maskRepeat: "no-repeat",
+  WebkitMaskPosition: "center",
+  maskPosition: "center",
+  height: "7rem",
+  aspectRatio: "535 / 466",
+} as const;
+
 const languages = [
   { code: "sr", flag: "🇷🇸", label: "srb" },
   { code: "en", flag: "🇬🇧", label: "eng" },
@@ -100,25 +114,19 @@ export default function Navbar() {
         scrolled ? th.borderScrolled : "border-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between gap-8">
+      <nav className="relative max-w-7xl mx-auto px-8 h-20 flex items-center justify-between gap-8">
         <div className="flex items-start shrink-0 self-start">
+          {/* Mobile: hamburger / close icon toggles the menu */}
           <button
-            onClick={() => {
-              if (window.innerWidth < 768) setMobileOpen((o) => !o);
-              else scrollTo("home");
-            }}
-            aria-label={language === "sr" ? "Meni / Početna" : "Menu / Home"}
-            className="flex items-center justify-center p-2 -m-2 md:p-0 md:m-0"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label={
+              mobileOpen
+                ? (language === "sr" ? "Zatvori meni" : "Close menu")
+                : (language === "sr" ? "Otvori meni" : "Open menu")
+            }
+            className="md:hidden flex items-center justify-center p-2 -m-2"
           >
-            {/* Mobile: hamburger / close icon toggles the menu */}
-            <svg
-              className="md:hidden w-9 h-9"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={th.logoColor}
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
+            <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke={th.logoColor} strokeWidth="2" strokeLinecap="round">
               {mobileOpen ? (
                 <>
                   <line x1="5" y1="5" x2="19" y2="19" />
@@ -132,26 +140,26 @@ export default function Navbar() {
                 </>
               )}
             </svg>
+          </button>
 
-            {/* Desktop: brand logo, scrolls to top */}
-            <div
-              className="hidden md:block"
-              style={{
-                backgroundColor: th.logoColor,
-                WebkitMaskImage: "url(/panacea_logo.png)",
-                maskImage: "url(/panacea_logo.png)",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-                maskPosition: "center",
-                height: "7rem",
-                aspectRatio: "535 / 466",
-              }}
-            />
+          {/* Desktop: brand logo, scrolls to top */}
+          <button
+            onClick={() => scrollTo("home")}
+            aria-label={language === "sr" ? "Početna" : "Home"}
+            className="hidden md:block"
+          >
+            <div style={logoMaskStyle} />
           </button>
         </div>
+
+        {/* Mobile: brand logo, centered in the header, scrolls to top */}
+        <button
+          onClick={() => scrollTo("home")}
+          aria-label={language === "sr" ? "Početna" : "Home"}
+          className="md:hidden absolute left-1/2 top-0 -translate-x-1/2 flex items-start"
+        >
+          <div style={logoMaskStyle} />
+        </button>
 
         {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-6">
@@ -159,7 +167,7 @@ export default function Navbar() {
             item.children ? (
               <li key={item.id} className="relative group">
                 <button
-                  onClick={() => scrollTo(item.target ?? item.id)}
+                  onClick={() => scrollTo(item.id)}
                   className={`relative flex items-center gap-1 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] ${th.navLink} transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:transition-[width] after:duration-300 hover:after:w-full`}
                 >
                   {item.label}
@@ -183,7 +191,7 @@ export default function Navbar() {
             ) : (
               <li key={item.id}>
                 <button
-                  onClick={() => scrollTo(item.target ?? item.id)}
+                  onClick={() => scrollTo(item.id)}
                   className={`relative font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] ${th.navLink} transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:transition-[width] after:duration-300 hover:after:w-full`}
                 >
                   {item.label}
@@ -236,7 +244,7 @@ export default function Navbar() {
                 <li key={item.id} className={`border-b ${th.mobileLink}`}>
                   <div className="flex items-center justify-between">
                     <button
-                      onClick={() => scrollTo(item.target ?? item.id)}
+                      onClick={() => scrollTo(item.id)}
                       className="flex-1 text-left py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] transition-colors"
                     >
                       {item.label}
@@ -273,7 +281,7 @@ export default function Navbar() {
               ) : (
                 <li key={item.id}>
                   <button
-                    onClick={() => scrollTo(item.target ?? item.id)}
+                    onClick={() => scrollTo(item.id)}
                     className={`w-full text-left py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] ${th.mobileLink} transition-colors border-b last:border-0`}
                   >
                     {item.label}
