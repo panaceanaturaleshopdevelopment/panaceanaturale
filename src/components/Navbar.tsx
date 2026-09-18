@@ -108,11 +108,11 @@ export default function Navbar() {
               else scrollTo("home");
             }}
             aria-label={language === "sr" ? "Meni / Početna" : "Menu / Home"}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center p-2 -m-2 md:p-0 md:m-0"
           >
             {/* Mobile: hamburger / close icon toggles the menu */}
             <svg
-              className="md:hidden w-7 h-7"
+              className="md:hidden w-9 h-9"
               viewBox="0 0 24 24"
               fill="none"
               stroke={th.logoColor}
@@ -159,7 +159,7 @@ export default function Navbar() {
             item.children ? (
               <li key={item.id} className="relative group">
                 <button
-                  onClick={() => scrollTo(item.id)}
+                  onClick={() => scrollTo(item.target ?? item.id)}
                   className={`relative flex items-center gap-1 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] ${th.navLink} transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:transition-[width] after:duration-300 hover:after:w-full`}
                 >
                   {item.label}
@@ -183,7 +183,7 @@ export default function Navbar() {
             ) : (
               <li key={item.id}>
                 <button
-                  onClick={() => scrollTo(item.id)}
+                  onClick={() => scrollTo(item.target ?? item.id)}
                   className={`relative font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] ${th.navLink} transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:transition-[width] after:duration-300 hover:after:w-full`}
                 >
                   {item.label}
@@ -233,16 +233,28 @@ export default function Navbar() {
           <ul className="max-w-7xl mx-auto px-6 py-3 flex flex-col">
             {navItems.map((item) =>
               item.children ? (
-                <li key={item.id}>
-                  <button
-                    onClick={() => setMobileSubmenu((prev) => (prev === item.id ? null : item.id))}
-                    className={`w-full flex items-center justify-between py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] ${th.mobileLink} transition-colors border-b`}
-                  >
-                    {item.label}
-                    <svg className={`w-3 h-3 transition-transform duration-200 ${mobileSubmenu === item.id ? "rotate-180" : ""}`} viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M2 4l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </button>
+                <li key={item.id} className={`border-b ${th.mobileLink}`}>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => scrollTo(item.target ?? item.id)}
+                      className="flex-1 text-left py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                    <button
+                      onClick={() => setMobileSubmenu((prev) => (prev === item.id ? null : item.id))}
+                      aria-label={
+                        mobileSubmenu === item.id
+                          ? (language === "sr" ? "Zatvori podmeni" : "Close submenu")
+                          : (language === "sr" ? "Otvori podmeni" : "Open submenu")
+                      }
+                      className="py-3 pl-3 pr-1 transition-colors"
+                    >
+                      <svg className={`w-3 h-3 transition-transform duration-200 ${mobileSubmenu === item.id ? "rotate-180" : ""}`} viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M2 4l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  </div>
                   {mobileSubmenu === item.id && (
                     <ul className={`pl-4 border-l ${th.mobileIndent} ml-2 mb-1`}>
                       {item.children.map((child) => (
@@ -261,7 +273,7 @@ export default function Navbar() {
               ) : (
                 <li key={item.id}>
                   <button
-                    onClick={() => scrollTo(item.id)}
+                    onClick={() => scrollTo(item.target ?? item.id)}
                     className={`w-full text-left py-3 font-[family-name:var(--font-nav)] text-[13px] uppercase tracking-[0.14em] ${th.mobileLink} transition-colors border-b last:border-0`}
                   >
                     {item.label}
