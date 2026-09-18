@@ -49,10 +49,13 @@ src/
   components/                 Page sections and reusable UI
     OrderForm.tsx             Order inquiry modal and client submission
     FloatingOrderButton.tsx   Fixed order CTA
+    PriceSection.tsx          Package price section
+    ContactSection.tsx        Phone/email/address section
     StockistsMap.tsx          Leaflet map and stockist data
     ui/Accordion.tsx          Reusable collapsible section
   context/LanguageContext.tsx All SR/EN translations and navigation
   lib/tx.tsx                  Renders **bold** translation markers
+  lib/pricing.ts              Shared package price constant and formatter
 public/
   images/                     Hero and gallery images
   documents/                  Product certificate PDF
@@ -64,7 +67,7 @@ The floating `Poruci` / `Order` button opens `OrderForm`. The form requires full
 
 The client sends JSON to `POST /api/orders`. The server validates the input, converts packages to bottles, generates a unique `PN-...` order number, and sends an email to the address configured in `ORDER_RECIPIENT_EMAIL` through Resend. The recipient is intentionally not hardcoded in source, since this repository is public.
 
-The email subject includes the order number and total bottle count. The email body includes the package count, bottle count, order date/time, customer name, address, message, and contact details. The customer email is used as `replyTo`.
+The email subject includes the order number and package count. The email body includes the package count, bottle count, order date/time, customer name, address, message, and contact details. The customer email is used as `replyTo`.
 
 The submit action is labeled `Pošalji upit` in Serbian and `Send inquiry` in English.
 

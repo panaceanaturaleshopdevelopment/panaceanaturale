@@ -214,7 +214,7 @@ Avoid:
 - `src/components/OrderForm.tsx` provides the client-side order form and submission state
 - `src/app/api/orders/route.ts` validates the request, converts packages to 7 bottles per package, generates a unique `PN-...` order number, and sends the email through Resend
 - Email recipient is read from `ORDER_RECIPIENT_EMAIL` (not hardcoded — deliberately kept out of source since this repo is public; see Pending below), currently set to `panacea.naturale.shop@gmail.com` in Vercel
-- Email subject includes the order number and bottle count
+- Email subject includes the order number and package count
 - Customer email is used as `replyTo`; the body includes name, address, order date/time, message, and contact details
 - Required server environment variables: `RESEND_API_KEY`, verified `RESEND_FROM_EMAIL`, and `ORDER_RECIPIENT_EMAIL`
 - In Vercel, `RESEND_API_KEY` is stored as type `Secret` (write-only, never readable again, even in the dashboard) since it's a real credential. `RESEND_FROM_EMAIL` and `ORDER_RECIPIENT_EMAIL` are stored as type `Config` instead (readable in the dashboard and via `vercel env pull`) since they're not secrets, just settings — this makes it possible to actually verify their current value later instead of only being able to blindly overwrite it
