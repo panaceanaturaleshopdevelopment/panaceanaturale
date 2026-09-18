@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { PACKAGE_PRICE_RSD, formatPriceRSD } from "@/lib/pricing";
 
 type OrderFormProps = {
   onClose: () => void;
@@ -10,9 +11,10 @@ type OrderFormProps = {
 type Result = "success" | "error" | null;
 
 export default function OrderForm({ onClose }: OrderFormProps) {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<Result>(null);
+  const [packages, setPackages] = useState("");
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -94,7 +96,8 @@ export default function OrderForm({ onClose }: OrderFormProps) {
               <select
                 name="packages"
                 required
-                defaultValue=""
+                value={packages}
+                onChange={(event) => setPackages(event.target.value)}
                 className="mt-2 block w-full border-b border-[#C8C4B4] bg-transparent px-1 py-2 font-[family-name:var(--font-serif)] text-lg normal-case tracking-normal text-[#2C2C22] outline-none focus:border-[#3D7A3D]"
               >
                 <option value="" disabled>{t.order.selectOption}</option>
@@ -105,6 +108,11 @@ export default function OrderForm({ onClose }: OrderFormProps) {
               <span className="mt-1 block font-[family-name:var(--font-serif)] text-sm normal-case tracking-normal text-[#5C5C50]">
                 {t.order.bottlesPerPackage}
               </span>
+              {packages && (
+                <span className="mt-1 block font-[family-name:var(--font-serif)] text-base normal-case tracking-normal text-[#1E3A1E]">
+                  {t.order.total}: {formatPriceRSD(Number(packages) * PACKAGE_PRICE_RSD, language)} RSD
+                </span>
+              )}
             </label>
             <label className="block font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.12em] text-[#3D7A3D]">
               {t.order.message} <span className="normal-case tracking-normal text-[#5C5C50]">({t.order.optional})</span>

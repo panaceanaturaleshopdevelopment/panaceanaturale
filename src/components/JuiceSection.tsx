@@ -6,20 +6,13 @@ import { tx } from "@/lib/tx";
 import Accordion from "@/components/ui/Accordion";
 
 const nutrients = [
-  { name: { sr: "Energija", en: "Energy" }, value: "327", unit: "kcal" },
-  { name: { sr: "Proteini", en: "Proteins" }, value: "12,63", unit: "g" },
-  { name: { sr: "Ugljeni hidrati", en: "Carbohydrates" }, value: "71,18", unit: "g" },
-  { name: { sr: "Šećeri", en: "Sugars" }, value: "0,41", unit: "g" },
-  { name: { sr: "Dijetetska vlakna", en: "Dietary fibre" }, value: "12,2", unit: "g" },
-  { name: { sr: "Masti", en: "Fats" }, value: "1,54", unit: "g" },
-  { name: { sr: "Gvožđe", en: "Iron" }, value: "126", unit: "mg" },
-  { name: { sr: "Kalijum", en: "Potassium" }, value: "363", unit: "mg" },
-  { name: { sr: "Fosfor", en: "Phosphorus" }, value: "288", unit: "mg" },
-  { name: { sr: "Kalcijum", en: "Calcium" }, value: "29", unit: "mg" },
-  { name: { sr: "Vitamin E", en: "Vitamin E" }, value: "1,01", unit: "mg" },
-  { name: { sr: "Niacin / B3", en: "Niacin / B3" }, value: "5,464", unit: "mg" },
-  { name: { sr: "Folati", en: "Folates" }, value: "38", unit: "μg" },
-  { name: { sr: "Cink", en: "Zinc" }, value: "2,65", unit: "mg" },
+  { name: { sr: "Energetska vrednost", en: "Energy" }, value: "91 kJ / 21,7", unit: "kcal" },
+  { name: { sr: "Masti", en: "Fat" }, value: "0,12", unit: "g" },
+  { name: { sr: "od kojih zasićene masne kiseline", en: "of which saturates" }, value: "0", unit: "g", sub: true },
+  { name: { sr: "Ugljeni hidrati", en: "Carbohydrate" }, value: "2,24", unit: "g" },
+  { name: { sr: "od kojih šećeri", en: "of which sugars" }, value: "1,3", unit: "g", sub: true },
+  { name: { sr: "Proteini", en: "Protein" }, value: "2,86", unit: "g" },
+  { name: { sr: "So", en: "Salt" }, value: "0", unit: "g" },
 ];
 
 export default function JuiceSection() {
@@ -93,17 +86,17 @@ export default function JuiceSection() {
                 {j.nutritivniSastav.colPer100}
               </p>
             </div>
-            {nutrients.map(({ name, value, unit }, i) => (
+            {nutrients.map(({ name, value, unit, sub }, i) => (
               <div
                 key={name.sr}
                 className={`grid grid-cols-2 px-4 py-2 border-b border-[#E4E2D8] last:border-0 ${
                   i % 2 === 0 ? "bg-[#FAFAF7]" : "bg-[#F7F5EE]"
                 }`}
               >
-                <p className="font-[family-name:var(--font-serif)] text-[14px] text-[#2C2C22] font-light">
+                <p className={`font-[family-name:var(--font-serif)] font-light ${sub ? "pl-4 text-[13px] text-[#6B6B5E]" : "text-[14px] text-[#2C2C22]"}`}>
                   {name[language]}
                 </p>
-                <p className="font-[family-name:var(--font-serif)] text-[14px] text-[#1E3A1E] font-medium text-right">
+                <p className={`font-[family-name:var(--font-serif)] text-right ${sub ? "text-[13px] font-light text-[#6B6B5E]" : "text-[14px] font-medium text-[#1E3A1E]"}`}>
                   {value}{" "}
                   <span className="font-light text-[#6B6B5E]">{unit}</span>
                 </p>
