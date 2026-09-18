@@ -16,10 +16,10 @@ export default function Home() {
       <JuiceSection />
       <GallerySection />
       <UsageSection />
-      <PriceSection />
       <StockistsSection />
-      <FAQSection />
+      <PriceSection />
       <ContactSection />
+      <FAQSection />
     </>
   );
 }

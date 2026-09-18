@@ -100,7 +100,7 @@ All visible copy is stored in `src/context/LanguageContext.tsx`. When adding or 
 
 The `useLanguage()` hook exposes `t` (the active translations object) and `setLanguage()`. FAQ items support an optional `link: { text, url }` for an inline link in the answer. The language switcher in the navbar uses lowercase labels (`srb` / `eng`).
 
-The page sections appear in this order: Navbar, Hero, About, Juice, Gallery, Usage, Price, Availability, FAQ, Contact, and Footer. Anchor IDs are documented in `CLAUDE.md`.
+The page sections appear in this order: Navbar, Hero, About, Juice, Gallery, Usage, Availability, Price, Contact, FAQ, and Footer. Anchor IDs are documented in `CLAUDE.md`.
 
 The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1600x1200 4:3 image with baked-in text; mobile uses `object-contain` and a matching aspect-ratio section so the text is not cropped or followed by empty space.
 

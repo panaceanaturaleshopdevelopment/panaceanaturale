@@ -104,7 +104,6 @@ const nav: Record<Language, NavItem[]> = {
     },
     { id: "gallery", label: "Galerija" },
     { id: "usage", label: "Upotreba" },
-    { id: "price", label: "Cena" },
     {
       id: "where",
       label: "Dostupnost",
@@ -114,8 +113,9 @@ const nav: Record<Language, NavItem[]> = {
         { id: "where-email", label: "Poruči emailom" },
       ],
     },
-    { id: "faq", label: "Česta pitanja" },
+    { id: "price", label: "Cena" },
     { id: "contact", label: "Kontakt" },
+    { id: "faq", label: "Česta pitanja" },
   ],
   en: [
     { id: "home", label: "Home" },
@@ -132,7 +132,6 @@ const nav: Record<Language, NavItem[]> = {
     },
     { id: "gallery", label: "Gallery" },
     { id: "usage", label: "How to use" },
-    { id: "price", label: "Price" },
     {
       id: "where",
       label: "Stockists",
@@ -142,8 +141,9 @@ const nav: Record<Language, NavItem[]> = {
         { id: "where-email", label: "Order by email" },
       ],
     },
-    { id: "faq", label: "FAQ" },
+    { id: "price", label: "Price" },
     { id: "contact", label: "Contact" },
+    { id: "faq", label: "FAQ" },
   ],
 };
 

@@ -27,10 +27,10 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 4. O soku (`#juice`) — subsections: `#juice-zeleno-zdravlje`, `#juice-nutritivni-sastav`, `#juice-hladno-cedjenje`, `#juice-zasto-biraju`
 5. Galerija (`#gallery`)
 6. Upotreba (`#usage`)
-7. Cena (`#price`)
-8. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
-9. Česta pitanja (`#faq`)
-10. Kontakt (`#contact`)
+7. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
+8. Cena (`#price`)
+9. Kontakt (`#contact`)
+10. Česta pitanja (`#faq`)
 11. Footer (`#footer`)
 
 ## Key files:
@@ -170,11 +170,6 @@ Avoid:
 - Intro paragraph + 3 collapsible subsections (Accordion)
 - All text translated SR/EN
 
-### Cena (`#price`)
-- Added 2026-09-18 per client feedback
-- Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a dashed placeholder box for a package photo the client hasn't sent yet
-- The price constant is shared with `OrderForm.tsx` so the Cena section and the order-form total always agree
-
 ### Dostupnost (`#where`)
 - Interactive OpenStreetMap with 23 stockist pins (red SVG markers + popups)
 - 3 collapsible subsections: map, phone, email
@@ -182,16 +177,21 @@ Avoid:
 - Email: `mailto:` link (replaces previous Nodemailer form)
 - Map z-index fix: `isolation: isolate` prevents Leaflet controls from overlapping navbar
 
+### Cena (`#price`)
+- Added 2026-09-18 per client feedback; placed after Dostupnost and before Kontakt in both the page and the nav, per client request
+- Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a dashed placeholder box for a package photo the client hasn't sent yet
+- The price constant is shared with `OrderForm.tsx` so the Cena section and the order-form total always agree
+
+### Kontakt (`#contact`)
+- Added 2026-09-18 per client feedback, as its own dedicated section (an earlier pass just pointed the Kontakt nav item at the existing Dostupnost section instead — client asked for a real separate section)
+- Three-column layout (stacks on mobile): phone (`tel:` link), email (`mailto:` link), physical address — address text is `t.footer.address`, reused rather than duplicated as a new string
+- Placed between Cena and Česta pitanja, matching where `Kontakt` sits in the nav
+
 ### Česta pitanja (`#faq`)
 - 6 Q&As (SR + EN)
 - Custom FAQ accordion with 18px question text (not uppercase)
 - Certificate link opens `cert_panacea.pdf` in new tab
 - Renders nothing if `items` array is empty
-
-### Kontakt (`#contact`)
-- Added 2026-09-18 per client feedback, as its own dedicated section (an earlier pass just pointed the Kontakt nav item at the existing Dostupnost section instead — client asked for a real separate section)
-- Three-column layout (stacks on mobile): phone (`tel:` link), email (`mailto:` link), physical address — address text is `t.footer.address`, reused rather than duplicated as a new string
-- Placed last in page order, right before the Footer, matching where `Kontakt` sits in the nav
 
 ### Footer
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
