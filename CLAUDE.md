@@ -247,7 +247,7 @@ Avoid:
 - **Once `panaceanaturale.rs` shows `verified` in Resend**: update `RESEND_FROM_EMAIL` in Vercel to an address on that domain (e.g. `orders@panaceanaturale.rs`) and redeploy — this removes the sandbox restriction entirely and enables sending to any recipient.
 
 ## Assets:
-- Images: `public/images/` (0–7, hero + 6 gallery photos)
+- Images: `public/images/` (0–7, hero + 6 gallery photos; 10 is the Cena product photo)
 - Certificate: `public/documents/cert_panacea.pdf`
 
 ## Fonts:
