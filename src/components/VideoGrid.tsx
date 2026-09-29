@@ -6,11 +6,11 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const videos = [
   {
-    id: "H48ZJICaj88",
+    id: "byQ2bghKGog",
     aspect: "aspect-video",
     caption: {
-      sr: "Sok od pšenične trave, i zdrav napitak i posao",
-      en: "Wheatgrass juice: a healthy drink and a livelihood",
+      sr: "Proizvodnja ZDRAVOG soka od SPELTE - U nasem ataru 990",
+      en: "Production of HEALTHY spelt juice — on our land",
     },
   },
   {
@@ -69,33 +69,28 @@ function VideoEmbed({ id, aspect }: { id: string; aspect: string }) {
   );
 }
 
-export default function VideoSection() {
+/**
+ * Rendered inside GallerySection, not its own top-level section — client asked for the
+ * videos to live under Galerija rather than as a separate nav item/section.
+ */
+export default function VideoGrid() {
   const { language, t } = useLanguage();
-  const v = t.videos;
 
   return (
-    <section id="videos" className="bg-[#FAFAF7]">
-      <div className="max-w-4xl mx-auto px-8 py-28 w-full">
-        <p className="font-[family-name:var(--font-nav)] text-[11px] uppercase tracking-[0.25em] text-[#3D7A3D] mb-6">
-          {v.label}
-        </p>
-        <div className="w-10 h-px bg-[#3D7A3D] mb-12" />
-
-        <h2 className="font-[family-name:var(--font-serif)] text-[38px] md:text-[44px] font-light text-[#1E3A1E] leading-tight mb-12">
-          {v.heading}
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 items-start">
-          {videos.map((video) => (
-            <div key={video.id}>
-              <VideoEmbed id={video.id} aspect={video.aspect} />
-              <p className="mt-4 font-[family-name:var(--font-serif)] text-[16px] text-[#2C2C22] font-light">
-                {video.caption[language]}
-              </p>
-            </div>
-          ))}
-        </div>
+    <div id="gallery-videos" className="max-w-4xl mx-auto px-8 pt-16">
+      <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E] mb-6">
+        {t.videos.heading}
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 items-start">
+        {videos.map((video) => (
+          <div key={video.id}>
+            <VideoEmbed id={video.id} aspect={video.aspect} />
+            <p className="mt-4 font-[family-name:var(--font-serif)] text-[16px] text-[#2C2C22] font-light">
+              {video.caption[language]}
+            </p>
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }

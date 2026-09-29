@@ -25,14 +25,13 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 2. Hero (`#home`)
 3. O nama (`#about`)
 4. O soku (`#juice`) — subsections: `#juice-zeleno-zdravlje`, `#juice-nutritivni-sastav`, `#juice-hladno-cedjenje`, `#juice-zasto-biraju`
-5. Galerija (`#gallery`)
-6. Video (`#videos`)
-7. Upotreba (`#usage`)
-8. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
-9. Cena (`#price`)
-10. Kontakt (`#contact`)
-11. Česta pitanja (`#faq`)
-12. Footer (`#footer`)
+5. Galerija (`#gallery`) — includes an embedded video grid (`#gallery-videos`) right after the photo strip, inside the same section
+6. Upotreba (`#usage`)
+7. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
+8. Cena (`#price`)
+9. Kontakt (`#contact`)
+10. Česta pitanja (`#faq`)
+11. Footer (`#footer`)
 
 ## Key files:
 - `src/context/LanguageContext.tsx` — all translations (SR/EN) + nav structure
@@ -42,7 +41,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right that opens the `OrderForm` modal
 - `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, portrait product photo
 - `src/components/ContactSection.tsx` — `#contact` section: phone, email, physical address (address text reused from `t.footer.address` so it isn't duplicated)
-- `src/components/VideoSection.tsx` — `#videos` section: two click-to-play YouTube embeds (facade thumbnail + play button, iframe only mounted after click — no third-party embed library), each sized to its own native aspect ratio
+- `src/components/VideoGrid.tsx` — rendered inside `GallerySection.tsx`, not its own page section/nav item (client explicitly asked for videos to live under Galerija, not separately, 2026-09-29). Two click-to-play YouTube embeds (facade thumbnail + play button, iframe only mounted after click — no third-party embed library), each sized to its own native aspect ratio
 
 ---
 
@@ -167,11 +166,10 @@ Avoid:
 - Horizontal scroll strip, portrait cards (`3:4`), CSS snap
 - Arrows shown at scroll boundaries
 - Click any card → full-screen lightbox with prev/next, keyboard nav, backdrop close
-
-### Video (`#videos`)
-- Added 2026-09-29 per client feedback, placed right after Galerija (client's choice) in both the page and the nav
-- Two YouTube videos (client's pick, out of 4 sent, when asked whether to include all 4 or just these 2): `H48ZJICaj88` (an RTS — Radio Televizija Srbije — reportage on the juice/production/business, 16:9) and `K0SaBB6R5QA` (a YouTube Short, a customer's usage experience, 9:16 portrait) — ids and captions live in the local `videos` array in `VideoSection.tsx`, same pattern as `JuiceSection.tsx`'s `nutrients` array (bilingual fields inline, not routed through `LanguageContext`)
-- Captions are short titles only (client's choice, not full descriptions): video 1 reuses its actual YouTube title (translated into English for the EN site); video 2's own YouTube title is just an auto-generated upload date, so per the client it's captioned "Iskustvo korisnika" / "Customer's experience" instead
+- Video grid (`#gallery-videos`, `VideoGrid.tsx`) rendered right after the photo strip, inside this same section — added 2026-09-29 per client feedback, initially built as its own `#videos` section/nav item, then folded into Galerija the same day per follow-up client feedback that it shouldn't be a separate section. No separate nav entry; reachable only by scrolling through Galerija
+- Two YouTube videos (client's pick, out of 4 sent): originally `H48ZJICaj88` (an RTS — Radio Televizija Srbije — reportage) + `K0SaBB6R5QA` (a YouTube Short, a customer's usage experience, 9:16 portrait). `H48ZJICaj88` turned out to be blocked from third-party embedding (confirmed live: YouTube returns "Video je nedostupan... sadržaj partnera Videomite CEE, koji je blokirao njegovo prikazivanje" — a hard block, not fixable) — verified via a real embedded iframe on an actual HTTP origin, not just oEmbed (oEmbed returns 200 even for videos with embedding disabled, so it's not a reliable check). Swapped for `byQ2bghKGog` (also from the client's original 4 links, confirmed embeddable the same way), 16:9. If `K0SaBB6R5QA` or any future video is ever reported as not playing, re-verify with the same real-iframe method before assuming it's a bug in the code
+- ids and captions live in the local `videos` array in `VideoGrid.tsx`, same pattern as `JuiceSection.tsx`'s `nutrients` array (bilingual fields inline, not routed through `LanguageContext` — only `t.videos.heading`, the small "Video" subheading shown above the grid, goes through translations)
+- Captions are short titles only (client's choice, not full descriptions): the reportage reuses its actual YouTube title (translated into English for the EN site); the Short's own YouTube title is just an auto-generated upload date, so per the client it's captioned "Iskustvo korisnika" / "Customer's experience" instead
 - Click-to-play facade: renders the YouTube thumbnail (`i.ytimg.com/vi/{id}/hqdefault.jpg`, via `next/image` — `i.ytimg.com` allow-listed in `next.config.ts`) with a play-button overlay; the actual `<iframe>` (youtube-nocookie.com, `autoplay=1`) is only mounted after a click, so nothing loads from YouTube until the user actually wants to watch — no embed library added, just local `useState` per video
 - Each card sized to its own native aspect ratio (`aspect-video` for the reportage, `aspect-[9/16]` for the Short) rather than forcing both into the same shape
 
@@ -260,7 +258,7 @@ Avoid:
 - [x] `lang` attribute in `<html>` — now reactive: `layout.tsx` sets the SSR default to `"sr"`, and `LanguageProvider` (`LanguageContext.tsx`) syncs `document.documentElement.lang` client-side via `useEffect` whenever the user toggles language. Verified via SSR curl check (correct `lang="sr"` + title/description on initial load); the client-side toggle itself wasn't click-tested in an actual browser, only reasoned through as a standard React pattern.
 - [ ] Shared order-endpoint anti-abuse protection (rate limiting/CAPTCHA) — current in-memory limiter doesn't work across Vercel's serverless instances; needed before high-traffic launch
 - [x] Package photo for the Cena section — client sent a portrait bottle photo 2026-09-29; now shown in `PriceSection.tsx`, placeholder removed
-- [x] Product videos — client sent 4 YouTube links 2026-09-29; asked to include 2 of them (a reportage and a customer-experience Short), embedded click-to-play in a new `#videos` section. The other 2 links they sent were not requested for inclusion, so nothing was built for those
+- [x] Product videos — client sent 4 YouTube links 2026-09-29; asked to include 2 of them (a reportage and a customer-experience Short), embedded click-to-play inside the Galerija section (not a separate section — see Galerija notes above for the mid-day swap of the blocked reportage video). The other 2 links they sent were not requested for inclusion, so nothing was built for those
 
 ### Blocked — waiting on yu.net support, nothing to do here until they respond
 - [ ] **yu.net nameserver fix** *(blocks the two items below)* — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site). Support has been contacted at my.yu.net; awaiting their fix.

@@ -47,7 +47,7 @@ type Translations = {
     zastoBiraju: { heading: string; p1: string; p2: string };
   };
   gallery: { label: string };
-  videos: { label: string; heading: string };
+  videos: { heading: string };
   price: {
     label: string;
     heading: string;
@@ -104,7 +104,6 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "gallery", label: "Galerija" },
-    { id: "videos", label: "Video" },
     { id: "usage", label: "Upotreba" },
     {
       id: "where",
@@ -133,7 +132,6 @@ const nav: Record<Language, NavItem[]> = {
       ],
     },
     { id: "gallery", label: "Gallery" },
-    { id: "videos", label: "Videos" },
     { id: "usage", label: "How to use" },
     {
       id: "where",
@@ -218,7 +216,6 @@ const translations: Record<Language, Translations> = {
       label: "Galerija",
     },
     videos: {
-      label: "Video",
       heading: "Video",
     },
     price: {
@@ -377,7 +374,6 @@ const translations: Record<Language, Translations> = {
       label: "Gallery",
     },
     videos: {
-      label: "Videos",
       heading: "Videos",
     },
     price: {

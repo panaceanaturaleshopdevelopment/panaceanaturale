@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import VideoGrid from "@/components/VideoGrid";
 
 const images = [
   { src: "/images/1. psenica.png", alt: "Polje pšenice" },
@@ -130,6 +131,8 @@ export default function GallerySection() {
           )}
         </div>
         </div>
+
+        <VideoGrid />
 
       </section>
 
