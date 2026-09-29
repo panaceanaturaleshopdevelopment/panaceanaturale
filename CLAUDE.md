@@ -26,12 +26,13 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 3. O nama (`#about`)
 4. O soku (`#juice`) — subsections: `#juice-zeleno-zdravlje`, `#juice-nutritivni-sastav`, `#juice-hladno-cedjenje`, `#juice-zasto-biraju`
 5. Galerija (`#gallery`)
-6. Upotreba (`#usage`)
-7. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
-8. Cena (`#price`)
-9. Kontakt (`#contact`)
-10. Česta pitanja (`#faq`)
-11. Footer (`#footer`)
+6. Video (`#videos`)
+7. Upotreba (`#usage`)
+8. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
+9. Cena (`#price`)
+10. Kontakt (`#contact`)
+11. Česta pitanja (`#faq`)
+12. Footer (`#footer`)
 
 ## Key files:
 - `src/context/LanguageContext.tsx` — all translations (SR/EN) + nav structure
@@ -39,8 +40,9 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - `src/lib/pricing.ts` — single source of truth for the package price (`PACKAGE_PRICE_RSD`) and its locale-aware formatter; used by both `PriceSection` and `OrderForm` so the displayed price and the order-form total can't drift apart
 - `src/components/ui/Accordion.tsx` — reusable collapsible subsection; listens for `open-accordion` custom event
 - `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right that opens the `OrderForm` modal
-- `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, placeholder box for a package photo (pending from the client)
+- `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, portrait product photo
 - `src/components/ContactSection.tsx` — `#contact` section: phone, email, physical address (address text reused from `t.footer.address` so it isn't duplicated)
+- `src/components/VideoSection.tsx` — `#videos` section: two click-to-play YouTube embeds (facade thumbnail + play button, iframe only mounted after click — no third-party embed library), each sized to its own native aspect ratio
 
 ---
 
@@ -166,6 +168,13 @@ Avoid:
 - Arrows shown at scroll boundaries
 - Click any card → full-screen lightbox with prev/next, keyboard nav, backdrop close
 
+### Video (`#videos`)
+- Added 2026-09-29 per client feedback, placed right after Galerija (client's choice) in both the page and the nav
+- Two YouTube videos (client's pick, out of 4 sent, when asked whether to include all 4 or just these 2): `H48ZJICaj88` (an RTS — Radio Televizija Srbije — reportage on the juice/production/business, 16:9) and `K0SaBB6R5QA` (a YouTube Short, a customer's usage experience, 9:16 portrait) — ids and captions live in the local `videos` array in `VideoSection.tsx`, same pattern as `JuiceSection.tsx`'s `nutrients` array (bilingual fields inline, not routed through `LanguageContext`)
+- Captions are short titles only (client's choice, not full descriptions): video 1 reuses its actual YouTube title (translated into English for the EN site); video 2's own YouTube title is just an auto-generated upload date, so per the client it's captioned "Iskustvo korisnika" / "Customer's experience" instead
+- Click-to-play facade: renders the YouTube thumbnail (`i.ytimg.com/vi/{id}/hqdefault.jpg`, via `next/image` — `i.ytimg.com` allow-listed in `next.config.ts`) with a play-button overlay; the actual `<iframe>` (youtube-nocookie.com, `autoplay=1`) is only mounted after a click, so nothing loads from YouTube until the user actually wants to watch — no embed library added, just local `useState` per video
+- Each card sized to its own native aspect ratio (`aspect-video` for the reportage, `aspect-[9/16]` for the Short) rather than forcing both into the same shape
+
 ### Upotreba (`#usage`)
 - Intro paragraph + 3 collapsible subsections (Accordion)
 - All text translated SR/EN
@@ -179,8 +188,9 @@ Avoid:
 
 ### Cena (`#price`)
 - Added 2026-09-18 per client feedback; placed after Dostupnost and before Kontakt in both the page and the nav, per client request
-- Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a dashed placeholder box for a package photo the client hasn't sent yet
+- Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a product photo
 - The price constant is shared with `OrderForm.tsx` so the Cena section and the order-form total always agree
+- Photo added 2026-09-29: `public/images/10. cena-flasica.png`, a 1080×1350 (4:5) portrait bottle shot the client sent, shown via `next/image` in a matching `aspect-[4/5]` container (client explicitly asked for portrait, not landscape, display) — replaced the earlier dashed "photo coming soon" placeholder; `t.price.photoSoon` was removed and replaced with `t.price.photoAlt` (image alt text) in both languages
 
 ### Kontakt (`#contact`)
 - Added 2026-09-18 per client feedback, as its own dedicated section (an earlier pass just pointed the Kontakt nav item at the existing Dostupnost section instead — client asked for a real separate section)
@@ -249,8 +259,8 @@ Avoid:
 - [x] Page metadata (`title`, `description`) in `layout.tsx` — set to Serbian SEO copy (matches the app's default language), replacing the default "Create Next App" placeholder
 - [x] `lang` attribute in `<html>` — now reactive: `layout.tsx` sets the SSR default to `"sr"`, and `LanguageProvider` (`LanguageContext.tsx`) syncs `document.documentElement.lang` client-side via `useEffect` whenever the user toggles language. Verified via SSR curl check (correct `lang="sr"` + title/description on initial load); the client-side toggle itself wasn't click-tested in an actual browser, only reasoned through as a standard React pattern.
 - [ ] Shared order-endpoint anti-abuse protection (rate limiting/CAPTCHA) — current in-memory limiter doesn't work across Vercel's serverless instances; needed before high-traffic launch
-- [ ] Package photo for the Cena section — client said they'll provide it; `PriceSection.tsx` currently shows a dashed placeholder box in its place
-- [ ] Product videos — client asked for videos added to the site, most likely as YouTube links; nothing built yet since no links/content have been provided
+- [x] Package photo for the Cena section — client sent a portrait bottle photo 2026-09-29; now shown in `PriceSection.tsx`, placeholder removed
+- [x] Product videos — client sent 4 YouTube links 2026-09-29; asked to include 2 of them (a reportage and a customer-experience Short), embedded click-to-play in a new `#videos` section. The other 2 links they sent were not requested for inclusion, so nothing was built for those
 
 ### Blocked — waiting on yu.net support, nothing to do here until they respond
 - [ ] **yu.net nameserver fix** *(blocks the two items below)* — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site). Support has been contacted at my.yu.net; awaiting their fix.

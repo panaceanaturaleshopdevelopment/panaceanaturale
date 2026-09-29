@@ -7,6 +7,7 @@ import JuiceSection from "@/components/JuiceSection";
 import PriceSection from "@/components/PriceSection";
 import StockistsSection from "@/components/StockistsSection";
 import UsageSection from "@/components/UsageSection";
+import VideoSection from "@/components/VideoSection";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <AboutSection />
       <JuiceSection />
       <GallerySection />
+      <VideoSection />
       <UsageSection />
       <StockistsSection />
       <PriceSection />

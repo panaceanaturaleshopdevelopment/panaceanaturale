@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { PACKAGE_PRICE_RSD, formatPriceRSD } from "@/lib/pricing";
 
@@ -33,10 +34,14 @@ export default function PriceSection() {
             </p>
           </div>
 
-          <div className="flex-1 flex items-center justify-center border border-dashed border-[#C8C4B4] rounded-sm min-h-[220px] w-full">
-            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.16em] text-[#8C8C7A] text-center px-6">
-              {p.photoSoon}
-            </p>
+          <div className="flex-1 w-full max-w-xs sm:max-w-none mx-auto">
+            <Image
+              src="/images/10. cena-flasica.png"
+              alt={p.photoAlt}
+              width={1080}
+              height={1350}
+              className="w-full h-auto aspect-[4/5] object-cover rounded-sm"
+            />
           </div>
         </div>
       </div>
