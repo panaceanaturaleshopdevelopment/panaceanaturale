@@ -16,12 +16,11 @@ export default function PriceSection() {
         </p>
         <div className="w-10 h-px bg-[#3D7A3D] mb-12" />
 
-        <h2 className="font-[family-name:var(--font-serif)] text-[38px] md:text-[44px] font-light text-[#1E3A1E] leading-tight mb-12">
-          {p.heading}
-        </h2>
-
         <div className="flex flex-col sm:flex-row gap-10 items-start">
           <div className="flex-1">
+            <h2 className="font-[family-name:var(--font-serif)] text-[38px] md:text-[44px] font-light text-[#1E3A1E] leading-tight mb-12">
+              {p.heading}
+            </h2>
             <p className="font-[family-name:var(--font-serif)] text-[56px] leading-none font-light text-[#1E3A1E]">
               {formatPriceRSD(PACKAGE_PRICE_RSD, language)}{" "}
               <span className="text-[24px] text-[#5C5C50] font-light">{p.currency}</span>

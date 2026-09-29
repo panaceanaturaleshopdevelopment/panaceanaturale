@@ -38,10 +38,13 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - `src/lib/tx.tsx` — rich text helper: renders `**bold**` markers as styled spans
 - `src/lib/pricing.ts` — single source of truth for the package price (`PACKAGE_PRICE_RSD`) and its locale-aware formatter; used by both `PriceSection` and `OrderForm` so the displayed price and the order-form total can't drift apart
 - `src/components/ui/Accordion.tsx` — reusable collapsible subsection; listens for `open-accordion` custom event
+- `src/components/ui/ScrollStrip.tsx` — reusable horizontal scroll-snap strip with prev/next arrows; used by `GallerySection.tsx` (photos) and `VideoGrid.tsx` (videos) so the two don't duplicate the same scroll/arrow logic
+- `src/components/ui/YouTubeEmbed.tsx` — reusable click-to-play YouTube facade (thumbnail + play button, iframe only mounted after click); used by `VideoGrid.tsx` and `AboutSection.tsx`
+- `src/components/ui/SocialIcons.tsx` — shared Instagram/Facebook/YouTube icon components; used by `Footer.tsx` and `ContactSection.tsx`
 - `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right that opens the `OrderForm` modal
 - `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, portrait product photo
-- `src/components/ContactSection.tsx` — `#contact` section: phone, email, physical address (address text reused from `t.footer.address` so it isn't duplicated)
-- `src/components/VideoGrid.tsx` — rendered inside `GallerySection.tsx`, not its own page section/nav item (client explicitly asked for videos to live under Galerija, not separately, 2026-09-29). Two click-to-play YouTube embeds (facade thumbnail + play button, iframe only mounted after click — no third-party embed library), each sized to its own native aspect ratio
+- `src/components/ContactSection.tsx` — `#contact` section: phone, email, physical address, and a follow-us block (Instagram/Facebook/YouTube) (address text reused from `t.footer.address` so it isn't duplicated)
+- `src/components/VideoGrid.tsx` — rendered inside `GallerySection.tsx`, not its own page section/nav item (client explicitly asked for videos to live under Galerija, not separately, 2026-09-29). Two click-to-play YouTube Shorts, sized identically to the photo-strip cards (`w-64 md:w-72 aspect-[3/4]`), same `ScrollStrip` scroll/arrow mechanism as the photos above them
 
 ---
 
@@ -155,6 +158,7 @@ Avoid:
 
 ### O nama (`#about`)
 - Complete, final text in place (SR + EN)
+- Includes a click-to-play YouTube embed (`byQ2bghKGog`, the RTS reportage — `YouTubeEmbed` from `src/components/ui/YouTubeEmbed.tsx`, `aspect-video`, capped `max-w-md`) below the intro text — added 2026-09-29 per client feedback; this video was originally in the Galerija video grid, then moved here specifically per the client
 
 ### O soku (`#juice`)
 - Intro with 3 fact stats (100%, 30ml, 10–12 days)
@@ -163,15 +167,15 @@ Avoid:
 - All text translated SR/EN
 
 ### Galerija (`#gallery`)
-- Horizontal scroll strip, portrait cards (`3:4`), CSS snap
+- Horizontal scroll strip, portrait cards (`3:4`), CSS snap — mechanism factored into `src/components/ui/ScrollStrip.tsx` (2026-09-29) so the photo strip and the video grid below it share one implementation instead of two copies
 - Arrows shown at scroll boundaries
 - Click any card → full-screen lightbox with prev/next, keyboard nav, backdrop close
 - Video grid (`#gallery-videos`, `VideoGrid.tsx`) rendered right after the photo strip, inside this same section — added 2026-09-29 per client feedback, initially built as its own `#videos` section/nav item, then folded into Galerija the same day per follow-up client feedback that it shouldn't be a separate section. No separate nav entry; reachable only by scrolling through Galerija
-- Two YouTube videos (client's pick, out of 4 sent): originally `H48ZJICaj88` (an RTS — Radio Televizija Srbije — reportage) + `K0SaBB6R5QA` (a YouTube Short, a customer's usage experience, 9:16 portrait). `H48ZJICaj88` turned out to be blocked from third-party embedding (confirmed live: YouTube returns "Video je nedostupan... sadržaj partnera Videomite CEE, koji je blokirao njegovo prikazivanje" — a hard block, not fixable) — verified via a real embedded iframe on an actual HTTP origin, not just oEmbed (oEmbed returns 200 even for videos with embedding disabled, so it's not a reliable check). Swapped for `byQ2bghKGog` (also from the client's original 4 links, confirmed embeddable the same way), 16:9. If `K0SaBB6R5QA` or any future video is ever reported as not playing, re-verify with the same real-iframe method before assuming it's a bug in the code
+- Video cards use `ScrollStrip` too and are sized identically to the photo cards (`w-64 md:w-72 aspect-[3/4]`), per client feedback that the videos should look/scroll the same as the photos — a later change from the initial 2-column grid with each video at its own native aspect ratio
+- Two YouTube Shorts (both from the client's channel, `@PanaceaNaturale`): `ugN_-1-ohqc` ("Proces proizvodnje"/"The production process") and `K0SaBB6R5QA` ("Iskustvo korisnika"/"Customer's experience") — both 9:16 natively, pillarboxed within the 3:4 card when playing, which is expected/fine
+- The reportage video (`H48ZJICaj88`, originally here) turned out to be blocked from third-party embedding (confirmed live: YouTube returns "Video je nedostupan... sadržaj partnera Videomite CEE, koji je blokirao njegovo prikazivanje" — a hard block, not fixable) — verified via a real embedded iframe on an actual HTTP origin, not just oEmbed (oEmbed returns 200 even for videos with embedding disabled, so it's not a reliable check on its own). Its swapped-in replacement (`byQ2bghKGog`) was later moved out of Galerija entirely into the O nama section per client feedback — see O nama above
 - ids and captions live in the local `videos` array in `VideoGrid.tsx`, same pattern as `JuiceSection.tsx`'s `nutrients` array (bilingual fields inline, not routed through `LanguageContext` — only `t.videos.heading`, the small "Video" subheading shown above the grid, goes through translations)
-- Captions are short titles only (client's choice, not full descriptions): the reportage reuses its actual YouTube title (translated into English for the EN site); the Short's own YouTube title is just an auto-generated upload date, so per the client it's captioned "Iskustvo korisnika" / "Customer's experience" instead
-- Click-to-play facade: renders the YouTube thumbnail (`i.ytimg.com/vi/{id}/hqdefault.jpg`, via `next/image` — `i.ytimg.com` allow-listed in `next.config.ts`) with a play-button overlay; the actual `<iframe>` (youtube-nocookie.com, `autoplay=1`) is only mounted after a click, so nothing loads from YouTube until the user actually wants to watch — no embed library added, just local `useState` per video
-- Each card sized to its own native aspect ratio (`aspect-video` for the reportage, `aspect-[9/16]` for the Short) rather than forcing both into the same shape
+- Click-to-play facade extracted into `src/components/ui/YouTubeEmbed.tsx` (reused by the O nama video too): renders the YouTube thumbnail (`i.ytimg.com/vi/{id}/hqdefault.jpg`, via `next/image` — `i.ytimg.com` allow-listed in `next.config.ts`) with a play-button overlay; the actual `<iframe>` (youtube-nocookie.com, `autoplay=1`) is only mounted after a click, so nothing loads from YouTube until the user actually wants to watch — no embed library added, just local `useState` per video
 
 ### Upotreba (`#usage`)
 - Intro paragraph + 3 collapsible subsections (Accordion)
@@ -189,10 +193,11 @@ Avoid:
 - Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a product photo
 - The price constant is shared with `OrderForm.tsx` so the Cena section and the order-form total always agree
 - Photo added 2026-09-29: `public/images/10. cena-flasica.png`, a 1080×1350 (4:5) portrait bottle shot the client sent, shown via `next/image` in a matching `aspect-[4/5]` container (client explicitly asked for portrait, not landscape, display) — replaced the earlier dashed "photo coming soon" placeholder; `t.price.photoSoon` was removed and replaced with `t.price.photoAlt` (image alt text) in both languages
+- Layout fix (2026-09-29): the `Cena` heading now lives inside the same flex column as the price/note text (both siblings of the photo in one `items-start` row), instead of sitting above the row on its own — on wide screens the photo's top was visibly lower than the heading before this change, since `items-start` was only aligning the photo against the price number, not the heading above it
 
 ### Kontakt (`#contact`)
 - Added 2026-09-18 per client feedback, as its own dedicated section (an earlier pass just pointed the Kontakt nav item at the existing Dostupnost section instead — client asked for a real separate section)
-- Three-column layout (stacks on mobile): phone (`tel:` link), email (`mailto:` link), physical address — address text is `t.footer.address`, reused rather than duplicated as a new string
+- Grid layout (2 cols mobile, 4 cols desktop): phone (`tel:` link), email (`mailto:` link), physical address (`t.footer.address`, reused rather than duplicated as a new string), and a follow-us block (Instagram/Facebook/YouTube, via `src/components/ui/SocialIcons.tsx`) — the social block added 2026-09-29 per client feedback to add YouTube; Instagram/Facebook were added alongside it for consistency with Footer, which already has all three next to its own contact details
 - Placed between Cena and Česta pitanja, matching where `Kontakt` sits in the nav
 
 ### Česta pitanja (`#faq`)
@@ -205,7 +210,7 @@ Avoid:
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
 - `id="footer"` on the `<footer>` element (not referenced by nav; kept in case something anchors here later)
 - Contact: `0615000280` | `panacea.naturale@gmail.com` | Čačak, Serbia address
-- Social: Instagram (linked), Facebook (linked)
+- Social: Instagram, Facebook, YouTube (all linked) — YouTube added 2026-09-29 per client feedback; icons now shared via `src/components/ui/SocialIcons.tsx` (also used by `ContactSection.tsx`) instead of being defined locally in this file
 - Copyright line
 - All text responsive, mobile-friendly 3→1 column layout
 

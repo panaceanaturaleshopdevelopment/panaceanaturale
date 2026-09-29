@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
+import { InstagramIcon, FacebookIcon, YouTubeIcon } from "@/components/ui/SocialIcons";
 
 export default function ContactSection() {
   const { t } = useLanguage();
@@ -18,7 +19,7 @@ export default function ContactSection() {
           {c.heading}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
           <div>
             <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E] mb-2">
               {c.phoneLabel}
@@ -50,6 +51,41 @@ export default function ContactSection() {
             <p className="font-[family-name:var(--font-serif)] text-[20px] font-light text-[#1E3A1E]">
               {t.footer.address}
             </p>
+          </div>
+
+          <div>
+            <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.18em] text-[#6B6B5E] mb-2">
+              {t.footer.followHeading}
+            </p>
+            <div className="space-y-2">
+              <a
+                href="https://www.instagram.com/panacea_naturale?igsh=MXVvaGJ2ZDdycjFkbQ%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[15px] font-light text-[#1E3A1E] hover:text-[#3D7A3D] transition-colors duration-200"
+              >
+                <InstagramIcon />
+                Instagram
+              </a>
+              <a
+                href="https://www.facebook.com/people/Panacea-Naturale/61562838522730/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[15px] font-light text-[#1E3A1E] hover:text-[#3D7A3D] transition-colors duration-200"
+              >
+                <FacebookIcon />
+                Facebook
+              </a>
+              <a
+                href="https://www.youtube.com/@PanaceaNaturale"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[15px] font-light text-[#1E3A1E] hover:text-[#3D7A3D] transition-colors duration-200"
+              >
+                <YouTubeIcon />
+                YouTube
+              </a>
+            </div>
           </div>
         </div>
       </div>

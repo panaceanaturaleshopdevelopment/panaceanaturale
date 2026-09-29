@@ -1,24 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-
-function InstagramIcon() {
-  return (
-    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function FacebookIcon() {
-  return (
-    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
-    </svg>
-  );
-}
+import { InstagramIcon, FacebookIcon, YouTubeIcon } from "@/components/ui/SocialIcons";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -81,6 +64,15 @@ export default function Footer() {
               >
                 <FacebookIcon />
                 Facebook
+              </a>
+              <a
+                href="https://www.youtube.com/@PanaceaNaturale"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 font-[family-name:var(--font-serif)] text-[14px] font-light text-[#C8C4B4] hover:text-[#E8E4D8] transition-colors duration-200"
+              >
+                <YouTubeIcon />
+                YouTube
               </a>
             </div>
           </div>

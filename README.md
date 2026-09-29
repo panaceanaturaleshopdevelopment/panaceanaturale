@@ -54,6 +54,9 @@ src/
     VideoGrid.tsx             Click-to-play YouTube embeds, rendered inside GallerySection
     StockistsMap.tsx          Leaflet map and stockist data
     ui/Accordion.tsx          Reusable collapsible section
+    ui/ScrollStrip.tsx        Reusable horizontal scroll-snap strip with arrows
+    ui/YouTubeEmbed.tsx       Reusable click-to-play YouTube facade
+    ui/SocialIcons.tsx        Shared Instagram/Facebook/YouTube icon components
   context/LanguageContext.tsx All SR/EN translations and navigation
   lib/tx.tsx                  Renders **bold** translation markers
   lib/pricing.ts              Shared package price constant and formatter
@@ -112,7 +115,7 @@ The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1
 
 - Phone: `0615000280` (`tel:+381615000280`)
 - Email: `panacea.naturale@gmail.com`
-- Instagram and Facebook links are maintained in `Footer.tsx`
+- Instagram, Facebook, and YouTube links live in `src/components/ui/SocialIcons.tsx`, used by both `Footer.tsx` and `ContactSection.tsx`
 - Hero: `public/images/9. visual1600x1200.png`
 - Gallery: `public/images/`
 - Cena product photo: `public/images/10. cena-flasica.png` (4:5 portrait)
