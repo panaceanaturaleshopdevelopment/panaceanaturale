@@ -49,10 +49,17 @@ src/
   components/                 Page sections and reusable UI
     OrderForm.tsx             Order inquiry modal and client submission
     FloatingOrderButton.tsx   Fixed order CTA
+    PriceSection.tsx          Package price section
+    ContactSection.tsx        Phone/email/address section
+    VideoGrid.tsx             Click-to-play YouTube embeds, rendered inside GallerySection
     StockistsMap.tsx          Leaflet map and stockist data
     ui/Accordion.tsx          Reusable collapsible section
+    ui/ScrollStrip.tsx        Reusable horizontal scroll-snap strip with arrows
+    ui/YouTubeEmbed.tsx       Reusable click-to-play YouTube facade
+    ui/SocialIcons.tsx        Shared Instagram/Facebook/YouTube icon components
   context/LanguageContext.tsx All SR/EN translations and navigation
   lib/tx.tsx                  Renders **bold** translation markers
+  lib/pricing.ts              Shared package price constant and formatter
 public/
   images/                     Hero and gallery images
   documents/                  Product certificate PDF
@@ -64,7 +71,7 @@ The floating `Poruci` / `Order` button opens `OrderForm`. The form requires full
 
 The client sends JSON to `POST /api/orders`. The server validates the input, converts packages to bottles, generates a unique `PN-...` order number, and sends an email to the address configured in `ORDER_RECIPIENT_EMAIL` through Resend. The recipient is intentionally not hardcoded in source, since this repository is public.
 
-The email subject includes the order number and total bottle count. The email body includes the package count, bottle count, order date/time, customer name, address, message, and contact details. The customer email is used as `replyTo`.
+The email subject includes the order number and package count. The email body includes the package count, bottle count, order date/time, customer name, address, message, and contact details. The customer email is used as `replyTo`.
 
 The submit action is labeled `Pošalji upit` in Serbian and `Send inquiry` in English.
 
@@ -100,7 +107,7 @@ All visible copy is stored in `src/context/LanguageContext.tsx`. When adding or 
 
 The `useLanguage()` hook exposes `t` (the active translations object) and `setLanguage()`. FAQ items support an optional `link: { text, url }` for an inline link in the answer. The language switcher in the navbar uses lowercase labels (`srb` / `eng`).
 
-The page sections appear in this order: Navbar, Hero, About, Juice, Gallery, Usage, Availability, Price, Contact, FAQ, and Footer. Anchor IDs are documented in `CLAUDE.md`.
+The page sections appear in this order: Navbar, Hero, About, Juice, Gallery (which includes an embedded video grid), Usage, Availability, Price, Contact, FAQ, and Footer. Anchor IDs are documented in `CLAUDE.md`.
 
 The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1600x1200 4:3 image with baked-in text; mobile uses `object-contain` and a matching aspect-ratio section so the text is not cropped or followed by empty space.
 
@@ -108,9 +115,10 @@ The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1
 
 - Phone: `0615000280` (`tel:+381615000280`)
 - Email: `panacea.naturale@gmail.com`
-- Instagram and Facebook links are maintained in `Footer.tsx`
+- Instagram, Facebook, and YouTube links live in `src/components/ui/SocialIcons.tsx`, used by both `Footer.tsx` and `ContactSection.tsx`
 - Hero: `public/images/9. visual1600x1200.png`
 - Gallery: `public/images/`
+- Cena product photo: `public/images/10. cena-flasica.png` (4:5 portrait)
 - Certificate: `public/documents/cert_panacea.pdf`
 - Stockist locations are currently hardcoded in `StockistsMap.tsx`
 

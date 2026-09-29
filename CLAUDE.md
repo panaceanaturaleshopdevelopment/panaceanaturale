@@ -25,7 +25,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 2. Hero (`#home`)
 3. O nama (`#about`)
 4. O soku (`#juice`) — subsections: `#juice-zeleno-zdravlje`, `#juice-nutritivni-sastav`, `#juice-hladno-cedjenje`, `#juice-zasto-biraju`
-5. Galerija (`#gallery`)
+5. Galerija (`#gallery`) — includes an embedded video grid (`#gallery-videos`) right after the photo strip, inside the same section
 6. Upotreba (`#usage`)
 7. Dostupnost (`#where`) — subsections: `#where-map`, `#where-phone`, `#where-email`
 8. Cena (`#price`)
@@ -38,9 +38,13 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - `src/lib/tx.tsx` — rich text helper: renders `**bold**` markers as styled spans
 - `src/lib/pricing.ts` — single source of truth for the package price (`PACKAGE_PRICE_RSD`) and its locale-aware formatter; used by both `PriceSection` and `OrderForm` so the displayed price and the order-form total can't drift apart
 - `src/components/ui/Accordion.tsx` — reusable collapsible subsection; listens for `open-accordion` custom event
+- `src/components/ui/ScrollStrip.tsx` — reusable horizontal scroll-snap strip with prev/next arrows; used by `GallerySection.tsx` (photos) and `VideoGrid.tsx` (videos) so the two don't duplicate the same scroll/arrow logic
+- `src/components/ui/YouTubeEmbed.tsx` — reusable click-to-play YouTube facade (thumbnail + play button, iframe only mounted after click); used by `VideoGrid.tsx` and `AboutSection.tsx`
+- `src/components/ui/SocialIcons.tsx` — shared Instagram/Facebook/YouTube icon components; used by `Footer.tsx` and `ContactSection.tsx`
 - `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right that opens the `OrderForm` modal
-- `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, placeholder box for a package photo (pending from the client)
-- `src/components/ContactSection.tsx` — `#contact` section: phone, email, physical address (address text reused from `t.footer.address` so it isn't duplicated)
+- `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, portrait product photo
+- `src/components/ContactSection.tsx` — `#contact` section: phone, email, physical address, and a follow-us block (Instagram/Facebook/YouTube) (address text reused from `t.footer.address` so it isn't duplicated)
+- `src/components/VideoGrid.tsx` — rendered inside `GallerySection.tsx`, not its own page section/nav item (client explicitly asked for videos to live under Galerija, not separately, 2026-09-29). Two click-to-play YouTube Shorts, sized identically to the photo-strip cards (`w-64 md:w-72 aspect-[3/4]`), same `ScrollStrip` scroll/arrow mechanism as the photos above them
 
 ---
 
@@ -154,6 +158,7 @@ Avoid:
 
 ### O nama (`#about`)
 - Complete, final text in place (SR + EN)
+- Includes a click-to-play YouTube embed (`byQ2bghKGog`, the RTS reportage — `YouTubeEmbed` from `src/components/ui/YouTubeEmbed.tsx`, `aspect-video`, capped `max-w-md`) below the intro text — added 2026-09-29 per client feedback; this video was originally in the Galerija video grid, then moved here specifically per the client
 
 ### O soku (`#juice`)
 - Intro with 3 fact stats (100%, 30ml, 10–12 days)
@@ -162,9 +167,15 @@ Avoid:
 - All text translated SR/EN
 
 ### Galerija (`#gallery`)
-- Horizontal scroll strip, portrait cards (`3:4`), CSS snap
+- Horizontal scroll strip, portrait cards (`3:4`), CSS snap — mechanism factored into `src/components/ui/ScrollStrip.tsx` (2026-09-29) so the photo strip and the video grid below it share one implementation instead of two copies
 - Arrows shown at scroll boundaries
 - Click any card → full-screen lightbox with prev/next, keyboard nav, backdrop close
+- Video grid (`#gallery-videos`, `VideoGrid.tsx`) rendered right after the photo strip, inside this same section — added 2026-09-29 per client feedback, initially built as its own `#videos` section/nav item, then folded into Galerija the same day per follow-up client feedback that it shouldn't be a separate section. No separate nav entry; reachable only by scrolling through Galerija
+- Video cards use `ScrollStrip` too and are sized identically to the photo cards (`w-64 md:w-72 aspect-[3/4]`), per client feedback that the videos should look/scroll the same as the photos — a later change from the initial 2-column grid with each video at its own native aspect ratio
+- Two YouTube Shorts (both from the client's channel, `@PanaceaNaturale`): `ugN_-1-ohqc` ("Proces proizvodnje"/"The production process") and `K0SaBB6R5QA` ("Iskustvo korisnika"/"Customer's experience") — both 9:16 natively, pillarboxed within the 3:4 card when playing, which is expected/fine
+- The reportage video (`H48ZJICaj88`, originally here) turned out to be blocked from third-party embedding (confirmed live: YouTube returns "Video je nedostupan... sadržaj partnera Videomite CEE, koji je blokirao njegovo prikazivanje" — a hard block, not fixable) — verified via a real embedded iframe on an actual HTTP origin, not just oEmbed (oEmbed returns 200 even for videos with embedding disabled, so it's not a reliable check on its own). Its swapped-in replacement (`byQ2bghKGog`) was later moved out of Galerija entirely into the O nama section per client feedback — see O nama above
+- ids and captions live in the local `videos` array in `VideoGrid.tsx`, same pattern as `JuiceSection.tsx`'s `nutrients` array (bilingual fields inline, not routed through `LanguageContext` — only `t.videos.heading`, the small "Video" subheading shown above the grid, goes through translations)
+- Click-to-play facade extracted into `src/components/ui/YouTubeEmbed.tsx` (reused by the O nama video too): renders the YouTube thumbnail (`i.ytimg.com/vi/{id}/hqdefault.jpg`, via `next/image` — `i.ytimg.com` allow-listed in `next.config.ts`) with a play-button overlay; the actual `<iframe>` (youtube-nocookie.com, `autoplay=1`) is only mounted after a click, so nothing loads from YouTube until the user actually wants to watch — no embed library added, just local `useState` per video
 
 ### Upotreba (`#usage`)
 - Intro paragraph + 3 collapsible subsections (Accordion)
@@ -179,12 +190,14 @@ Avoid:
 
 ### Cena (`#price`)
 - Added 2026-09-18 per client feedback; placed after Dostupnost and before Kontakt in both the page and the nav, per client request
-- Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a dashed placeholder box for a package photo the client hasn't sent yet
+- Shows the package price (`PACKAGE_PRICE_RSD` in `src/lib/pricing.ts`, currently 1500) formatted with `Intl.NumberFormat`, a `*7 bottles per package` footnote, and a product photo
 - The price constant is shared with `OrderForm.tsx` so the Cena section and the order-form total always agree
+- Photo added 2026-09-29: `public/images/10. cena-flasica.png`, a 1080×1350 (4:5) portrait bottle shot the client sent, shown via `next/image` in a matching `aspect-[4/5]` container (client explicitly asked for portrait, not landscape, display) — replaced the earlier dashed "photo coming soon" placeholder; `t.price.photoSoon` was removed and replaced with `t.price.photoAlt` (image alt text) in both languages
+- Layout fix (2026-09-29, two passes): the `Cena` heading now lives inside the same flex column as the price/note text (both siblings of the photo in one `items-start` row), instead of sitting above the row on its own. This made the heading's DOM box top match the photo's top exactly (verified via `getBoundingClientRect`), but the client reported it was *still* visibly misaligned — the actual glyph ink of serif heading text sits well below its line box's top edge (line-height leading space above the cap-height), so box-level alignment isn't the same as visual alignment. Fixed with `-mt-3` on the `<h2>` to pull the visible text up to match the photo's edge; verified with pixel-level analysis (not just DOM rects) — sampled screenshot pixels to find where the glyph's ink and the photo's edge actually start, confirmed within ~2px at multiple viewport widths (mobile/tablet/laptop/wide)
 
 ### Kontakt (`#contact`)
 - Added 2026-09-18 per client feedback, as its own dedicated section (an earlier pass just pointed the Kontakt nav item at the existing Dostupnost section instead — client asked for a real separate section)
-- Three-column layout (stacks on mobile): phone (`tel:` link), email (`mailto:` link), physical address — address text is `t.footer.address`, reused rather than duplicated as a new string
+- Grid layout (2 cols mobile, 4 cols desktop): phone (`tel:` link), email (`mailto:` link), physical address (`t.footer.address`, reused rather than duplicated as a new string), and a follow-us block (Instagram/Facebook/YouTube, via `src/components/ui/SocialIcons.tsx`) — the social block added 2026-09-29 per client feedback to add YouTube; Instagram/Facebook were added alongside it for consistency with Footer, which already has all three next to its own contact details
 - Placed between Cena and Česta pitanja, matching where `Kontakt` sits in the nav
 
 ### Česta pitanja (`#faq`)
@@ -197,7 +210,7 @@ Avoid:
 - Dark green (`#1E3A1E`), 3-column layout: brand | contact info | find us
 - `id="footer"` on the `<footer>` element (not referenced by nav; kept in case something anchors here later)
 - Contact: `0615000280` | `panacea.naturale@gmail.com` | Čačak, Serbia address
-- Social: Instagram (linked), Facebook (linked)
+- Social: Instagram, Facebook, YouTube (all linked) — YouTube added 2026-09-29 per client feedback; icons now shared via `src/components/ui/SocialIcons.tsx` (also used by `ContactSection.tsx`) instead of being defined locally in this file
 - Copyright line
 - All text responsive, mobile-friendly 3→1 column layout
 
@@ -214,7 +227,7 @@ Avoid:
 - `src/components/OrderForm.tsx` provides the client-side order form and submission state
 - `src/app/api/orders/route.ts` validates the request, converts packages to 7 bottles per package, generates a unique `PN-...` order number, and sends the email through Resend
 - Email recipient is read from `ORDER_RECIPIENT_EMAIL` (not hardcoded — deliberately kept out of source since this repo is public; see Pending below), currently set to `panacea.naturale.shop@gmail.com` in Vercel
-- Email subject includes the order number and bottle count
+- Email subject includes the order number and package count
 - Customer email is used as `replyTo`; the body includes name, address, order date/time, message, and contact details
 - Required server environment variables: `RESEND_API_KEY`, verified `RESEND_FROM_EMAIL`, and `ORDER_RECIPIENT_EMAIL`
 - In Vercel, `RESEND_API_KEY` is stored as type `Secret` (write-only, never readable again, even in the dashboard) since it's a real credential. `RESEND_FROM_EMAIL` and `ORDER_RECIPIENT_EMAIL` are stored as type `Config` instead (readable in the dashboard and via `vercel env pull`) since they're not secrets, just settings — this makes it possible to actually verify their current value later instead of only being able to blindly overwrite it
@@ -234,7 +247,7 @@ Avoid:
 - **Once `panaceanaturale.rs` shows `verified` in Resend**: update `RESEND_FROM_EMAIL` in Vercel to an address on that domain (e.g. `orders@panaceanaturale.rs`) and redeploy — this removes the sandbox restriction entirely and enables sending to any recipient.
 
 ## Assets:
-- Images: `public/images/` (0–7, hero + 6 gallery photos)
+- Images: `public/images/` (0–7, hero + 6 gallery photos; 10 is the Cena product photo)
 - Certificate: `public/documents/cert_panacea.pdf`
 
 ## Fonts:
@@ -249,8 +262,8 @@ Avoid:
 - [x] Page metadata (`title`, `description`) in `layout.tsx` — set to Serbian SEO copy (matches the app's default language), replacing the default "Create Next App" placeholder
 - [x] `lang` attribute in `<html>` — now reactive: `layout.tsx` sets the SSR default to `"sr"`, and `LanguageProvider` (`LanguageContext.tsx`) syncs `document.documentElement.lang` client-side via `useEffect` whenever the user toggles language. Verified via SSR curl check (correct `lang="sr"` + title/description on initial load); the client-side toggle itself wasn't click-tested in an actual browser, only reasoned through as a standard React pattern.
 - [ ] Shared order-endpoint anti-abuse protection (rate limiting/CAPTCHA) — current in-memory limiter doesn't work across Vercel's serverless instances; needed before high-traffic launch
-- [ ] Package photo for the Cena section — client said they'll provide it; `PriceSection.tsx` currently shows a dashed placeholder box in its place
-- [ ] Product videos — client asked for videos added to the site, most likely as YouTube links; nothing built yet since no links/content have been provided
+- [x] Package photo for the Cena section — client sent a portrait bottle photo 2026-09-29; now shown in `PriceSection.tsx`, placeholder removed
+- [x] Product videos — client sent 4 YouTube links 2026-09-29; asked to include 2 of them (a reportage and a customer-experience Short), embedded click-to-play inside the Galerija section (not a separate section — see Galerija notes above for the mid-day swap of the blocked reportage video). The other 2 links they sent were not requested for inclusion, so nothing was built for those
 
 ### Blocked — waiting on yu.net support, nothing to do here until they respond
 - [ ] **yu.net nameserver fix** *(blocks the two items below)* — `panaceanaturale.rs`'s `.rs` registry delegation still lists both the old nameservers (`ns1/ns2.stapozelis.com`) and the new Vercel ones (`ns1/ns2.vercel-dns.com`) simultaneously, more than 4 days after the change was made — not normal propagation, the old ones were never removed at the registrar. Causes inconsistent site resolution (some visitors/resolvers still get the old site). Support has been contacted at my.yu.net; awaiting their fix.

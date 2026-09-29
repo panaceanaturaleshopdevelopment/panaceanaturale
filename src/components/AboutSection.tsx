@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import { tx } from "@/lib/tx";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 
 export default function AboutSection() {
   const { t } = useLanguage();
@@ -26,6 +27,10 @@ export default function AboutSection() {
           <p className="font-[family-name:var(--font-serif)] text-[20px] leading-[1.9] text-[#2C2C22] font-light">
             {tx(t.about.p3)}
           </p>
+        </div>
+
+        <div className="mt-12 max-w-md">
+          <YouTubeEmbed id="byQ2bghKGog" aspect="aspect-video" />
         </div>
 
       </div>

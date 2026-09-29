@@ -47,13 +47,14 @@ type Translations = {
     zastoBiraju: { heading: string; p1: string; p2: string };
   };
   gallery: { label: string };
+  videos: { heading: string };
   price: {
     label: string;
     heading: string;
     currency: string;
     perPackage: string;
     note: string;
-    photoSoon: string;
+    photoAlt: string;
   };
   usage: {
     label: string;
@@ -214,13 +215,16 @@ const translations: Record<Language, Translations> = {
     gallery: {
       label: "Galerija",
     },
+    videos: {
+      heading: "Video",
+    },
     price: {
       label: "Cena",
       heading: "Cena",
       currency: "RSD",
       perPackage: "po pakovanju",
       note: "*Jedno pakovanje sadrži 7 flašica.",
-      photoSoon: "Fotografija pakovanja uskoro",
+      photoAlt: "Flašica soka od pšenične trave Panacea Naturale",
     },
     usage: {
       label: "Upotreba",
@@ -369,13 +373,16 @@ const translations: Record<Language, Translations> = {
     gallery: {
       label: "Gallery",
     },
+    videos: {
+      heading: "Videos",
+    },
     price: {
       label: "Price",
       heading: "Price",
       currency: "RSD",
       perPackage: "per package",
       note: "*One package contains 7 bottles.",
-      photoSoon: "Package photo coming soon",
+      photoAlt: "A bottle of Panacea Naturale wheatgrass juice",
     },
     usage: {
       label: "How to use",

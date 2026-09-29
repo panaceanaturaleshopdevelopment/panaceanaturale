@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import ScrollStrip from "@/components/ui/ScrollStrip";
+import VideoGrid from "@/components/VideoGrid";
 
 const images = [
   { src: "/images/1. psenica.png", alt: "Polje pšenice" },
@@ -16,31 +18,7 @@ const images = [
 
 export default function GallerySection() {
   const { t } = useLanguage();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canLeft, setCanLeft] = useState(false);
-  const [canRight, setCanRight] = useState(true);
   const [lightbox, setLightbox] = useState<number | null>(null);
-
-  const updateArrows = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanLeft(el.scrollLeft > 0);
-    setCanRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 1);
-  };
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateArrows, { passive: true });
-    updateArrows();
-    return () => el.removeEventListener("scroll", updateArrows);
-  }, []);
-
-  const scroll = (dir: 1 | -1) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 320, behavior: "smooth" });
-  };
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
   const prevLightbox = useCallback(() => setLightbox((i) => (i !== null ? (i - 1 + images.length) % images.length : null)), []);
@@ -76,13 +54,7 @@ export default function GallerySection() {
 
         {/* Strip */}
         <div className="max-w-4xl mx-auto px-8">
-        <div className="relative">
-
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
-            style={{ scrollbarWidth: "none" }}
-          >
+          <ScrollStrip>
             {images.map((img, i) => (
               <button
                 key={i}
@@ -99,37 +71,10 @@ export default function GallerySection() {
                 />
               </button>
             ))}
-            {/* right breathing room */}
-            <div className="shrink-0 w-4" />
-          </div>
-
-          {/* Prev */}
-          {canLeft && (
-            <button
-              onClick={() => scroll(-1)}
-              aria-label="Previous"
-              className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 rounded-full bg-white/80 hover:bg-white shadow-sm text-[#1E3A1E] transition-colors duration-200"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-          )}
-
-          {/* Next */}
-          {canRight && (
-            <button
-              onClick={() => scroll(1)}
-              aria-label="Next"
-              className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 rounded-full bg-white/80 hover:bg-white shadow-sm text-[#1E3A1E] transition-colors duration-200"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-          )}
+          </ScrollStrip>
         </div>
-        </div>
+
+        <VideoGrid />
 
       </section>
 
