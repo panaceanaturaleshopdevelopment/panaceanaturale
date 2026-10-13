@@ -11,6 +11,7 @@ The site is a responsive single-page presentation with bilingual Serbian/English
 - Tailwind CSS v4
 - React Leaflet and OpenStreetMap for the stockists map
 - Resend for order email delivery
+- Google Tag Manager via `@next/third-parties` (container `GTM-W8C7W6MW`, loaded once in `src/app/layout.tsx`, plus GTM's `<noscript>` iframe)
 - Custom i18n using `LanguageContext` (SR/EN)
 - `next/font` with Cormorant Garamond and Raleway
 - npm with the committed `package-lock.json`
@@ -125,6 +126,8 @@ The site uses an 80px navbar offset for anchor scrolling. The hero visual is a 1
 ## Security
 
 This repository is public. The order endpoint currently has server-side validation, a 16 KB request-body limit, a hidden honeypot field, and a best-effort limit of 5 requests per IP per 10 minutes — note that a public repo means these exact thresholds and the honeypot field name are visible to anyone, which offers less defense-in-depth than they would in a private repo. The Resend API key and order recipient are read only from environment variables in the server route and are never hardcoded in source or exposed to the browser. Earlier git history predates this and may still contain the recipient email in plain text; this is a known, accepted gap rather than an oversight.
+
+Google Tag Manager is loaded on every page without a consent gate, and the site currently has no cookie consent mechanism or Content Security Policy. Tags, triggers, and variables are managed in the GTM UI, not in this repository; anything published there runs for all visitors. Do not publish analytics or marketing tags until a consent solution is in place.
 
 The in-memory rate limiter is not a complete production anti-abuse system on Vercel because separate serverless instances do not share memory. The recommended next step is to add a shared rate-limit store such as Upstash Redis, or add Cloudflare Turnstile/reCAPTCHA verification. Either option requires a service account and environment variables. Until then, monitor Resend usage and treat the current limiter as basic protection only.
 

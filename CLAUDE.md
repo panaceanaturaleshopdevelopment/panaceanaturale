@@ -15,6 +15,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - CSS scroll snap (horizontal gallery)
 - Custom i18n (LanguageContext — SR/EN)
 - Resend (order inquiry email delivery)
+- Google Tag Manager (`GTM-W8C7W6MW`) via `@next/third-parties` in the root layout
 
 ---
 
@@ -261,6 +262,7 @@ Avoid:
 - [x] Facebook link URL — Updated: `https://www.facebook.com/people/Panacea-Naturale/61562838522730/`
 - [x] Page metadata (`title`, `description`) in `layout.tsx` — set to Serbian SEO copy (matches the app's default language), replacing the default "Create Next App" placeholder
 - [x] `lang` attribute in `<html>` — now reactive: `layout.tsx` sets the SSR default to `"sr"`, and `LanguageProvider` (`LanguageContext.tsx`) syncs `document.documentElement.lang` client-side via `useEffect` whenever the user toggles language. Verified via SSR curl check (correct `lang="sr"` + title/description on initial load); the client-side toggle itself wasn't click-tested in an actual browser, only reasoned through as a standard React pattern.
+- [ ] **Cookie consent before GTM tags go live** — GTM (`GTM-W8C7W6MW`, added 2026-10-13 for the social media manager) loads on every page with no consent gate; the site has no consent mechanism. As of 2026-10-13 the published container (v1) has no tags, so nothing fires yet — but any tag published in the GTM UI will run for every visitor without consent. Consent solution is being handled separately; GTM tags must not be published until it exists. No CSP exists either (if one is added later, allow `www.googletagmanager.com` + whatever tags the container loads)
 - [ ] Shared order-endpoint anti-abuse protection (rate limiting/CAPTCHA) — current in-memory limiter doesn't work across Vercel's serverless instances; needed before high-traffic launch
 - [x] Package photo for the Cena section — client sent a portrait bottle photo 2026-09-29; now shown in `PriceSection.tsx`, placeholder removed
 - [x] Product videos — client sent 4 YouTube links 2026-09-29; asked to include 2 of them (a reportage and a customer-experience Short), embedded click-to-play inside the Galerija section (not a separate section — see Galerija notes above for the mid-day swap of the blocked reportage video). The other 2 links they sent were not requested for inclusion, so nothing was built for those
@@ -281,6 +283,7 @@ Avoid:
 - ✅ Mailto and tel: links work on all devices
 - ✅ `npm audit` and `npm audit --omit=dev` report zero known vulnerabilities
 - ✅ Page metadata and reactive `lang` attribute done — see Pending above
+- ⚠️ No cookie consent yet — don't publish marketing/analytics tags in GTM until one is in place (see Pending)
 - ⚠️ Add shared order-endpoint anti-abuse protection before high-traffic production use
 - ✅ Order-inquiry emails now reach `panacea.naturale.shop@gmail.com` in production (now via `ORDER_RECIPIENT_EMAIL`), but only via a fragile interim workaround (Resend sandbox `from` address that happens to match the account owner's email) — not yet a real fix. See the Resend domain verification and yu.net nameserver pending items above.
 
