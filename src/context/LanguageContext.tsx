@@ -86,6 +86,13 @@ type Translations = {
     contactHeading: string;
     followHeading: string;
     copyright: string;
+    cookieSettings: string;
+  };
+  cookies: {
+    label: string;
+    message: string;
+    accept: string;
+    decline: string;
   };
 };
 
@@ -305,6 +312,14 @@ const translations: Record<Language, Translations> = {
       contactHeading: "Kontakt info",
       followHeading: "Pronađite nas",
       copyright: "© 2025 Panacea Naturale. Sva prava zadržana.",
+      cookieSettings: "Podešavanja kolačića",
+    },
+    cookies: {
+      label: "Saglasnost za kolačiće",
+      message:
+        "Koristimo kolačiće i osnovne podatke o pregledanju sajta za analitiku i marketing, uključujući oglašavanje na mrežama Facebook i Instagram. Ovi kolačići se uključuju samo uz vašu saglasnost, a izbor možete promeniti bilo kada u podnožju stranice.",
+      accept: "Prihvatam",
+      decline: "Odbijam",
     },
   },
   en: {
@@ -463,6 +478,14 @@ const translations: Record<Language, Translations> = {
       contactHeading: "Contact info",
       followHeading: "Find us",
       copyright: "© 2025 Panacea Naturale. All rights reserved.",
+      cookieSettings: "Cookie settings",
+    },
+    cookies: {
+      label: "Cookie consent",
+      message:
+        "We use cookies and basic browsing data for website analytics and marketing, including advertising on Facebook and Instagram. These cookies are only enabled with your consent, and you can change your choice at any time in the footer.",
+      accept: "Accept",
+      decline: "Decline",
     },
   },
 };

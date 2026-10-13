@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist, Geist_Mono, Raleway } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import CookieConsent from "@/components/CookieConsent";
 import FloatingOrderButton from "@/components/FloatingOrderButton";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -50,6 +51,7 @@ export default function RootLayout({
           <main className="pt-20">{children}</main>
           <Footer />
           <FloatingOrderButton />
+          <CookieConsent />
         </Providers>
       </body>
     </html>

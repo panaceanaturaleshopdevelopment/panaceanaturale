@@ -15,6 +15,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - CSS scroll snap (horizontal gallery)
 - Custom i18n (LanguageContext — SR/EN)
 - Resend (order inquiry email delivery)
+- Google Tag Manager (`GTM-W8C7W6MW`) via `@next/third-parties`, mounted only after cookie consent (`CookieConsent.tsx`)
 
 ---
 
@@ -41,6 +42,7 @@ Website for Panacea Naturale — a family business from Čačak producing cold-p
 - `src/components/ui/ScrollStrip.tsx` — reusable horizontal scroll-snap strip with prev/next arrows; used by `GallerySection.tsx` (photos) and `VideoGrid.tsx` (videos) so the two don't duplicate the same scroll/arrow logic
 - `src/components/ui/YouTubeEmbed.tsx` — reusable click-to-play YouTube facade (thumbnail + play button, iframe only mounted after click); used by `VideoGrid.tsx` and `AboutSection.tsx`
 - `src/components/ui/SocialIcons.tsx` — shared Instagram/Facebook/YouTube icon components; used by `Footer.tsx` and `ContactSection.tsx`
+- `src/components/CookieConsent.tsx` — cookie consent banner; the only place GTM is mounted (only after `Prihvatam`)
 - `src/components/FloatingOrderButton.tsx` — fixed CTA bottom-right that opens the `OrderForm` modal
 - `src/components/PriceSection.tsx` — `#price` section: package price, `*7 bottles/package` footnote, portrait product photo
 - `src/components/ContactSection.tsx` — `#contact` section: phone, email, physical address, and a follow-us block (Instagram/Facebook/YouTube) (address text reused from `t.footer.address` so it isn't duplicated)
@@ -261,6 +263,7 @@ Avoid:
 - [x] Facebook link URL — Updated: `https://www.facebook.com/people/Panacea-Naturale/61562838522730/`
 - [x] Page metadata (`title`, `description`) in `layout.tsx` — set to Serbian SEO copy (matches the app's default language), replacing the default "Create Next App" placeholder
 - [x] `lang` attribute in `<html>` — now reactive: `layout.tsx` sets the SSR default to `"sr"`, and `LanguageProvider` (`LanguageContext.tsx`) syncs `document.documentElement.lang` client-side via `useEffect` whenever the user toggles language. Verified via SSR curl check (correct `lang="sr"` + title/description on initial load); the client-side toggle itself wasn't click-tested in an actual browser, only reasoned through as a standard React pattern.
+- [x] **Cookie consent for GTM** (2026-10-13) — `src/components/CookieConsent.tsx` (rendered in `layout.tsx`) shows a bottom banner (SR/EN via `t.cookies`, equal-weight `Prihvatam`/`Odbijam` buttons) and renders `<GoogleTagManager>` **only** when consent is `granted`, so no GTM tag (Google or non-Google, e.g. Meta Pixel) can run before consent or after rejection. Choice stored in `localStorage` key `panacea-cookie-consent`; footer `Podešavanja kolačića` button reopens the banner via an `open-cookie-settings` window event (same pattern as `open-accordion`). Withdrawing consent clears `_ga*/_gid/_gat/_gcl*/_fbp/_fbc` cookies and reloads. GTM's `<noscript>` iframe was removed on purpose (no JS → no way to consent). No GTM-side consent configuration needed. Legal/privacy-policy text is handled separately. No CSP exists (if one is added later, allow `www.googletagmanager.com` + whatever tags the container loads)
 - [ ] Shared order-endpoint anti-abuse protection (rate limiting/CAPTCHA) — current in-memory limiter doesn't work across Vercel's serverless instances; needed before high-traffic launch
 - [x] Package photo for the Cena section — client sent a portrait bottle photo 2026-09-29; now shown in `PriceSection.tsx`, placeholder removed
 - [x] Product videos — client sent 4 YouTube links 2026-09-29; asked to include 2 of them (a reportage and a customer-experience Short), embedded click-to-play inside the Galerija section (not a separate section — see Galerija notes above for the mid-day swap of the blocked reportage video). The other 2 links they sent were not requested for inclusion, so nothing was built for those
@@ -281,6 +284,7 @@ Avoid:
 - ✅ Mailto and tel: links work on all devices
 - ✅ `npm audit` and `npm audit --omit=dev` report zero known vulnerabilities
 - ✅ Page metadata and reactive `lang` attribute done — see Pending above
+- ✅ GTM loads only after explicit cookie consent (see Pending)
 - ⚠️ Add shared order-endpoint anti-abuse protection before high-traffic production use
 - ✅ Order-inquiry emails now reach `panacea.naturale.shop@gmail.com` in production (now via `ORDER_RECIPIENT_EMAIL`), but only via a fragile interim workaround (Resend sandbox `from` address that happens to match the account owner's email) — not yet a real fix. See the Resend domain verification and yu.net nameserver pending items above.
 

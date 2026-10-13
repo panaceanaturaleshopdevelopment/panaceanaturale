@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import { InstagramIcon, FacebookIcon, YouTubeIcon } from "@/components/ui/SocialIcons";
+import { OPEN_SETTINGS_EVENT } from "@/components/CookieConsent";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -79,10 +80,17 @@ export default function Footer() {
 
         </div>
 
-        <div className="border-t border-[#2D5A2D] pt-4">
+        <div className="border-t border-[#2D5A2D] pt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.14em] text-[#4A7A4A]">
             {f.copyright}
           </p>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(OPEN_SETTINGS_EVENT))}
+            className="self-start font-[family-name:var(--font-nav)] text-[10px] uppercase tracking-[0.14em] text-[#7FA87F] hover:text-[#E8E4D8] transition-colors duration-200"
+          >
+            {f.cookieSettings}
+          </button>
         </div>
 
       </div>
