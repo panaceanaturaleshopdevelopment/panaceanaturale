@@ -317,7 +317,7 @@ const translations: Record<Language, Translations> = {
     cookies: {
       label: "Saglasnost za kolačiće",
       message:
-        "Koristimo kolačiće i osnovne podatke o pregledanju sajta za analitiku i marketing, uključujući oglašavanje na mrežama Facebook i Instagram. Ovi kolačići se uključuju samo uz vašu saglasnost, a izbor možete promeniti bilo kada u podnožju stranice.",
+        "Kolačići nam pomažu da unapredimo vaše iskustvo na sajtu i prilagodimo naše marketinške aktivnosti. Dodatne kolačiće koristimo samo uz vašu saglasnost, a svoje postavke možete promeniti u bilo kom trenutku u podnožju stranice.",
       accept: "Prihvatam",
       decline: "Odbijam",
     },
@@ -483,7 +483,7 @@ const translations: Record<Language, Translations> = {
     cookies: {
       label: "Cookie consent",
       message:
-        "We use cookies and basic browsing data for website analytics and marketing, including advertising on Facebook and Instagram. These cookies are only enabled with your consent, and you can change your choice at any time in the footer.",
+        "Cookies help us improve your experience on the website and tailor our marketing activities. We only use additional cookies with your consent, and you can change your settings at any time in the footer.",
       accept: "Accept",
       decline: "Decline",
     },
